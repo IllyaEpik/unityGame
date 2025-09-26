@@ -863,11 +863,11 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 03a2bf1c-754f-4178-83bd-051033ece5fb
+  cloudProjectId: 62de5573-7e34-49e7-926c-f4d95e49e6e5
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Competition Project
-  organizationId: nikitaguslistyj
+  projectName: UnityGame
+  organizationId: epi99k
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
