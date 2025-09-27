@@ -6,6 +6,7 @@ public class Hero : MonoBehaviour
 
 
 {
+    
     private Rigidbody2D rb;
     private Animator animator;
     private Vector2 moveVector;
@@ -63,13 +64,8 @@ public class Hero : MonoBehaviour
             isJump = true;
             animator.SetBool("isJump", isJump);
             rb.AddForce(Vector2.up * jumpForce);
-            // Invoke("TimeJump", 1f);
         }
     }
-    // private void TimeJump()
-    // {
-        
-    // }
     private void CheckGround()
     {
         Collider2D[] gr = Physics2D.OverlapCircleAll(zoneGround.position, 1.3f, ground);

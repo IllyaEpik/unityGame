@@ -42,6 +42,7 @@ public class SpaceRockMover : MonoBehaviour
 
     void Start()
     {
+        
         spriteRenderer = GetComponent<SpriteRenderer>();
         
         if (spriteRenderer == null)

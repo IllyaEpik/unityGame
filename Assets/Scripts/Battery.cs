@@ -16,7 +16,7 @@ public class Battery : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Hero"))
+        if (collision.CompareTag("hero"))
         {
             managerUi.AddBattery();
             Invoke("DeleteBattery", 0.3f);

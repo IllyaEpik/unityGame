@@ -3,14 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-<<<<<<< HEAD
-  tags: []
-=======
   tags:
-  - battery
-  - heart
-  - managerUi
->>>>>>> origin/items
+  - hero
   layers:
   - Default
   - TransparentFX

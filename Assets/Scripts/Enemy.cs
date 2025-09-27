@@ -55,7 +55,8 @@ public class Enemy : MonoBehaviour
             }
             else if (isLeft)
             {
-                transform.localScale *= new Vector2(-1, 1);
+                
+                transform.localScale = new Vector2(-1, 1);
                 isLeft = false;
                 // Attack();
                 isAttack = true;
