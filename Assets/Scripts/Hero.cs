@@ -7,7 +7,7 @@ public class Hero : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
     private Vector2 moveVector;
-    
+    public float health = 3f;
     [SerializeField] private FixedJoystick joystick2;
     [SerializeField] private float speed;
     [SerializeField] float jumpForce = 1000;
