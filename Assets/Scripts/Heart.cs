@@ -1,7 +1,8 @@
 using UnityEngine;
 
-public class Battery : MonoBehaviour
+public class Heart : MonoBehaviour
 {
+
     ManagerUi managerUi;
     void Start()
     {
@@ -18,12 +19,11 @@ public class Battery : MonoBehaviour
     {
         if (collision.CompareTag("Hero"))
         {
-            managerUi.AddBattery();
-            Invoke("DeleteBattery", 0.3f);
+            Invoke("DeleteHeart", 0.3f);
         }
     }
 
-    private void DeleteBattery()
+    private void DeleteHeart()
     {
         Destroy(gameObject);
     }
