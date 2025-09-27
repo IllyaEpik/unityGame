@@ -2,7 +2,7 @@ using UnityEngine;
 using TMPro;
 public class ManagerUi : MonoBehaviour
 {
-    [SerializeField] private GameObject heart1, heart2, heart3, heart4, heart5;
+    [SerializeField] private GameObject heart1, heart2, heart3;
 
     private int battery = 0;
 
@@ -18,7 +18,7 @@ public class ManagerUi : MonoBehaviour
         textBattery.text = "" + battery;
     }
 
-    public void AddBatteries()
+    public void AddBattery()
     {
         battery++;
     }
