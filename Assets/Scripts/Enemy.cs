@@ -6,9 +6,10 @@ public class Enemy : MonoBehaviour
     private bool isAttack = false;
     private Animator animator;
 
-    [SerializeField] Transform Circle_trigger_left;
-    [SerializeField] Transform Circle_trigger_right;
+    [SerializeField] Transform detectionZone; // точка проверки (перед врагом)
+    [SerializeField] float radius = 5f;
     [SerializeField] LayerMask hero;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -19,59 +20,32 @@ public class Enemy : MonoBehaviour
         Flip();
     }
 
-    void FixedUpdate()
-    {
-
-    }
-
     private void Flip()
     {
-        Collider2D[] check_left = Physics2D.OverlapCircleAll(Circle_trigger_left.position, 5f, hero);
-        Collider2D[] check_right = Physics2D.OverlapCircleAll(Circle_trigger_right.position, 5f, hero);
-        if (check_left.Length > 0)
+        Collider2D player = Physics2D.OverlapCircle(detectionZone.position, radius, hero);
+
+        if (player != null)
         {
-            if (isLeft)
+            // если игрок слева
+            if (player.transform.position.x < transform.position.x && !isLeft)
             {
-                // Attack();
-                isAttack = true;
-                animator.SetBool("isAttack", isAttack);
-            }
-            else if (!isLeft)
-            {
-                transform.localScale *= new Vector2(-1, 1);
+                transform.localScale = new Vector3(-1, 1, 1);
                 isLeft = true;
-                // Attack();
-                isAttack = true;
-                animator.SetBool("isAttack", isAttack);
             }
-        }
-        if (check_right.Length > 0)
-        {
-            if (!isLeft)
+            // если игрок справа
+            else if (player.transform.position.x > transform.position.x && isLeft)
             {
-                // Attack();
-                isAttack = true;
-                animator.SetBool("isAttack", isAttack);
-            }
-            else if (isLeft)
-            {
-                
-                transform.localScale = new Vector2(-1, 1);
+                transform.localScale = new Vector3(1, 1, 1);
                 isLeft = false;
-                // Attack();
-                isAttack = true;
-                animator.SetBool("isAttack", isAttack);
             }
+            isAttack = true;
+            animator.SetBool("isAttack", isAttack);
         }
-        if (check_left.Length == 0 && check_right.Length == 0)
+        else
         {
-            isAttack = false;
             animator.SetBool("isAttack", false);
         }
     }
 
-    // private void Attack()
-    // {
 
-    // }
 }
