@@ -9,9 +9,7 @@ public class Hero : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
     private Vector2 moveVector;
-    [SerializeField] private UnityEngine.UI.Image heart;
-    [SerializeField] private Sprite newSprite;
-
+    public float health = 3f;
     [SerializeField] private FixedJoystick joystick2;
     [SerializeField] private float speed;
     [SerializeField] float jumpForce = 1000;
@@ -35,7 +33,6 @@ public class Hero : MonoBehaviour
     {
         Walk();
         Flip();
-        heart.sprite = newSprite;
     }
 
     private void Walk()
