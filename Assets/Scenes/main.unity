@@ -2292,6 +2292,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8368bac2fd4874b9d9ff57670c551912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  heart: {fileID: 391174791}
+  newSprite: {fileID: -4178046375966092550, guid: 5a7a758c43cf6fd4f8695e9527bace23, type: 3}
   joystick2: {fileID: 1142960889}
   speed: 10
   jumpForce: 1000
