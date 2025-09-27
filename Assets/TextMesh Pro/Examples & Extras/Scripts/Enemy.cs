@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -7,9 +6,6 @@ public class Enemy : MonoBehaviour
     private bool isAttack = false;
     private Animator animator;
 
-    [SerializeField] private UnityEngine.UI.Image heart;
-    [SerializeField] private Sprite newSprite;
-    private Hero health;
     [SerializeField] Transform Circle_trigger_left;
     [SerializeField] Transform Circle_trigger_right;
     [SerializeField] LayerMask hero;
@@ -36,7 +32,7 @@ public class Enemy : MonoBehaviour
         {
             if (isLeft)
             {
-                Attack();
+                // Attack();
                 isAttack = true;
                 animator.SetBool("isAttack", isAttack);
             }
@@ -44,7 +40,7 @@ public class Enemy : MonoBehaviour
             {
                 transform.localScale *= new Vector2(-1, 1);
                 isLeft = true;
-                Attack();
+                // Attack();
                 isAttack = true;
                 animator.SetBool("isAttack", isAttack);
             }
@@ -53,7 +49,7 @@ public class Enemy : MonoBehaviour
         {
             if (!isLeft)
             {
-                Attack();
+                // Attack();
                 isAttack = true;
                 animator.SetBool("isAttack", isAttack);
             }
@@ -61,7 +57,7 @@ public class Enemy : MonoBehaviour
             {
                 transform.localScale *= new Vector2(-1, 1);
                 isLeft = false;
-                Attack();
+                // Attack();
                 isAttack = true;
                 animator.SetBool("isAttack", isAttack);
             }
@@ -73,8 +69,8 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void Attack()
-    {
-        heart.sprite = newSprite;
-    }
+    // private void Attack()
+    // {
+
+    // }
 }
