@@ -10,7 +10,13 @@ public class Hero : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
     private Vector2 moveVector;
-    public float health = 3f;
+    public float health = 6f;
+    public int battery = 1;
+    [SerializeField] private UnityEngine.UI.Image[] hearts;
+    [SerializeField] private Sprite[] spritesOfHeart;
+
+    public UnityEngine.UI.Image batteryUi;
+    public Sprite[] BattaryElems;
     [SerializeField] private FixedJoystick joystick2;
     [SerializeField] private float speed;
     [SerializeField] float jumpForce = 1000;
@@ -24,7 +30,23 @@ public class Hero : MonoBehaviour
         animator = GetComponent<Animator>();
         
     }
-
+    public void getDamage()
+    {
+        foreach (UnityEngine.UI.Image heart in hearts)
+        {
+            if (heart.sprite == spritesOfHeart[4])
+            {
+                heart.sprite = spritesOfHeart[2];
+                break;
+            }
+            else if (heart.sprite == spritesOfHeart[2])
+            {
+                heart.sprite = spritesOfHeart[0];
+                break;
+            }
+        }
+        // heart3.sprite = spritesOfHeart[2];
+    }
     void Update()
     {
         Jump();
@@ -38,7 +60,6 @@ public class Hero : MonoBehaviour
 
     private void Walk()
     {
-        
         moveVector.x = Input.GetAxis("Horizontal");
         // moveVector.x = 
         moveVector.x = joystick2.Horizontal;
@@ -47,13 +68,18 @@ public class Hero : MonoBehaviour
         // Debug.Log(Mathf.Abs(moveVector.x));
     }
     private bool isLeft = false;
-
+ 
     private void Flip()
     {
         if ((!isLeft && moveVector.x < 0) || (isLeft && moveVector.x > 0))
         {
             transform.localScale *= new Vector2(-1, 1);
             isLeft = !isLeft;
+            // Sprite newSprite = Resources.Load<Sprite>($"images/Текстури/батарейка/заряд/{battery}");
+            // batteryUi.  = newSprite;
+            // BattaryElems
+            // battery -= 1;
+            // batteryUi.sprite = BattaryElems[battery];
         }
     }
 
@@ -61,6 +87,8 @@ public class Hero : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && isGround)
         {
+            
+            Debug.Log(battery);
             isJump = true;
             animator.SetBool("isJump", isJump);
             rb.AddForce(Vector2.up * jumpForce);
