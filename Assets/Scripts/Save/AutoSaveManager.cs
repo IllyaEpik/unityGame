@@ -4,7 +4,7 @@ using System.Collections;
 
 public class AutoSaveManager : MonoBehaviour
 {
-    // Герой, за которым мы будем следить
+    // Герой 
     public Hero player;
     public SaveSystem saveSystem;
     
@@ -21,7 +21,7 @@ public class AutoSaveManager : MonoBehaviour
 
     private void OnDisable()
     {
-        // Останавливаем автосохранение, если вдруг выключили объект
+        // Останавливаем автосохранение если вдруг выключили объект
         if (autoSaveCoroutine != null)
             StopCoroutine(autoSaveCoroutine);
     }
@@ -33,7 +33,7 @@ public class AutoSaveManager : MonoBehaviour
             yield return new WaitForSeconds(intervalSeconds);
             if (player != null && saveSystem != null)
             {
-                // Сохраняем игру, чтобы не потерять прогресс после очередного босса
+                // Сохраняем игру чтобы не потерять прогресс после очередного босса
                 saveSystem.SaveGame(player); 
                 Debug.Log("AutoSave completed. (Да-да, мы всё записали)");
             }
@@ -42,7 +42,7 @@ public class AutoSaveManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        // На всякий случай сохраняем игру при выходе. Вдруг свет выключат!
+        // На всякий случай сохраняем игру при выходе. Вдруг свет выключат
         if (player != null && saveSystem != null)
             saveSystem.SaveGame(player);
     }
@@ -50,7 +50,7 @@ public class AutoSaveManager : MonoBehaviour
     private void OnApplicationPause(bool pause)
     {
         // Сохраняем игру, если игрок решил сделать перерыв на чай тип пауза
-        if (pause && player != null && saveSystem != null)
+        if (pause && playr != null && saveSystem != null)
             saveSystem.SaveGame(player);
     }
 }
