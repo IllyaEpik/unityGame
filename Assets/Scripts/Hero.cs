@@ -85,9 +85,10 @@ public class Hero : MonoBehaviour
 
     private void Jump()
     {
+       
         if (Input.GetKeyDown(KeyCode.Space) && isGround)
         {
-            
+           
             Debug.Log(battery);
             isJump = true;
             animator.SetBool("isJump", isJump);
