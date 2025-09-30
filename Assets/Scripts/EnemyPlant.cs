@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Timeline;
 
-public class Enemy : MonoBehaviour
+public class EnemyPlant : MonoBehaviour
 {
     private bool isLeft = false;
     private bool isAttack = false;
@@ -23,11 +23,14 @@ public class Enemy : MonoBehaviour
     {
         Flip();
     }
-
+    public void getDamageForPlant()
+    {
+        Destroy(gameObject);
+    }
     private void Flip()
     {
         Collider2D player = Physics2D.OverlapCircle(detectionZone.position, radius, hero);
-        Debug.Log(player);
+        // Debug.Log(player);
         if (player != null)
         {
             // если игрок слева
