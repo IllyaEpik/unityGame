@@ -24,7 +24,6 @@ public class Battery : MonoBehaviour
             {
             hero.battery += 1;
             }
-
             hero.batteryUi.sprite = hero.BattaryElems[hero.battery];
             Invoke("DeleteBattery", 0.3f);
         }
