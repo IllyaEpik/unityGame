@@ -50,7 +50,7 @@ public class AutoSaveManager : MonoBehaviour
     private void OnApplicationPause(bool pause)
     {
         // Сохраняем игру, если игрок решил сделать перерыв на чай тип пауза
-        if (pause && playr != null && saveSystem != null)
+        if (pause && player != null && saveSystem != null)
             saveSystem.SaveGame(player);
     }
 }

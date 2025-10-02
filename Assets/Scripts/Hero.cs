@@ -1,5 +1,7 @@
+using System.Linq;
 using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 public class Hero : MonoBehaviour
@@ -21,6 +23,7 @@ public class Hero : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] float jumpForce = 1000;
     private bool isJump;
+    private bool isLeft = false;
     private bool isGround = true;
     [SerializeField] LayerMask ground;
     [SerializeField] Transform zoneGround;
@@ -28,24 +31,50 @@ public class Hero : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        
+        updateHp();
     }
     public void getDamage()
     {
+        // foreach (UnityEngine.UI.Image heart in hearts)
+        // {
+        //     if (heart.sprite == spritesOfHeart[4])
+        //     {
+        //         heart.sprite = spritesOfHeart[2];
+        //         break;
+        //     }
+        //     else if (heart.sprite == spritesOfHeart[2])
+        //     {
+        //         heart.sprite = spritesOfHeart[0];
+        //         break;
+        //     }
+        // }
+        health-=1;
+        Debug.Log(health);
+        updateHp();
+    }
+    public void updateHp()
+    {
+        float hp = health-0;
         foreach (UnityEngine.UI.Image heart in hearts)
         {
-            if (heart.sprite == spritesOfHeart[4])
+            
+            Debug.Log($"hp: {hp}");
+            if (hp >= 2)
+            {
+                heart.sprite = spritesOfHeart[4];
+                hp -= 2;
+            }
+            else if (hp >= 1)
             {
                 heart.sprite = spritesOfHeart[2];
-                break;
+                hp -= 1;
             }
-            else if (heart.sprite == spritesOfHeart[2])
+            else
             {
+
                 heart.sprite = spritesOfHeart[0];
-                break;
             }
         }
-        // heart3.sprite = spritesOfHeart[2];
     }
     void Update()
     {
@@ -67,7 +96,6 @@ public class Hero : MonoBehaviour
         animator.SetFloat("moveVector", Mathf.Abs(moveVector.x));
         // Debug.Log(Mathf.Abs(moveVector.x));
     }
-    private bool isLeft = false;
  
     private void Flip()
     {
