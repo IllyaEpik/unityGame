@@ -71,7 +71,6 @@ public class SaveSystem : MonoBehaviour
         {
             Destroy(old.gameObject);
         }
-
         // Создаём врагов из prefab. 
         foreach (EnemyData ed in data.enemies)
         {

@@ -150,14 +150,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e69e6840669546408af79ddaa8946cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heroObject: {fileID: 0}
   isAlive: 1
   detectionZone: {fileID: 7397497801718253668}
   detectionZoneRight: {fileID: 8393755784971291832}
   radius: 10
-  heroLayer:
+  hero:
     serializedVersion: 2
     m_Bits: 64
+  heroObject: {fileID: 0}
 --- !u!95 &2556156043076226745
 Animator:
   serializedVersion: 7

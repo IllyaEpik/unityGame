@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
         // S горячая клав —  Save! 
         if (Input.GetKeyDown(KeyCode.S))
         {
+            Debug.Log("saving");
             // Просто передаем игрока. SaveSystem сам найдет врагов.
             saveSystem.SaveGame(player); 
         }
