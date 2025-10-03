@@ -4,23 +4,23 @@ using System.Collections;
 
 public class death : MonoBehaviour
 {
-    // Ссылка на компонент Hero вашего игрока
+    
     public Hero playerHero;
 
-    // Ссылки на два компонента CanvasGroup
+   
     public CanvasGroup gameOverPanelGroup; 
-    public CanvasGroup gameOverPanelGroup1; // 👈 Исправлен тип с CanvasGroup1 на CanvasGroup
+    public CanvasGroup gameOverPanelGroup1; 
     
-    // Время для плавного появления (3 секунды)
+    
     public float fadeDuration = 3f; 
     private bool isFading = false; 
 
     void Start()
     {
-        // 💡 Исправлен оператор 'or' на '||' (логическое ИЛИ)
+       
         if (gameOverPanelGroup != null || gameOverPanelGroup1 != null)
         {
-            // Устанавливаем начальные значения, если компоненты существуют
+            
             if (gameOverPanelGroup != null)
             {
                 gameOverPanelGroup.alpha = 0f;
