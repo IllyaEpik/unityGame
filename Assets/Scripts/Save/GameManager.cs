@@ -27,5 +27,11 @@ public class GameManager : MonoBehaviour
             
         
         }
+        
+     
     }
+    public void OnMyButtonClicked_death() 
+        {
+        saveSystem.LoadGame(player, enemyPrefab);
+        }
 }

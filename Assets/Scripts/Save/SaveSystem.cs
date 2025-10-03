@@ -1,4 +1,4 @@
-// 2️⃣ SaveSystem.cs (ИСПРАВЛЕННАЯ ВЕРСИЯ)
+
 using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ public class SaveSystem : MonoBehaviour
         Debug.Log("Save path: " + savePath);
     }
 
-    // Сохраняем игрока и ВСЕХ врагов на сцене.
+    // Сохраняем игрока и ВСЕХ врагов типа EnemyPlant на сцене.
     public void SaveGame(Hero player) 
     {
         SaveData data = new SaveData();
@@ -28,9 +28,9 @@ public class SaveSystem : MonoBehaviour
         data.timestamp = System.DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 
         // Враги
-        // Находим ВСЕХ активных врагов на сцене прямо сейчас 
-        Enemy[] currentEnemies = FindObjectsOfType<Enemy>(); 
-        foreach (Enemy e in currentEnemies)
+        // Находим ВСЕХ активных врагов типа EnemyPlant на сцене прямо сейчас 
+        EnemyPlant[] currentEnemies = FindObjectsOfType<EnemyPlant>(); 
+        foreach (EnemyPlant e in currentEnemies) 
         {
             // Проверяем, что ссылка не "мертвая" (на всякий случай а то баги)
             if (e == null) continue; 
@@ -66,8 +66,8 @@ public class SaveSystem : MonoBehaviour
         player.health = data.health;
         player.battery = data.battery;
 
-        // Удаляем старых врагов со сцены. елси не удалить все полетит 
-        foreach (Enemy old in FindObjectsOfType<Enemy>())
+        // Удаляем старых врагов типа EnemyPlant со сцены. елси не удалить все полетит 
+        foreach (EnemyPlant old in FindObjectsOfType<EnemyPlant>()) 
         {
             Destroy(old.gameObject);
         }
@@ -76,7 +76,7 @@ public class SaveSystem : MonoBehaviour
         foreach (EnemyData ed in data.enemies)
         {
             GameObject enemyObj = Instantiate(enemyPrefab, new Vector2(ed.posX, ed.posY), Quaternion.identity);
-            Enemy e = enemyObj.GetComponent<Enemy>();
+            EnemyPlant e = enemyObj.GetComponent<EnemyPlant>(); 
             
             // восстанавливаем состояние isAlive
             e.isAlive = ed.isAlive; 

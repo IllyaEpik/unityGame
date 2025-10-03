@@ -32,6 +32,7 @@ public class Hero : MonoBehaviour
     }
     public void getDamage()
     {
+        health -= 1;
         foreach (UnityEngine.UI.Image heart in hearts)
         {
             if (heart.sprite == spritesOfHeart[4])
