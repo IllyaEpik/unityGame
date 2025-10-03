@@ -5,8 +5,6 @@ using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 public class Hero : MonoBehaviour
-
-
 {
     
     private Rigidbody2D rb;
@@ -14,6 +12,7 @@ public class Hero : MonoBehaviour
     private Vector2 moveVector;
     public float health = 6f;
     public int battery = 1;
+    [SerializeField] private GameObject plasmaPrefab;
     [SerializeField] private UnityEngine.UI.Image[] hearts;
     [SerializeField] private Sprite[] spritesOfHeart;
 
@@ -25,6 +24,7 @@ public class Hero : MonoBehaviour
     private bool isJump;
     private bool isLeft = false;
     private bool isGround = true;
+
     [SerializeField] LayerMask ground;
     [SerializeField] Transform zoneGround;
     void Start()
@@ -35,21 +35,7 @@ public class Hero : MonoBehaviour
     }
     public void getDamage()
     {
-        // foreach (UnityEngine.UI.Image heart in hearts)
-        // {
-        //     if (heart.sprite == spritesOfHeart[4])
-        //     {
-        //         heart.sprite = spritesOfHeart[2];
-        //         break;
-        //     }
-        //     else if (heart.sprite == spritesOfHeart[2])
-        //     {
-        //         heart.sprite = spritesOfHeart[0];
-        //         break;
-        //     }
-        // }
         health-=1;
-        Debug.Log(health);
         updateHp();
     }
     public void updateHp()
@@ -76,10 +62,19 @@ public class Hero : MonoBehaviour
             }
         }
     }
+    private void attack()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            // (this.isLeft) ? Quaternion.Euler(0, 0, 90) :
+            Instantiate(plasmaPrefab, transform.position,  Quaternion.identity );
+        }
+    }
     void Update()
     {
         Jump();
         CheckGround();
+        attack();
     }
     void FixedUpdate()
     {

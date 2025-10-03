@@ -11,11 +11,13 @@ public class plasma : MonoBehaviour
     private int direction = -1;
     [SerializeField] private Transform detectionZone;
     [SerializeField] LayerMask layers;
-    [SerializeField] Hero heroObject;
+    // Hero heroObject;
+    // [SerializeField] 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         // detectionZone = GetComponent<BoxCollider2D>();
+        // heroObject = GameObject.FindGameObjectWithTag("Hero").GetComponent<Hero>();
     }
 
     // Update is called once per frame
@@ -26,7 +28,7 @@ public class plasma : MonoBehaviour
     void FixedUpdate()
     {
         transform.Translate(Vector3.right * moveSpeed * direction * Time.deltaTime, Space.World);
-        GameObject someone = Physics2D.OverlapCircle(detectionZone.position, 2, layers).gameObject;
+        var someone = Physics2D.OverlapCircle(detectionZone.position, 2, layers).gameObject;
         if (someone!=null)
         {
             var targetBot = someone.GetComponent<enemyBot>();

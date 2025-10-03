@@ -22,7 +22,7 @@ public class SaveData
 
     // Время сохранения
     public long timestamp;
-
+    
     // враги 
     public List<EnemyData> enemies = new List<EnemyData>();
 }
