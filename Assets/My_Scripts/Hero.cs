@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Hero : MonoBehaviour
 {
-    
+
     private Rigidbody2D rb;
     private Animator animator;
     private Vector2 moveVector;
@@ -15,6 +15,7 @@ public class Hero : MonoBehaviour
     [SerializeField] private GameObject plasmaPrefab;
     [SerializeField] private UnityEngine.UI.Image[] hearts;
     [SerializeField] private Sprite[] spritesOfHeart;
+    [SerializeField] private UnityEngine.UI.Image shieldIcon;
 
     public UnityEngine.UI.Image batteryUi;
     public Sprite[] BattaryElems;
@@ -24,6 +25,7 @@ public class Hero : MonoBehaviour
     private bool isJump;
     private bool isLeft = false;
     private bool isGround = true;
+    private bool hasShield = false;
 
     [SerializeField] LayerMask ground;
     [SerializeField] Transform zoneGround;
@@ -31,19 +33,26 @@ public class Hero : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        shieldIcon.enabled = false;
         updateHp();
     }
     public void getDamage()
     {
-        health-=1;
+        if (hasShield)
+        {
+            hasShield = false;
+            shieldIcon.enabled = false;
+            return;
+        }
+        health -= 1;
         updateHp();
     }
     public void updateHp()
     {
-        float hp = health-0;
+        float hp = health - 0;
         foreach (UnityEngine.UI.Image heart in hearts)
         {
-            
+
             Debug.Log($"hp: {hp}");
             if (hp >= 2)
             {
@@ -67,7 +76,7 @@ public class Hero : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             // (this.isLeft) ? Quaternion.Euler(0, 0, 90) :
-            Instantiate(plasmaPrefab, transform.position,  Quaternion.identity );
+            Instantiate(plasmaPrefab, transform.position, Quaternion.identity);
         }
     }
     void Update()
@@ -91,7 +100,7 @@ public class Hero : MonoBehaviour
         animator.SetFloat("moveVector", Mathf.Abs(moveVector.x));
         // Debug.Log(Mathf.Abs(moveVector.x));
     }
- 
+
     private void Flip()
     {
         if ((!isLeft && moveVector.x < 0) || (isLeft && moveVector.x > 0))
@@ -108,10 +117,10 @@ public class Hero : MonoBehaviour
 
     private void Jump()
     {
-       
+
         if (Input.GetKeyDown(KeyCode.Space) && isGround)
         {
-           
+
             Debug.Log(battery);
             isJump = true;
             animator.SetBool("isJump", isJump);
@@ -132,5 +141,11 @@ public class Hero : MonoBehaviour
             animator.SetBool("isJump", isJump);
         }
         animator.SetBool("isGround", isGround);
+    }
+
+    public void AddShield()
+    {
+    hasShield = true;
+    shieldIcon.enabled = true;
     }
 }
