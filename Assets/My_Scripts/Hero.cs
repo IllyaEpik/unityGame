@@ -24,6 +24,7 @@ public class Hero : MonoBehaviour
     private bool isJump;
     private bool isLeft = false;
     private bool isGround = true;
+    
 
     [SerializeField] LayerMask ground;
     [SerializeField] Transform zoneGround;
@@ -67,7 +68,8 @@ public class Hero : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             // (this.isLeft) ? Quaternion.Euler(0, 0, 90) :
-            Instantiate(plasmaPrefab, transform.position,  Quaternion.identity );
+
+            Instantiate(plasmaPrefab, transform.position, Quaternion.Euler(0, 0, this.isLeft ? 0 : 180));
         }
     }
     void Update()

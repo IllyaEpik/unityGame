@@ -15,6 +15,8 @@ public class plasma : MonoBehaviour
     // [SerializeField] 
     void Start()
     {
+
+        
         spriteRenderer = GetComponent<SpriteRenderer>();
         // detectionZone = GetComponent<BoxCollider2D>();
         // heroObject = GameObject.FindGameObjectWithTag("Hero").GetComponent<Hero>();
@@ -27,7 +29,7 @@ public class plasma : MonoBehaviour
     }
     void FixedUpdate()
     {
-        transform.Translate(Vector3.right * moveSpeed * direction * Time.deltaTime, Space.World);
+        transform.Translate( transform.rotation.z!=0 ? Vector3.left  * moveSpeed * direction * Time.deltaTime : Vector3.right * moveSpeed * direction * Time.deltaTime, Space.World);
         var someone = Physics2D.OverlapCircle(detectionZone.position, 2, layers).gameObject;
         if (someone!=null)
         {
