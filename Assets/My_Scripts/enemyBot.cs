@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class enemyBot : MonoBehaviour
@@ -8,6 +9,8 @@ public class enemyBot : MonoBehaviour
     private bool attacking = false;
 
     private int count = 200;
+    private float cooldown = 2;
+    private float cooldownCurrent = 0;
     private Animator animator;
     [SerializeField] Transform FirePoint;
     [SerializeField] Transform detectionZone;
@@ -28,9 +31,11 @@ public class enemyBot : MonoBehaviour
     private void FixedUpdate()
     {
         // Flip();
-        count--;
+        // count--;
+        cooldownCurrent -= Time.fixedDeltaTime;
+        Flip();
         // Collider2D[] left = Physics2D.OverlapBoxAll(detectionZone.position, size, 0f, hero);
-        Debug.Log(count);
+        // Debug.Log(count);
     }
     public void getDamageForBot()
     {
@@ -39,7 +44,7 @@ public class enemyBot : MonoBehaviour
 
     private void Flip()
     {
-        Collider2D[] right = Physics2D.OverlapBoxAll(detectionZone.position, size, 0f, hero);
+        Collider2D[] right = Physics2D.OverlapBoxAll(detectionZoneRight.position, size, 0f, hero);
         Collider2D[] left = Physics2D.OverlapBoxAll(detectionZone.position, size, 0f, hero);
         // Debug.Log(left);
         if (right.Length != 0 || left.Length != 0)
@@ -49,6 +54,7 @@ public class enemyBot : MonoBehaviour
                 if (col.CompareTag("hero"))
                 {
                     animator.SetBool("isAttack", true);
+                    attackHero(180);
 
 
                 }
@@ -57,36 +63,36 @@ public class enemyBot : MonoBehaviour
             {
                 if (col.CompareTag("hero"))
                 {
-                    transform.localScale *= new Vector2(-1, 1);
+                    // transform.localScale *= new Vector2(-1, 1);
                     animator.SetBool("isAttack", true);
+                    attackHero(0);
                 }
             }
-            if (count <= 0)
-            {
-                attackHero();
-                count = 200;
-            }
+            
+            
+                
         }
         else
         {
             animator.SetBool("isAttack", false);
         }
-                
-            
-        
     }
-    private void OnTriggerStay2D(Collider2D collision)
+    private void attackHero(int left)
     {
-        if (collision.CompareTag("hero") && count <= 0)
+        if (cooldownCurrent <= 0)
         {
-            count = 200;
-            attackHero();
+            Instantiate(plasmaPrefab, FirePoint.position, Quaternion.Euler(0, 0, left));
+            cooldownCurrent = cooldown;
         }
     }
+    // private void OnTriggerStay2D(Collider2D collision)
+    // {
+    //     if (collision.CompareTag("hero") && count <= 0)
+    //     {
+    //         count = 200;
+    //         attackHero();
+    //     }
+    // }
 
-    private void attackHero()
-    {
-        Instantiate(plasmaPrefab, FirePoint.position, Quaternion.Euler(0, 180, 0));
-        heroObject.getDamage();
-    }
+    
 }   
