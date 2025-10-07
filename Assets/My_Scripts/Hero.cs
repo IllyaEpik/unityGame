@@ -10,15 +10,16 @@ public class Hero : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
     private Vector2 moveVector;
-    public float health = 6f;
-    public int battery = 1;
+    public float health = 6f; // hero
+    public int battery = 1; // hero
+    [SerializeField] private ManagerUi managerUi;
     [SerializeField] private GameObject plasmaPrefab;
-    [SerializeField] private UnityEngine.UI.Image[] hearts;
-    [SerializeField] private Sprite[] spritesOfHeart;
-    [SerializeField] private UnityEngine.UI.Image shieldIcon;
+    [SerializeField] private UnityEngine.UI.Image[] hearts; // managerUi
+    [SerializeField] private Sprite[] spritesOfHeart; // managerUi
+    [SerializeField] private UnityEngine.UI.Image shieldIcon; // managerUi or hero
 
-    public UnityEngine.UI.Image batteryUi;
-    public Sprite[] BattaryElems;
+    public UnityEngine.UI.Image batteryUi; // managerUi
+    public Sprite[] BattaryElems; // managerUi
     [SerializeField] private FixedJoystick joystick2;
     [SerializeField] private float speed;
     [SerializeField] private float jumpForce = 1000;
