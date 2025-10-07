@@ -18,7 +18,6 @@ public class Key : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("132132");
         if (collision.CompareTag("hero"))
         {
             managerUi.TakeKey();

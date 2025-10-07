@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: bc0e33f5bde0f7645879547f98001397
+=======
+guid: d87beb42ab732b04ba6018cbd3679793
+>>>>>>> origin/Jetpack
 TextureImporter:
   internalIDToNameTable:
   - first:
