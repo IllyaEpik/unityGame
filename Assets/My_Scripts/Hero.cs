@@ -24,7 +24,7 @@ public class Hero : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float jumpForce = 1000;
     private bool isJump;
-    private bool isLeft = false;
+    public bool isLeft = false;
     private bool isGround = true;
     private bool hasShield = false;
 
@@ -72,13 +72,18 @@ public class Hero : MonoBehaviour
             }
         }
     }
+    public void updateBattery()
+    {
+        // battery -= 1;
+        batteryUi.sprite = BattaryElems[battery];
+    }
     public void attack()
     {
         // if (Input.GetKeyDown(KeyCode.E))
         // {
-            // (this.isLeft) ? Quaternion.Euler(0, 0, 90) :
+        // (this.isLeft) ? Quaternion.Euler(0, 0, 90) :
 
-            Instantiate(plasmaPrefab, transform.position, Quaternion.Euler(0, 0, this.isLeft ? 0 : 180));
+        Instantiate(plasmaPrefab, transform.position, Quaternion.Euler(0, 0, this.isLeft ? 0 : 180));
         // }
     }
     void Update()

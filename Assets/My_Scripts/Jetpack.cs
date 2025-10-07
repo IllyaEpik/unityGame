@@ -5,12 +5,12 @@ public class Jetpack : MonoBehaviour
     [SerializeField] private Hero hero;
     public float jetpackForce = 10f;
     public float horizontalBoost = 5f;
-    public Sprite normalSprite;
-    public Sprite jetpackSprite;
+    // public Sprite normalSprite;
+    // public Sprite jetpackSprite;
 
     private Rigidbody2D rb;
     private SpriteRenderer sr;
-
+    private Animator animator;
     private bool isUsingJetpack = false;
     private float batteryTimer = 0f;
 
@@ -18,21 +18,25 @@ public class Jetpack : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
-        sr.sprite = normalSprite;
+        animator = GetComponent<Animator>();
+        // sr.sprite = normalSprite;
         sr.flipX = false;
     }
 
     void Update()
     {
+        Debug.Log(hero.battery);
         if (hero.battery > 0 && Input.GetKey(KeyCode.Space))
         {
             isUsingJetpack = true;
-            sr.sprite = jetpackSprite;
+            animator.SetBool("isFlying", true);
+            // sr.sprite = jetpackSprite;
         }
         else
         {
             isUsingJetpack = false;
-            sr.sprite = normalSprite;
+            animator.SetBool("isFlying", false);
+            // sr.sprite = normalSprite;
         }
 
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -50,11 +54,13 @@ public class Jetpack : MonoBehaviour
         if (isUsingJetpack)
         {
             rb.AddForce(Vector2.up * jetpackForce);
+            rb.AddForce(hero.isLeft ? Vector2.left * jetpackForce*10 : Vector2.right * jetpackForce*10);
             batteryTimer += Time.fixedDeltaTime;
             if (batteryTimer >= 1f)
             {
                 hero.battery -= 1;
                 batteryTimer = 0f;
+                hero.updateBattery();
                 if (hero.battery < 0) hero.battery = 0;
             }
         }

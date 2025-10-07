@@ -1355,7 +1355,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 234, y: -126}
+  m_AnchoredPosition: {x: 369, y: -206}
   m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &885448407
@@ -1427,7 +1427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.754717, g: 0.33107865, b: 0.33107865, a: 1}
+  m_Color: {r: 1, g: 0.495283, b: 0.495283, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1650,7 +1650,7 @@ SpriteRenderer:
   m_Size: {x: 5.21, y: 8.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &918204338
@@ -2472,7 +2472,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 348, y: -125}
+  m_AnchoredPosition: {x: 479, y: -206}
   m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1345431318
@@ -2544,7 +2544,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.31181023, g: 0.8584906, b: 0.45304608, a: 1}
+  m_Color: {r: 0.46751517, g: 0.9622642, b: 0.59565157, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2877,7 +2877,7 @@ Transform:
   m_GameObject: {fileID: 1473034006}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.1, y: 19, z: 0}
+  m_LocalPosition: {x: 3.1, y: 18.8, z: 0}
   m_LocalScale: {x: 20, y: 20, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -22695,6 +22695,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 6
   battery: 4
+  managerUi: {fileID: 0}
   plasmaPrefab: {fileID: 8937023810055130003, guid: e239a10ee2168ef4c9aa9cff55cc4200, type: 3}
   hearts:
   - {fileID: 537059465}
@@ -22709,15 +22710,16 @@ MonoBehaviour:
   shieldIcon: {fileID: 2022733308}
   batteryUi: {fileID: 284109794}
   BattaryElems:
-  - {fileID: 5088316998373936774, guid: d9aac557023fb3842a019b864ce78b28, type: 3}
-  - {fileID: -855298285791758126, guid: b1b3b3f64a9df4443a7a2cf4022df909, type: 3}
-  - {fileID: 6937817954938267909, guid: 3fbb5757b1eaac44d95c997810235e3d, type: 3}
-  - {fileID: -6470460504253458178, guid: 9218406caf0c1d146a9d61e55f62ba15, type: 3}
-  - {fileID: -4178046375966092550, guid: 3cab7b8160b5be6458b52f8c23caf365, type: 3}
-  - {fileID: 4130640169021434097, guid: 61b1bde500238cc48b0878025741fbe1, type: 3}
+  - {fileID: 5088316998373936774, guid: 2def0e92661c1e54a8566d452b6cc5d2, type: 3}
+  - {fileID: -855298285791758126, guid: ae4c8ff49ce6b3b4088cb3176c7c8371, type: 3}
+  - {fileID: 6937817954938267909, guid: 862f5e81c30d0214f961f54e31482784, type: 3}
+  - {fileID: -6470460504253458178, guid: b8f0a523ad71b424ca6db9c578347b15, type: 3}
+  - {fileID: -4178046375966092550, guid: 4cdd5e16029ee5541842b41cc92d63a6, type: 3}
+  - {fileID: 4130640169021434097, guid: ffc95fb86e8589c42b2823c8a030c12a, type: 3}
   joystick2: {fileID: 1142960889}
   speed: 10
   jumpForce: 1000
+  isLeft: 0
   ground:
     serializedVersion: 2
     m_Bits: 8
@@ -22801,8 +22803,6 @@ MonoBehaviour:
   hero: {fileID: 1946944988}
   jetpackForce: 10
   horizontalBoost: 5
-  normalSprite: {fileID: 5088316998373936774, guid: ad997ab370d25014e8cca6c6b316d196, type: 3}
-  jetpackSprite: {fileID: 5391586172378194148, guid: 1a90c58d19fdc2b46bc17ed38ebe8f64, type: 3}
 --- !u!1 &2022733306
 GameObject:
   m_ObjectHideFlags: 0
