@@ -21,7 +21,7 @@ public class Hero : MonoBehaviour
     public Sprite[] BattaryElems;
     [SerializeField] private FixedJoystick joystick2;
     [SerializeField] private float speed;
-    [SerializeField] float jumpForce = 1000;
+    [SerializeField] private float jumpForce = 1000;
     private bool isJump;
     private bool isLeft = false;
     private bool isGround = true;
@@ -71,20 +71,20 @@ public class Hero : MonoBehaviour
             }
         }
     }
-    private void attack()
+    public void attack()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
+        // if (Input.GetKeyDown(KeyCode.E))
+        // {
             // (this.isLeft) ? Quaternion.Euler(0, 0, 90) :
 
             Instantiate(plasmaPrefab, transform.position, Quaternion.Euler(0, 0, this.isLeft ? 0 : 180));
-        }
+        // }
     }
     void Update()
     {
-        Jump();
+        // Jump();
         CheckGround();
-        attack();
+        // attack();
     }
     void FixedUpdate()
     {
@@ -116,17 +116,17 @@ public class Hero : MonoBehaviour
         }
     }
 
-    private void Jump()
+    public void Jump()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGround)
-        {
+        // if (Input.GetKeyDown(KeyCode.Space) && isGround)
+        // {
 
             Debug.Log(battery);
             isJump = true;
             animator.SetBool("isJump", isJump);
             rb.AddForce(Vector2.up * jumpForce);
-        }
+        // }
     }
     private void CheckGround()
     {
