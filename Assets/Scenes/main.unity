@@ -209,7 +209,7 @@ GameObject:
   - component: {fileID: 284109793}
   - component: {fileID: 284109794}
   m_Layer: 5
-  m_Name: battary
+  m_Name: battery
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -262,7 +262,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -4178046375966092550, guid: 3cab7b8160b5be6458b52f8c23caf365, type: 3}
+  m_Sprite: {fileID: -4178046375966092550, guid: 4cdd5e16029ee5541842b41cc92d63a6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1404,7 +1404,7 @@ SpriteRenderer:
   m_Size: {x: 5.21, y: 8.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &918204338
@@ -1690,7 +1690,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1567065691439884614, guid: 15dfbc17840e33d41aa03ccbad6e3d03, type: 3}
+  m_Sprite: {fileID: -1567065691439884614, guid: ddfa967c914cfc04498ea7b43ceb9ecb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1698,7 +1698,7 @@ SpriteRenderer:
   m_Size: {x: 2.37, y: 4.03}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1043847010
@@ -22065,6 +22065,7 @@ GameObject:
   - component: {fileID: 1946944988}
   - component: {fileID: 1946944989}
   - component: {fileID: 1946944990}
+  - component: {fileID: 1946944991}
   m_Layer: 6
   m_Name: hero
   m_TagString: hero
@@ -22270,6 +22271,23 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 5.72, y: 8.34}
   m_Direction: 0
+--- !u!114 &1946944991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946944984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efacf09e5e8334f19a88868f3c59c8a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hero: {fileID: 1946944988}
+  jetpackForce: 10
+  horizontalBoost: 5
+  normalSprite: {fileID: 5088316998373936774, guid: ad997ab370d25014e8cca6c6b316d196, type: 3}
+  jetpackSprite: {fileID: 5391586172378194148, guid: 1a90c58d19fdc2b46bc17ed38ebe8f64, type: 3}
 --- !u!1 &2022733306
 GameObject:
   m_ObjectHideFlags: 0
