@@ -55,8 +55,6 @@ public class enemyBot : MonoBehaviour
                 {
                     animator.SetBool("isAttack", true);
                     attackHero(180);
-
-
                 }
             }
             foreach (Collider2D col in left)
