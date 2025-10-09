@@ -6,20 +6,14 @@ using UnityEngine.UI;
 
 public class Hero : MonoBehaviour
 {
-
     private Rigidbody2D rb;
     private Animator animator;
     private Vector2 moveVector;
-    public float health = 6f; // hero
+    public static float health = 6f; // hero
     public int battery = 1; // hero
     [SerializeField] private ManagerUi managerUi;
     [SerializeField] private GameObject plasmaPrefab;
-    [SerializeField] private UnityEngine.UI.Image[] hearts; // managerUi
-    [SerializeField] private Sprite[] spritesOfHeart; // managerUi
     [SerializeField] private UnityEngine.UI.Image shieldIcon; // managerUi or hero
-
-    public UnityEngine.UI.Image batteryUi; // managerUi
-    public Sprite[] BattaryElems; // managerUi
     [SerializeField] private FixedJoystick joystick2;
     [SerializeField] private float speed;
     [SerializeField] private float jumpForce = 1000;
@@ -35,7 +29,7 @@ public class Hero : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         shieldIcon.enabled = false;
-        updateHp();
+        managerUi.updateHp();
     }
     public void getDamage()
     {
@@ -46,37 +40,9 @@ public class Hero : MonoBehaviour
             return;
         }
         health -= 1;
-        updateHp();
+        managerUi.updateHp();
     }
-    public void updateHp()
-    {
-        float hp = health - 0;
-        foreach (UnityEngine.UI.Image heart in hearts)
-        {
 
-            Debug.Log($"hp: {hp}");
-            if (hp >= 2)
-            {
-                heart.sprite = spritesOfHeart[4];
-                hp -= 2;
-            }
-            else if (hp >= 1)
-            {
-                heart.sprite = spritesOfHeart[2];
-                hp -= 1;
-            }
-            else
-            {
-
-                heart.sprite = spritesOfHeart[0];
-            }
-        }
-    }
-    public void updateBattery()
-    {
-        // battery -= 1;
-        batteryUi.sprite = BattaryElems[battery];
-    }
     public void attack()
     {
         // if (Input.GetKeyDown(KeyCode.E))

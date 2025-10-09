@@ -2,10 +2,14 @@ using UnityEngine;
 using UnityEngine.UI;
 public class ManagerUi : MonoBehaviour
 {
-
     private int battery = 0;
     private bool isKey = false;
-    [SerializeField] private Image[] hearts;
+    [SerializeField] private Image[] heart;
+
+    public Sprite[] BattaryElems; // managerUi
+    public UnityEngine.UI.Image batteryUi; // managerUi
+    [SerializeField] private Sprite[] spritesOfHeart; // managerUi
+    [SerializeField] private UnityEngine.UI.Image[] hearts;
     [SerializeField] private Image shieldIcon;
     private int currentHealth;
     private bool hasShield = false;
@@ -76,4 +80,34 @@ public class ManagerUi : MonoBehaviour
             hearts[i].enabled = (i < currentHealth);
         }
     }
+    public void updateHp()
+    {
+        float hp = Hero.health - 0;
+        foreach (UnityEngine.UI.Image heart in hearts)
+        {
+
+            Debug.Log($"hp: {hp}");
+            if (hp >= 2)
+            {
+                heart.sprite = spritesOfHeart[4];
+                hp -= 2;
+            }
+            else if (hp >= 1)
+            {
+                heart.sprite = spritesOfHeart[2];
+                hp -= 1;
+            }
+            else
+            {
+
+                heart.sprite = spritesOfHeart[0];
+            }
+        }
+    }
+    public void updateBattery()
+    {
+        // battery -= 1;
+        batteryUi.sprite = BattaryElems[battery];
+    }
+
 }
