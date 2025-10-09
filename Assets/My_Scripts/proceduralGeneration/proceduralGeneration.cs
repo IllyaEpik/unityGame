@@ -5,6 +5,7 @@ using System.Data;
 using System;
 using UnityEngine.Tilemaps;
 using UnityEditor.U2D.Aseprite;
+using NUnit.Framework.Constraints;
 
 public class ProceduralGeneration : MonoBehaviour
 {
@@ -80,11 +81,18 @@ public class ProceduralGeneration : MonoBehaviour
                 }
             }
         }
+        for (int count2 = 0; count2 < random.Next(5, 8); count2++)
+        {
         Generatecaves();
-        Generatecaves();
-        Generatecaves();
-        Generatecaves();
-        Generatecaves();
+            
+        }
+        // Generatecaves();
+        // Generatecaves();
+        // Generatecaves();
+        // Generatecaves();
+        // Generatecaves();
+        // Generatecaves();
+        // Generatecaves();
         for (int row = 0; row < width; row++)
         {
             for (int cell = 0; cell < height; cell++)
