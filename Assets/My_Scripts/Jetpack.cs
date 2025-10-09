@@ -14,6 +14,8 @@ public class Jetpack : MonoBehaviour
     private bool isUsingJetpack = false;
     private float batteryTimer = 0f;
 
+    private ManagerUi manager;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -60,7 +62,7 @@ public class Jetpack : MonoBehaviour
             {
                 hero.battery -= 1;
                 batteryTimer = 0f;
-                hero.updateBattery();
+                manager.updateBattery();
                 if (hero.battery < 0) hero.battery = 0;
             }
         }

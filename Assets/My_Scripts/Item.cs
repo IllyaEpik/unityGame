@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    // ManagerUi managerUi;
+    ManagerUi managerUi;
     [SerializeField] private Hero hero;
     [SerializeField] private string type = "heart";
     void Start()
@@ -29,7 +29,7 @@ public class Item : MonoBehaviour
                 {
                     hero.battery += 1;
                 }
-                hero.batteryUi.sprite = hero.BattaryElems[hero.battery];
+                managerUi.batteryUi.sprite = managerUi.BattaryElems[hero.battery];
                 Invoke("DeleteObject", 0.3f);
             }
             else if (type == "heart")
@@ -38,7 +38,7 @@ public class Item : MonoBehaviour
                 {
                     hero.health += 1;
                 }
-                hero.updateHp();
+                managerUi.updateHp();
                 Invoke("DeleteObject", 0.3f);
             }
 

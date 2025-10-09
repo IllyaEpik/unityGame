@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Battery : MonoBehaviour
 {
-    // ManagerUi managerUi;
+    private ManagerUi managerUi;
     [SerializeField] private Hero hero;
     private SpriteRenderer sr;
     private float alpha = 0f;
@@ -42,7 +42,7 @@ public class Battery : MonoBehaviour
             hero.battery += 1;
             }
 
-            hero.batteryUi.sprite = hero.BattaryElems[hero.battery];
+            managerUi.batteryUi.sprite = managerUi.BattaryElems[hero.battery];
             Invoke("DeleteBattery", 0.3f);
         }
     }
