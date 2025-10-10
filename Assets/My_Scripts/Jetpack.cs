@@ -27,7 +27,7 @@ public class Jetpack : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(hero.battery);
+        // Debug.Log(hero.battery);
         if (hero.battery > 0 && Input.GetKey(KeyCode.Space))
         {
             isUsingJetpack = true;

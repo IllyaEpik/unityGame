@@ -1,12 +1,13 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.iOS;
 
 public class enemyBot : MonoBehaviour
 {
     private bool isLeft = false;
     Vector2 size = new Vector2(25, 3);
 
-    private float cooldown = 2;
+    private float cooldown = 2f;
     private float cooldownCurrent = 0;
     private Animator animator;
 
@@ -33,27 +34,29 @@ public class enemyBot : MonoBehaviour
     {
         cooldownCurrent -= Time.fixedDeltaTime;
         Flip();
-        CheckPlayerDistance();
+        // CheckPlayerDistance();
     }
     public void OnPlayerShoot()
     {
         if (isGrounded)
         {
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            // , ForceMode2D.Impulse
+            
+            rb.AddForce(Vector2.up * jumpForce);
             isGrounded = false;
         }
     }
-    private void CheckPlayerDistance()
-    {
-        if (heroObject == null) return;
+    // private void CheckPlayerDistance()
+    // {
+    //     if (heroObject == null) return;
 
-        float distance = Vector2.Distance(transform.position, heroObject.transform.position);
-        if (distance < safeDistance)
-        {
-            Vector2 dir = (transform.position - heroObject.transform.position).normalized;
-            transform.position += (Vector3)(dir * moveSpeed * Time.fixedDeltaTime);
-        }
-    }
+    //     float distance = Vector2.Distance(transform.position, heroObject.transform.position);
+    //     if (distance < safeDistance)
+    //     {
+    //         Vector2 dir = (transform.position - heroObject.transform.position).normalized;
+    //         transform.position += (Vector3)(dir * moveSpeed * Time.fixedDeltaTime);
+    //     }
+    // }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -75,24 +78,32 @@ public class enemyBot : MonoBehaviour
         {
             foreach (Collider2D col in right)
             {
+                if (col.CompareTag("heroAttack"))
+                {
+                    OnPlayerShoot();
+                }
                 if (col.CompareTag("hero"))
                 {
-                    animator.SetBool("isAttack", true);
+                    // animator.SetBool("isAttack", true);
                     attackHero(180);
                 }
             }
             foreach (Collider2D col in left)
             {
+                if (col.CompareTag("heroAttack"))
+                {
+                    OnPlayerShoot();
+                }
                 if (col.CompareTag("hero"))
                 {
-                    animator.SetBool("isAttack", true);
+                    // animator.SetBool("isAttack", true);
                     attackHero(0);
                 }
             }
         }
         else
         {
-            animator.SetBool("isAttack", false);
+            // animator.SetBool("isAttack", false);
         }
     }
 

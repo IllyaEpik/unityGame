@@ -4,7 +4,7 @@ public class ManagerUi : MonoBehaviour
 {
     private int battery = 0;
     private bool isKey = false;
-    [SerializeField] private Image[] heart;
+    // [SerializeField] private Image[] heart;
 
     public Sprite[] BattaryElems; // managerUi
     public UnityEngine.UI.Image batteryUi; // managerUi
@@ -12,12 +12,14 @@ public class ManagerUi : MonoBehaviour
     [SerializeField] private UnityEngine.UI.Image[] hearts;
     [SerializeField] private Image shieldIcon;
     private int currentHealth;
+    private Hero hero;
     private bool hasShield = false;
 
     void Start()
     {
         currentHealth = hearts.Length;
         UpdateUI();
+        hero = GameObject.FindGameObjectWithTag("hero").GetComponent<Hero>();
     }
 
     void Update()
@@ -82,7 +84,7 @@ public class ManagerUi : MonoBehaviour
     }
     public void updateHp()
     {
-        float hp = Hero.health - 0;
+        float hp = hero.health - 0;
         foreach (UnityEngine.UI.Image heart in hearts)
         {
 
@@ -99,7 +101,6 @@ public class ManagerUi : MonoBehaviour
             }
             else
             {
-
                 heart.sprite = spritesOfHeart[0];
             }
         }

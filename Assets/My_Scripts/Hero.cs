@@ -9,7 +9,7 @@ public class Hero : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
     private Vector2 moveVector;
-    public static float health = 6f; // hero
+    public float health = 6f; // hero
     public int battery = 1; // hero
     [SerializeField] private ManagerUi managerUi;
     [SerializeField] private GameObject plasmaPrefab;

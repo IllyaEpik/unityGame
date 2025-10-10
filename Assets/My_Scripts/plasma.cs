@@ -7,6 +7,7 @@ public class plasma : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private SpriteRenderer spriteRenderer;
     private int moveSpeed = 9;
+    // private GameObject currentGameObject = ;
     // left = -1; right = 1
     private int direction = -1;
     [SerializeField] private Transform detectionZone;
@@ -29,28 +30,52 @@ public class plasma : MonoBehaviour
     }
     void FixedUpdate()
     {
-        transform.Translate( transform.rotation.z!=0 ? Vector3.left  * moveSpeed * direction * Time.deltaTime : Vector3.right * moveSpeed * direction * Time.deltaTime, Space.World);
+        transform.Translate(transform.rotation.z != 0 ? Vector3.left * moveSpeed * direction * Time.deltaTime : Vector3.right * moveSpeed * direction * Time.deltaTime, Space.World);
         var someone = Physics2D.OverlapCircle(detectionZone.position, 2, layers).gameObject;
-        if (someone!=null)
+        if (someone != null)
         {
+            // var checkBot = someone.GetComponentInChildren<BoxCollider2D>();
+            // 
             var targetBot = someone.GetComponent<enemyBot>();
-            if (targetBot!=null)
+            if (someone.CompareTag("enemy") && targetBot != null)
             {
                 targetBot.getDamageForBot();
+                RemoveAttack();
+                return;
             }
+
             var target = someone.GetComponent<EnemyPlant>();
-            if (target!=null)
+            if (target != null)
             {
                 target.getDamageForPlant();
+                RemoveAttack();
+                // return;
             }
-            
+
             var targetHero = someone.GetComponent<Hero>();
-            if (targetHero!=null)
+            if (targetHero != null)
             {
-                targetHero.getDamage();
+                targetHero.getDamage(); 
+                // RemoveAttack();
+                // return;
+                RemoveAttack();
+                
             }
-            Destroy(gameObject);
+            var enemyAttack = someone.GetComponent<plasma>();
+            if (enemyAttack != null)
+            {
+                enemyAttack.RemoveAttack();
+                RemoveAttack();
+                return;
+            }
+            return;
         }
-        
+
+    }
+    void RemoveAttack()
+    {
+        Debug.Log(32232323);
+        Destroy(gameObject);
+        return;
     }
 }
