@@ -1,10 +1,11 @@
+using TMPro;
 using UnityEngine;
 
 public class Jetpack : MonoBehaviour
 {
     [SerializeField] private Hero hero;
     public float jetpackForce = 10f;
-    public float horizontalBoost = 5f;
+    public float horizontalBoost = 1f;
     // public Sprite normalSprite;
     // public Sprite jetpackSprite;
 
@@ -13,8 +14,9 @@ public class Jetpack : MonoBehaviour
     private Animator animator;
     private bool isUsingJetpack = false;
     private float batteryTimer = 0f;
-
     private ManagerUi manager;
+    private bool jetpackMode = false;
+    public TMP_Text buttonText;
 
     void Start()
     {
@@ -39,6 +41,7 @@ public class Jetpack : MonoBehaviour
             isUsingJetpack = false;
             animator.SetBool("isFlying", false);
             // sr.sprite = normalSprite;
+
         }
 
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -49,6 +52,15 @@ public class Jetpack : MonoBehaviour
             sr.flipX = true;
         else
             sr.flipX = false;
+
+        if (hero.isGround)
+        {
+            jetpackMode = false;
+            if (buttonText != null)
+            {
+                buttonText.text = "Jump";
+            }
+        }
     }
 
     void FixedUpdate()
@@ -56,7 +68,7 @@ public class Jetpack : MonoBehaviour
         if (isUsingJetpack)
         {
             rb.AddForce(Vector2.up * jetpackForce);
-            rb.AddForce(hero.isLeft ? Vector2.left * jetpackForce*10 : Vector2.right * jetpackForce*10);
+            rb.AddForce(hero.isLeft ? Vector2.left * jetpackForce * 10 : Vector2.right * jetpackForce * 10);
             batteryTimer += Time.fixedDeltaTime;
             if (batteryTimer >= 1f)
             {
@@ -67,4 +79,30 @@ public class Jetpack : MonoBehaviour
             }
         }
     }
+
+public void UseJetpackFromUI()
+{
+    if (hero.battery > 0)
+    {
+        isUsingJetpack = true;
+        animator.SetBool("isFlying", true);
+
+        rb.AddForce(Vector2.up * jetpackForce);
+        rb.AddForce(hero.isLeft ? Vector2.left * jetpackForce * 10 : Vector2.right * jetpackForce * 10);
+
+        batteryTimer += Time.fixedDeltaTime;
+        if (batteryTimer >= 1f)
+        {
+            hero.battery -= 1;
+            batteryTimer = 0f;
+            manager.updateBattery();
+            if (hero.battery < 0) hero.battery = 0;
+        }
+    }
+    else
+    {
+        isUsingJetpack = false;
+        animator.SetBool("isFlying", false);
+    }
+}
 }
