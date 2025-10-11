@@ -39,10 +39,11 @@ public class Battery : MonoBehaviour
             // managerUi.AddBattery();
             if (hero.battery < 5)
             {
-            hero.battery += 1;
+                hero.battery += 1;
             }
 
-            managerUi.batteryUi.sprite = managerUi.BattaryElems[hero.battery];
+            // managerUi.batteryUi.sprite = managerUi.BattaryElems[hero.battery];
+            managerUi.updateBattery();
             Invoke("DeleteBattery", 0.3f);
         }
     }

@@ -10,7 +10,7 @@ public class Hero : MonoBehaviour
     private Animator animator;
     private Vector2 moveVector;
     public float health = 6f; // hero
-    public int battery = 1; // hero
+    public int battery = 0; // hero
     [SerializeField] private ManagerUi managerUi;
     [SerializeField] private GameObject plasmaPrefab;
     [SerializeField] private UnityEngine.UI.Image shieldIcon; // managerUi or hero
@@ -19,7 +19,7 @@ public class Hero : MonoBehaviour
     [SerializeField] private float jumpForce = 1000;
     private bool isJump;
     public bool isLeft = false;
-    private bool isGround = true;
+    public bool isGround = true;
     private bool hasShield = false;
 
     [SerializeField] LayerMask ground;
@@ -61,6 +61,7 @@ public class Hero : MonoBehaviour
     void FixedUpdate()
     {
         Walk();
+        managerUi.updateBattery();
         Flip();
     }
 
@@ -90,15 +91,14 @@ public class Hero : MonoBehaviour
 
     public void Jump()
     {
-
-        // if (Input.GetKeyDown(KeyCode.Space) && isGround)
-        // {
-
+        if (isGround)
+        {
+            isGround = false;
             Debug.Log(battery);
             isJump = true;
             animator.SetBool("isJump", isJump);
             rb.AddForce(Vector2.up * jumpForce);
-        // }
+        }
     }
     private void CheckGround()
     {

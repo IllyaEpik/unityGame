@@ -2,11 +2,12 @@ using UnityEngine;
 using UnityEngine.UI;
 public class ManagerUi : MonoBehaviour
 {
-    private int battery = 0;
+    // private int battery = 0;
     private bool isKey = false;
     // [SerializeField] private Image[] heart;
 
-    public Sprite[] BattaryElems; // managerUi
+    // public Sprite[] BattaryElems; // managerUi
+    private Animator batteryUiAnimator;
     public UnityEngine.UI.Image batteryUi; // managerUi
     [SerializeField] private Sprite[] spritesOfHeart; // managerUi
     [SerializeField] private UnityEngine.UI.Image[] hearts;
@@ -15,11 +16,14 @@ public class ManagerUi : MonoBehaviour
     private Hero hero;
     private bool hasShield = false;
 
+
     void Start()
     {
         currentHealth = hearts.Length;
         UpdateUI();
         hero = GameObject.FindGameObjectWithTag("hero").GetComponent<Hero>();
+        batteryUiAnimator = batteryUi.GetComponent<Animator>();
+        batteryUiAnimator.speed = 0;
     }
 
     void Update()
@@ -27,10 +31,10 @@ public class ManagerUi : MonoBehaviour
 
     }
 
-    public void AddBattery()
-    {
-        battery++;
-    }
+    // public void AddBattery()
+    // {
+    //     battery++;
+    // }
 
     public void TakeKey()
     {
@@ -108,7 +112,11 @@ public class ManagerUi : MonoBehaviour
     public void updateBattery()
     {
         // battery -= 1;
-        batteryUi.sprite = BattaryElems[battery];
+        batteryUiAnimator.speed = 1;
+        batteryUiAnimator.Play("battery", 0, Mathf.Clamp01(hero.battery / 6f));
+        batteryUiAnimator.Update(0f); 
+        batteryUiAnimator.speed = 0;
+        // batteryUi.sprite = BattaryElems[battery];
     }
 
 }

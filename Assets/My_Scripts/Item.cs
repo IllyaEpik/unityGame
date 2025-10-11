@@ -29,7 +29,7 @@ public class Item : MonoBehaviour
                 {
                     hero.battery += 1;
                 }
-                managerUi.batteryUi.sprite = managerUi.BattaryElems[hero.battery];
+                // managerUi.batteryUi.sprite = managerUi.BattaryElems[hero.battery];
                 Invoke("DeleteObject", 0.3f);
             }
             else if (type == "heart")
