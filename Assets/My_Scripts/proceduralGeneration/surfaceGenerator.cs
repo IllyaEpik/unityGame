@@ -85,9 +85,10 @@ public class surfaceGenerator : MonoBehaviour
         // float offset = Random.Range(0f, 9999f);
         for (int e = 0; e < count; e++ )
         {
-            int x = Mathf.FloorToInt(Random.Range(0f, levelWidth));
-            int y = surface[x];
-            Instantiate(prefab, new Vector2((x-levelWidth/2)*2, 0), Quaternion.identity);
+            // Mathf.FloorToInt()
+            float x = Random.Range(0f, levelWidth*4);
+            // int y = surface[x];
+            Instantiate(prefab, new Vector2(x-levelWidth*2, 0), Quaternion.identity);
         }
     }
     
