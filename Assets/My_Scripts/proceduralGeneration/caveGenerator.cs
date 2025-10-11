@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 using UnityEditor.U2D.Aseprite;
 using NUnit.Framework.Constraints;
 
-public class ProceduralGeneration : MonoBehaviour
+public class caveGenerator : MonoBehaviour
 {
     private int width = 100;
     private int height = 100;

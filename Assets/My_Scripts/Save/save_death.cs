@@ -16,7 +16,6 @@ public class save_death : MonoBehaviour
         
     }
     
-    
     public void OnMyButtonClicked_death() 
     {
         

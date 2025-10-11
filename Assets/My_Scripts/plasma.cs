@@ -1,7 +1,7 @@
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-
+#nullable enable
 public class plasma : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -31,12 +31,13 @@ public class plasma : MonoBehaviour
     void FixedUpdate()
     {
         transform.Translate(transform.rotation.z != 0 ? Vector3.left * moveSpeed * direction * Time.deltaTime : Vector3.right * moveSpeed * direction * Time.deltaTime, Space.World);
-        var someone = Physics2D.OverlapCircle(detectionZone.position, 2, layers).gameObject;
-        if (someone != null)
+        Collider2D? collider2D = Physics2D.OverlapCircle(detectionZone.position, 2, layers);
+        if (collider2D != null)
         {
+            GameObject someone = collider2D.gameObject;
             // var checkBot = someone.GetComponentInChildren<BoxCollider2D>();
             // 
-            var targetBot = someone.GetComponent<enemyBot>();
+            enemyBot? targetBot = someone.GetComponent<enemyBot>();
             if (someone.CompareTag("enemy") && targetBot != null)
             {
                 targetBot.getDamageForBot();
@@ -44,7 +45,7 @@ public class plasma : MonoBehaviour
                 return;
             }
 
-            var target = someone.GetComponent<EnemyPlant>();
+            EnemyPlant? target = someone.GetComponent<EnemyPlant>();
             if (target != null)
             {
                 target.getDamageForPlant();
@@ -52,7 +53,7 @@ public class plasma : MonoBehaviour
                 // return;
             }
 
-            var targetHero = someone.GetComponent<Hero>();
+            Hero? targetHero = someone.GetComponent<Hero>();
             if (targetHero != null)
             {
                 targetHero.getDamage(); 
@@ -61,7 +62,7 @@ public class plasma : MonoBehaviour
                 RemoveAttack();
                 
             }
-            var enemyAttack = someone.GetComponent<plasma>();
+            plasma? enemyAttack = someone.GetComponent<plasma>();
             if (enemyAttack != null)
             {
                 enemyAttack.RemoveAttack();
