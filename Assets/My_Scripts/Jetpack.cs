@@ -11,8 +11,8 @@ public class Jetpack : MonoBehaviour
 
     private Rigidbody2D rb;
     private SpriteRenderer sr;
-    private Animator animator;
-    private bool isUsingJetpack = false;
+    public Animator animator;
+    public bool isUsingJetpack = false;
     private float batteryTimer = 0f;
     private ManagerUi manager;
     private bool jetpackMode = false;
@@ -30,37 +30,37 @@ public class Jetpack : MonoBehaviour
     void Update()
     {
         // Debug.Log(hero.battery);
-        if (hero.battery > 0 && Input.GetKey(KeyCode.Space))
-        {
-            isUsingJetpack = true;
-            animator.SetBool("isFlying", true);
-            // sr.sprite = jetpackSprite;
-        }
-        else
-        {
-            isUsingJetpack = false;
-            animator.SetBool("isFlying", false);
-            // sr.sprite = normalSprite;
+        // if (hero.battery > 0 && Input.GetKey(KeyCode.Space))
+        // {
+        //     isUsingJetpack = true;
+        //     animator.SetBool("isFlying", true);
+        //     // sr.sprite = jetpackSprite;
+        // }
+        // else
+        // {
+        //     isUsingJetpack = false;
+        //     animator.SetBool("isFlying", false);
+        //     // sr.sprite = normalSprite;
 
-        }
+        // }
 
-        float horizontalInput = Input.GetAxis("Horizontal");
-        if (isUsingJetpack && horizontalInput != 0)
-            rb.AddForce(Vector2.right * horizontalInput * horizontalBoost);
+        // float horizontalInput = Input.GetAxis("Horizontal");
+        // if (isUsingJetpack && horizontalInput != 0)
+        //     rb.AddForce(Vector2.right * horizontalInput * horizontalBoost);
 
-        if (horizontalInput < 0)
-            sr.flipX = true;
-        else
-            sr.flipX = false;
+        // if (horizontalInput < 0)
+        //     sr.flipX = true;
+        // else
+        //     sr.flipX = false;
 
-        if (hero.isGround)
-        {
-            jetpackMode = false;
-            if (buttonText != null)
-            {
-                buttonText.text = "Jump";
-            }
-        }
+        // if (hero.isGround)
+        // {
+        //     jetpackMode = false;
+        //     if (buttonText != null)
+        //     {
+        //         buttonText.text = "Jump";
+        //     }
+        // }
     }
 
     void FixedUpdate()
@@ -70,7 +70,9 @@ public class Jetpack : MonoBehaviour
             rb.AddForce(Vector2.up * jetpackForce);
             rb.AddForce(hero.isLeft ? Vector2.left * jetpackForce * 10 : Vector2.right * jetpackForce * 10);
             batteryTimer += Time.fixedDeltaTime;
-            if (batteryTimer >= 1f)
+            animator.SetBool("isFlying", true);
+            
+            if (batteryTimer >= 2f)
             {
                 hero.battery -= 1;
                 batteryTimer = 0f;
@@ -90,8 +92,8 @@ public void UseJetpackFromUI()
         rb.AddForce(Vector2.up * jetpackForce);
         rb.AddForce(hero.isLeft ? Vector2.left * jetpackForce * 10 : Vector2.right * jetpackForce * 10);
 
-        batteryTimer += Time.fixedDeltaTime;
-        if (batteryTimer >= 1f)
+        
+        if (batteryTimer >= 4f)
         {
             hero.battery -= 1;
             batteryTimer = 0f;

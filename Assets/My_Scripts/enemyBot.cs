@@ -4,12 +4,13 @@ using UnityEngine.iOS;
 
 public class enemyBot : MonoBehaviour
 {
-    private bool isLeft = false;
+    // private bool isLeft = false;
     Vector2 size = new Vector2(25, 3);
 
     private float cooldown = 2f;
     private float cooldownCurrent = 0;
     private Animator animator;
+    private int isLeft = 1;
 
     [SerializeField] Transform FirePoint;
     [SerializeField] Transform detectionZone;
@@ -60,7 +61,7 @@ public class enemyBot : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("ground"))
             isGrounded = true;
     }
 
@@ -85,7 +86,9 @@ public class enemyBot : MonoBehaviour
                 if (col.CompareTag("hero"))
                 {
                     // animator.SetBool("isAttack", true);
-                    attackHero(180);
+                    attackHero(isLeft*180);
+                    // isLeft = 
+                    // transform.localScale *= new Vector2(1, 1);
                 }
             }
             foreach (Collider2D col in left)
@@ -97,7 +100,18 @@ public class enemyBot : MonoBehaviour
                 if (col.CompareTag("hero"))
                 {
                     // animator.SetBool("isAttack", true);
-                    attackHero(0);
+                    transform.localScale *= new Vector2(-1, 1);
+                    if (isLeft == 0)
+                    {
+                        isLeft = 1;
+                    }
+                    else
+                    {
+                        isLeft = 0;
+                    }
+                    
+                    // attackHero(isLeft*180);
+                    Debug.Log(transform.localScale.x);
                 }
             }
         }

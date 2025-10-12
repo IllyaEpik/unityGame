@@ -2,14 +2,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using System;
 
 public class JetpackButtonController : MonoBehaviour
 {
     public Button jumpButton;
     public TMP_Text buttonText;
     public Jetpack jetpack;
-
-    private bool isHolding = false;
+    public Hero hero;
+    public bool isHolding = false;
     private bool jetpackMode = false;
 
     private void Start()
@@ -20,9 +21,17 @@ public class JetpackButtonController : MonoBehaviour
 
     private void Update()
     {
-        if (isHolding && jetpackMode)
+        // if (isHolding && jetpackMode)
+        // {
+        //     jetpack.UseJetpackFromUI();
+        // }
+        jetpackMode = !hero.isGround;
+        jetpack.isUsingJetpack = isHolding && jetpackMode;
+        if (!jetpackMode)
         {
-            jetpack.UseJetpackFromUI();
+            buttonText.text = "Jump";
+            jetpack.animator.SetBool("isFlying", false);
+            
         }
     }
 
@@ -35,7 +44,7 @@ public class JetpackButtonController : MonoBehaviour
     private void AddHoldEvents()
     {
         var trigger = jumpButton.gameObject.AddComponent<EventTrigger>();
-
+        
         var pointerDown = new EventTrigger.Entry
         {
             eventID = EventTriggerType.PointerDown

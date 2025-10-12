@@ -8,22 +8,27 @@ public class ManagerUi : MonoBehaviour
 
     // public Sprite[] BattaryElems; // managerUi
     private Animator batteryUiAnimator;
+    private Animator HeartUiAnimator;
     public UnityEngine.UI.Image batteryUi; // managerUi
-    [SerializeField] private Sprite[] spritesOfHeart; // managerUi
-    [SerializeField] private UnityEngine.UI.Image[] hearts;
+    // [SerializeField] private Sprite[] spritesOfHeart; // managerUi
+    // [SerializeField] private UnityEngine.UI.Image[] hearts;
+    [SerializeField] private UnityEngine.UI.Image heartUi;
     [SerializeField] private Image shieldIcon;
-    private int currentHealth;
+    // private int currentHealth;
     private Hero hero;
     private bool hasShield = false;
 
 
     void Start()
     {
-        currentHealth = hearts.Length;
-        UpdateUI();
+        // currentHealth = hearts.Length;
+        // UpdateUI();
         hero = GameObject.FindGameObjectWithTag("hero").GetComponent<Hero>();
         batteryUiAnimator = batteryUi.GetComponent<Animator>();
+        HeartUiAnimator = heartUi.GetComponent<Animator>();
         batteryUiAnimator.speed = 0;
+        updateHp();
+        updateBattery();
     }
 
     void Update()
@@ -72,42 +77,50 @@ public class ManagerUi : MonoBehaviour
             return;
         }
 
-        if (currentHealth > 0)
-        {
-            currentHealth--;
-            UpdateUI();
-        }
+        // if (currentHealth > 0)
+        // {
+        //     currentHealth--;
+        //     UpdateUI();
+        // }
     }
 
-    private void UpdateUI()
-    {
-        for (int i = 0; i < hearts.Length; i++)
-        {
-            hearts[i].enabled = (i < currentHealth);
-        }
-    }
+    // private void UpdateUI()
+    // {
+    //     for (int i = 0; i < hearts.Length; i++)
+    //     {
+    //         hearts[i].enabled = (i < currentHealth);
+    //     }
+    // }
     public void updateHp()
     {
-        float hp = hero.health - 0;
-        foreach (UnityEngine.UI.Image heart in hearts)
-        {
+        // float hp = hero.health - 0;
+        // foreach (UnityEngine.UI.Image heart in hearts)
+        // {
+        //     HeartUiAnimator = heart.GetComponent<Animator>();
+        //     Debug.Log($"hp: {hp}");
+        //     if (hp >= 2)
+        //     {
+        //         HeartUiAnimator.Play("heart", 0, Mathf.Clamp01(4 / 6f));
+        //         // heart.sprite = spritesOfHeart[4];
+        //         hp -= 2;
+        //     }
+        //     else if (hp >= 1)
+        //     {
+        //         // heart.sprite = spritesOfHeart[2];
+        //         HeartUiAnimator.Play("heart", 0, Mathf.Clamp01(2 / 6f));
+        //         hp -= 1;
+        //     }
+        //     else
+        //     {
+        //         HeartUiAnimator.Play("heart", 0, Mathf.Clamp01(0 / 6f));
+        //         // heart.sprite = spritesOfHeart[0];
 
-            Debug.Log($"hp: {hp}");
-            if (hp >= 2)
-            {
-                heart.sprite = spritesOfHeart[4];
-                hp -= 2;
-            }
-            else if (hp >= 1)
-            {
-                heart.sprite = spritesOfHeart[2];
-                hp -= 1;
-            }
-            else
-            {
-                heart.sprite = spritesOfHeart[0];
-            }
-        }
+        //     }
+        // }
+        float hp = hero.health + 1;
+        HeartUiAnimator.Play("heart", 0, Mathf.Clamp01(hp / 6f));
+        HeartUiAnimator.Update(0f); 
+        HeartUiAnimator.speed = 0;
     }
     public void updateBattery()
     {

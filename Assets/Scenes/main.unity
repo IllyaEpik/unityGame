@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 284109792}
   - component: {fileID: 284109793}
   - component: {fileID: 284109794}
+  - component: {fileID: 284109795}
   m_Layer: 5
   m_Name: battery
   m_TagString: Untagged
@@ -184,7 +185,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -4178046375966092550, guid: 4cdd5e16029ee5541842b41cc92d63a6, type: 3}
+  m_Sprite: {fileID: -4178046375966092550, guid: fc967f46e7a44e545af9d5ba7b658a41, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -194,6 +195,28 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &284109795
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 284109791}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c08c8e572b6bc2e48b294918ebc43642, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &391174789
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,7 +229,7 @@ GameObject:
   - component: {fileID: 391174792}
   - component: {fileID: 391174791}
   m_Layer: 5
-  m_Name: Image (2)
+  m_Name: heart3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -228,7 +251,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -268, y: 200}
+  m_AnchoredPosition: {x: -246.65, y: 513}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &391174791
@@ -623,8 +646,9 @@ GameObject:
   - component: {fileID: 537059464}
   - component: {fileID: 537059466}
   - component: {fileID: 537059465}
+  - component: {fileID: 537059467}
   m_Layer: 5
-  m_Name: Image
+  m_Name: heart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -669,7 +693,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 5088316998373936774, guid: f3de523576a32f649b09bd726b6f7c51, type: 3}
+  m_Sprite: {fileID: -4178046375966092550, guid: 5a7a758c43cf6fd4f8695e9527bace23, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -687,6 +711,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 537059463}
   m_CullTransparentMesh: 1
+--- !u!95 &537059467
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537059463}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e883586e616ab894d8758f7a207402f1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &595708953
 GameObject:
   m_ObjectHideFlags: 0
@@ -1098,11 +1144,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccbb3c79b695b4b23bdc6dbf8aa9f180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BattaryElems: []
-  batteryUi: {fileID: 0}
-  spritesOfHeart: []
-  hearts: []
-  shieldIcon: {fileID: 0}
+  batteryUi: {fileID: 284109794}
+  heartUi: {fileID: 537059465}
+  shieldIcon: {fileID: 2022733308}
 --- !u!4 &767741512
 Transform:
   m_ObjectHideFlags: 0
@@ -2133,6 +2177,7 @@ GameObject:
   - component: {fileID: 1345431320}
   - component: {fileID: 1345431319}
   - component: {fileID: 1345431318}
+  - component: {fileID: 1345431321}
   m_Layer: 5
   m_Name: Jump
   m_TagString: Untagged
@@ -2254,6 +2299,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1345431316}
   m_CullTransparentMesh: 1
+--- !u!114 &1345431321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345431316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25122a49a2fac447b970371a2d540996, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpButton: {fileID: 1345431318}
+  buttonText: {fileID: 1171825478}
+  jetpack: {fileID: 1946944991}
 --- !u!1001 &1352255446
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2706,7 +2766,7 @@ GameObject:
   - component: {fileID: 1603344090}
   - component: {fileID: 1603344089}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: heart2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2728,7 +2788,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -384, y: 200}
+  m_AnchoredPosition: {x: -411, y: 542}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1603344089
@@ -22311,15 +22371,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8368bac2fd4874b9d9ff57670c551912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 6
+  health: 4
   battery: 4
-  managerUi: {fileID: 0}
+  managerUi: {fileID: 767741511}
   plasmaPrefab: {fileID: 8937023810055130003, guid: e239a10ee2168ef4c9aa9cff55cc4200, type: 3}
   shieldIcon: {fileID: 2022733308}
   joystick2: {fileID: 1142960889}
   speed: 10
   jumpForce: 1000
   isLeft: 0
+  isGround: 1
   ground:
     serializedVersion: 2
     m_Bits: 8
@@ -22403,6 +22464,7 @@ MonoBehaviour:
   hero: {fileID: 1946944988}
   jetpackForce: 10
   horizontalBoost: 5
+  buttonText: {fileID: 1171825478}
 --- !u!114 &1946944992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22415,13 +22477,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccbb3c79b695b4b23bdc6dbf8aa9f180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BattaryElems: []
   batteryUi: {fileID: 0}
-  spritesOfHeart: []
-  hearts:
-  - {fileID: 537059465}
-  - {fileID: 1603344089}
-  - {fileID: 391174791}
+  heartUi: {fileID: 0}
   shieldIcon: {fileID: 2022733308}
 --- !u!1 &2022733306
 GameObject:
@@ -22457,7 +22514,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -157, y: 200}
+  m_AnchoredPosition: {x: -383.35, y: 200}
   m_SizeDelta: {x: 79.301, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2022733308
@@ -22480,7 +22537,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 5347640611019280199, guid: 338015fc2df9d564cbb3a216ed03bb7c, type: 3}
+  m_Sprite: {fileID: 5347640611019280199, guid: ec181fb2a12a1a04cb70fbcd2b81f21d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
