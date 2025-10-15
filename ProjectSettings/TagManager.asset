@@ -9,6 +9,7 @@ TagManager:
   - enemy
   - heroAttack
   - enemyAttack
+  - ground
   layers:
   - Default
   - TransparentFX
