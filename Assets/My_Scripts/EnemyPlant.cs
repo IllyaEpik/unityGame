@@ -18,17 +18,35 @@ public class EnemyPlant : MonoBehaviour
    
     [SerializeField] Hero heroObject;
 
-    
-   
-    
-    
+
+
+
+
     private bool attacking = false;
+    
+
+
+
+    public float maxHealth = 100;
+    public float currentHealth;
+
+    private HealthBar healthBar;
 
     void Start()
     {
         heroObject = FindFirstObjectByType<Hero>();// находим объект героя в сцене
         hero = 1 << heroObject.gameObject.layer;// получаем слой героя
         animator = GetComponent<Animator>();
+
+
+
+
+        currentHealth = maxHealth;
+
+        // Создаём префаб
+        GameObject bar = Instantiate(Resources.Load<GameObject>("HealthBar"), null);
+        healthBar = bar.GetComponent<HealthBar>();
+        healthBar.target = transform; // Привязываем к этому врагу
     }
 
     void Update()
@@ -76,5 +94,25 @@ public class EnemyPlant : MonoBehaviour
             heroObject.getDamage();
         }
         attacking = false;
+    }
+
+
+
+
+
+    public void TakeDamage(float amount)
+    {
+        currentHealth -= amount;
+        if (currentHealth < 0) currentHealth = 0;
+
+        healthBar.UpdateHealth(currentHealth, maxHealth);
+
+        if (currentHealth <= 0)
+            Die();
+    }
+
+    private void Die()
+    {
+        Destroy(gameObject);
     }
 }

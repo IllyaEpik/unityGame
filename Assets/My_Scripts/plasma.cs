@@ -14,6 +14,10 @@ public class plasma : MonoBehaviour
     [SerializeField] LayerMask layers;
     // Hero heroObject;
     // [SerializeField] 
+
+
+
+    [SerializeField] private float damage = 50f; // урон пули
     void Start()
     {
 
@@ -40,7 +44,7 @@ public class plasma : MonoBehaviour
             enemyBot? targetBot = someone.GetComponent<enemyBot>();
             if (someone.CompareTag("enemy") && targetBot != null)
             {
-                targetBot.getDamageForBot();
+                targetBot.OnHit();
                 RemoveAttack();
                 return;
             }
@@ -79,4 +83,6 @@ public class plasma : MonoBehaviour
         Destroy(gameObject);
         return;
     }
+
+    
 }
