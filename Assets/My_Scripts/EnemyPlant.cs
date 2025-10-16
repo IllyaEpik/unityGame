@@ -6,20 +6,21 @@ public class EnemyPlant : MonoBehaviour
 
     private bool isLeft = false;
     private bool isAttack = false;
+
+    private bool isDead = false;
+
+
+    private Rigidbody2D rb;
     private Animator animator;
-
-    
-    
-
     [SerializeField] Transform detectionZone;
     [SerializeField] Transform detectionZoneRight; 
     [SerializeField] float radius = 10f;
     [SerializeField] LayerMask hero ;
-   
+
     [SerializeField] Hero heroObject;
 
     
-   
+
     
     
     private bool attacking = false;
@@ -37,7 +38,9 @@ public class EnemyPlant : MonoBehaviour
     }
     public void getDamageForPlant()
     {
-        Destroy(gameObject);
+        animator.SetTrigger("isDead");
+        isDead = true;
+        Destroy(gameObject, 0.5f);
     }
     private void Flip()
     {
