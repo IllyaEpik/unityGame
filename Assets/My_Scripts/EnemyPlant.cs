@@ -24,12 +24,30 @@ public class EnemyPlant : MonoBehaviour
     
     
     private bool attacking = false;
+    
+
+
+
+    public float maxHealth = 100;
+    public float currentHealth;
+
+    private EnemyHealthBar healthBar;
 
     void Start()
     {
         heroObject = FindFirstObjectByType<Hero>();// находим объект героя в сцене
         hero = 1 << heroObject.gameObject.layer;// получаем слой героя
         animator = GetComponent<Animator>();
+
+
+
+
+        currentHealth = maxHealth;
+
+        // Создаём префаб
+        // GameObject bar = Instantiate(Resources.Load<GameObject>("HealthBar"), null);
+        healthBar = GetComponent<EnemyHealthBar>();
+        healthBar.target = transform; // Привязываем к этому врагу
     }
 
     void Update()
@@ -38,9 +56,10 @@ public class EnemyPlant : MonoBehaviour
     }
     public void getDamageForPlant()
     {
-        animator.SetTrigger("isDead");
-        isDead = true;
-        Destroy(gameObject, 0.5f);
+
+        // isDead = true;
+        TakeDamage(50);
+        
     }
     private void Flip()
     {
@@ -79,5 +98,32 @@ public class EnemyPlant : MonoBehaviour
             heroObject.getDamage();
         }
         attacking = false;
+    }
+
+
+
+
+
+    public void TakeDamage(float amount)
+    {
+        currentHealth -= amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        healthBar.UpdateHealth(currentHealth, maxHealth);
+        if (currentHealth <= 0)
+            Die();
+        // currentHealth -= amount;
+        // if (currentHealth < 0) currentHealth = 0;
+
+        // healthBar.UpdateHealth(currentHealth, maxHealth);
+
+        // if (currentHealth <= 0)
+
+        //     Die();
+    }
+
+    private void Die()
+    {
+        animator.SetTrigger("isDead");
+        Destroy(gameObject, 1f);
     }
 }

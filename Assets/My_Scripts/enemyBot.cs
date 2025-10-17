@@ -1,3 +1,4 @@
+using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.iOS;
@@ -6,11 +7,13 @@ public class enemyBot : MonoBehaviour
 {
     // private bool isLeft = false;
     Vector2 size = new Vector2(25, 3);
-
     private float cooldown = 2f;
     private float cooldownCurrent = 0;
     private Animator animator;
     private int isLeft = 1;
+
+    private bool isAlive = true;
+
 
     [SerializeField] Transform FirePoint;
     [SerializeField] Transform detectionZone;
@@ -19,16 +22,40 @@ public class enemyBot : MonoBehaviour
     [SerializeField] Hero heroObject;
     [SerializeField] private GameObject plasmaPrefab;
 
+    [SerializeField] private float damagePerHit = 50f; // половина здоровья
+
     public float safeDistance = 3f;
     public float moveSpeed = 2f;
     public float jumpForce = 5f;
     private Rigidbody2D rb;
     private bool isGrounded = true;
 
+    // [SerializeField] private HealthBar bar;
+
+
+
+    public float maxHealth = 100;
+    public float currentHealth;
+
+    [SerializeField] private EnemyHealthBar healthBar;
+
     private void Start()
     {
+        // Die();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+
+
+
+
+        currentHealth = maxHealth;
+
+        // Создаём префаб
+        // GameObject bar = Instantiate(Resources.Load<GameObject>("HealthBar"), null);
+        // healthBar = bar.GetComponent<HealthBar>();
+        healthBar.target = transform; // Привязываем к этому врагу
+
+        
     }
 
     private void FixedUpdate()
@@ -65,10 +92,10 @@ public class enemyBot : MonoBehaviour
             isGrounded = true;
     }
 
-    public void getDamageForBot()
-    {
-        Destroy(gameObject);
-    }
+    // public void getDamageForBot()
+    // {
+    //     Destroy(gameObject);
+    // }
 
     private void Flip()
     {
@@ -128,5 +155,27 @@ public class enemyBot : MonoBehaviour
             Instantiate(plasmaPrefab, FirePoint.position, Quaternion.Euler(0, 0, left));
             cooldownCurrent = cooldown;
         }
+    }
+
+    public void TakeDamage(float amount)
+    {
+        // if (!isAlive) return;
+
+        currentHealth -= amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        healthBar.UpdateHealth(currentHealth, maxHealth);
+        if (currentHealth <= 0)
+            Die();
+    }
+
+    private void Die()
+    {
+        // isAlive = false;
+        Destroy(gameObject);
+    }
+
+    public void OnHit()
+    {
+        TakeDamage(damagePerHit);
     }
 }
