@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public SaveSystem saveSystem;
     // Префаб врага — чтобы можно было клонировать  сколько угодно
     public GameObject enemyPrefab;   // префаб врага
-  
+
 
     void Update()
     {
@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
         
         }
         
-     
+
     }
     public void OnMyButtonClicked_death() 
         {

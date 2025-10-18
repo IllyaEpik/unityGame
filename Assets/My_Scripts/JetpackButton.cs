@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using TMPro;
-using System;
+using UnityEngine.EventSystems;
 
 public class JetpackButtonController : MonoBehaviour
 {
@@ -17,21 +16,18 @@ public class JetpackButtonController : MonoBehaviour
     {
         jumpButton.onClick.AddListener(OnButtonClick);
         AddHoldEvents();
+        buttonText.text = LanguageManager.Instance.GetText("jump");
     }
 
     private void Update()
     {
-        // if (isHolding && jetpackMode)
-        // {
-        //     jetpack.UseJetpackFromUI();
-        // }
         jetpackMode = !hero.isGround;
         jetpack.isUsingJetpack = isHolding && jetpackMode;
+
         if (!jetpackMode)
         {
-            buttonText.text = "Jump";
+            buttonText.text = LanguageManager.Instance.GetText("jump");
             jetpack.animator.SetBool("isFlying", false);
-            
         }
     }
 
@@ -44,18 +40,12 @@ public class JetpackButtonController : MonoBehaviour
     private void AddHoldEvents()
     {
         var trigger = jumpButton.gameObject.AddComponent<EventTrigger>();
-        
-        var pointerDown = new EventTrigger.Entry
-        {
-            eventID = EventTriggerType.PointerDown
-        };
+
+        var pointerDown = new EventTrigger.Entry { eventID = EventTriggerType.PointerDown };
         pointerDown.callback.AddListener((data) => { isHolding = true; });
         trigger.triggers.Add(pointerDown);
 
-        var pointerUp = new EventTrigger.Entry
-        {
-            eventID = EventTriggerType.PointerUp
-        };
+        var pointerUp = new EventTrigger.Entry { eventID = EventTriggerType.PointerUp };
         pointerUp.callback.AddListener((data) => { isHolding = false; });
         trigger.triggers.Add(pointerUp);
     }
