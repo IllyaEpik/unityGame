@@ -29,9 +29,6 @@ public class EnemyHealthBar : MonoBehaviour
     {
         // Debug.Log("hello");
         return;
-        if (target == null) return;
-        transform.position = target.position + offset; // Следует за врагом
-        transform.rotation = Quaternion.identity; // Не вращается с ним
     }
     public void UpdateHealth(float current, float max)
     {
