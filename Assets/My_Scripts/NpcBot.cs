@@ -1,114 +1,127 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using System;
+using System.Collections.Generic;
 
-[Serializable]
+[System.Serializable]
+public class PlayerResponse
+{
+    [TextArea(1, 3)]
+    public string responseText; // Текст варианта игрока
+    public int nextLineIndex;   // К какому элементу diálogo перейти (-1 = конец)
+    public bool oneTime = false; // Если true — можно выбрать только один раз за игру (сессия)
+}
+
+[System.Serializable]
 public class DialogueLine
 {
     [TextArea(2, 5)]
-    public string npcText;             // Что говорит NPC
-    public string[] playerResponses;   // Варианты ответов игрока
+    public string npcText; // Реплика NPC
+    public PlayerResponse[] responses; // Варианты ответов игрока
 }
 
 public class NpcBot : MonoBehaviour
 {
     [Header("Диалоговые данные")]
-    [SerializeField] public DialogueLine[] dialogueLines; // Реплики NPC с ответами
+    [SerializeField] private DialogueLine[] dialogueLines;
 
-    [Header("UI элементы")]
+    [Header("UI елементи")]
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TMP_Text dialogueText;
     [SerializeField] private Button talkButton;
 
-    [Header("Кнопки выбора ответа")]
+    [Header("Кнопки вибору відповіді")]
     [SerializeField] private Button[] choiceButtons;
     [SerializeField] private TMP_Text[] choiceTexts;
+
+    // Служебное: ключи использованных одноразовых ответов
+    private HashSet<string> usedOneTimeResponses = new HashSet<string>();
 
     private int currentLine = 0;
     private bool playerInRange = false;
     private bool dialogueActive = false;
 
-    // Это просто для проверки во время разработки:
-    void Reset()
-    {
-        // Reset сработает при добавлении компонента или на Reset в инспекторе.
-        dialogueLines = new DialogueLine[2];
-
-        dialogueLines[0] = new DialogueLine();
-        dialogueLines[0].npcText = "Привет, я NPC. Что хочешь?";
-        dialogueLines[0].playerResponses = new string[] { "Привет!", "Кто ты?" };
-
-        dialogueLines[1] = new DialogueLine();
-        dialogueLines[1].npcText = "Хорошо, спасибо за ответ.";
-        dialogueLines[1].playerResponses = new string[] { "Пока", "Еще что-нибудь?" };
-    }
-
     void Start()
     {
         if (talkButton != null) talkButton.gameObject.SetActive(false);
         if (dialoguePanel != null) dialoguePanel.SetActive(false);
-
-        if (talkButton != null)
-            talkButton.onClick.AddListener(OnTalkButtonPressed);
+        if (talkButton != null) talkButton.onClick.AddListener(OnTalkButtonPressed);
 
         if (choiceButtons != null)
         {
-            foreach (var btn in choiceButtons)
-                if (btn != null) btn.gameObject.SetActive(false);
+            foreach (var b in choiceButtons)
+                if (b != null) b.gameObject.SetActive(false);
         }
     }
 
-    // Остальной код как у тебя...
     void Update()
     {
         if (playerInRange && Input.GetKeyDown(KeyCode.E))
         {
-            if (!dialogueActive)
-                StartDialogue();
-            else
-                NextLine();
+            if (!dialogueActive) StartDialogue();
         }
     }
 
     void StartDialogue()
     {
+        if (dialogueLines == null || dialogueLines.Length == 0) return;
+
         dialogueActive = true;
-        currentLine = 0;
         if (dialoguePanel != null) dialoguePanel.SetActive(true);
-        if (dialogueText != null && dialogueLines.Length > 0) dialogueText.text = dialogueLines[currentLine].npcText;
-        ShowChoices();
+        ShowLine(currentLine);
     }
 
-    void NextLine()
+    void ShowLine(int lineIndex)
     {
-        currentLine++;
-        if (currentLine < dialogueLines.Length)
-        {
-            if (dialogueText != null) dialogueText.text = dialogueLines[currentLine].npcText;
-            ShowChoices();
-        }
-        else
+        if (dialogueLines == null) return;
+
+        if (lineIndex < 0 || lineIndex >= dialogueLines.Length)
         {
             EndDialogue();
+            return;
         }
+
+        currentLine = lineIndex;
+
+        if (dialogueText != null) dialogueText.text = dialogueLines[currentLine].npcText;
+
+        ShowChoices();
     }
 
     void ShowChoices()
     {
         if (choiceButtons == null || choiceTexts == null) return;
-        var choices = dialogueLines[currentLine].playerResponses;
+
+        var responses = dialogueLines[currentLine].responses ?? new PlayerResponse[0];
 
         for (int i = 0; i < choiceButtons.Length; i++)
         {
-            if (i < choices.Length)
+            if (i < responses.Length)
             {
-                choiceButtons[i].gameObject.SetActive(true);
-                choiceTexts[i].text = choices[i];
+                var resp = responses[i];
+                var btn = choiceButtons[i];
+                var txt = choiceTexts[i];
 
-                int index = i;
-                choiceButtons[i].onClick.RemoveAllListeners();
-                choiceButtons[i].onClick.AddListener(() => OnPlayerChoice(index));
+                btn.gameObject.SetActive(true);
+                txt.text = resp.responseText;
+
+                // уникальный ключ для одноразового ответа: "lineIndex_responseIndex"
+                string key = currentLine + "_" + i;
+
+                // если одноразовый и уже использован -> делаем неинтерактивным
+                if (resp.oneTime && usedOneTimeResponses.Contains(key))
+                {
+                    btn.interactable = false;
+                    txt.text = resp.responseText + " (використано)";
+                    btn.onClick.RemoveAllListeners();
+                }
+                else
+                {
+                    btn.interactable = true;
+                    btn.onClick.RemoveAllListeners();
+                    int choiceIndex = i; // локальная копия для замыкания
+                    btn.onClick.AddListener(() => OnPlayerChoice(choiceIndex));
+                }
             }
             else
             {
@@ -119,17 +132,33 @@ public class NpcBot : MonoBehaviour
 
     void OnPlayerChoice(int choiceIndex)
     {
-        Debug.Log("Игрок выбрал: " + dialogueLines[currentLine].playerResponses[choiceIndex]);
-        NextLine();
+        var responses = dialogueLines[currentLine].responses;
+        if (responses == null || choiceIndex < 0 || choiceIndex >= responses.Length) return;
+
+        var chosen = responses[choiceIndex];
+
+        // если одноразовый — отметим как использованный
+        if (chosen.oneTime)
+        {
+            string key = currentLine + "_" + choiceIndex;
+            usedOneTimeResponses.Add(key);
+        }
+
+        // Переходим к следующей линии. Если nextLineIndex == -1 -> конец диалога.
+        if (chosen.nextLineIndex >= 0)
+            ShowLine(chosen.nextLineIndex);
+        else
+            EndDialogue();
     }
 
     void EndDialogue()
     {
         dialogueActive = false;
         if (dialoguePanel != null) dialoguePanel.SetActive(false);
+
         if (choiceButtons != null)
-            foreach (var btn in choiceButtons)
-                if (btn != null) btn.gameObject.SetActive(false);
+            foreach (var b in choiceButtons)
+                if (b != null) b.gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -154,6 +183,5 @@ public class NpcBot : MonoBehaviour
     void OnTalkButtonPressed()
     {
         if (!dialogueActive) StartDialogue();
-        else NextLine();
     }
 }
