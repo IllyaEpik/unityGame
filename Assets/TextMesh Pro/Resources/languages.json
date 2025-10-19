@@ -1,0 +1,22 @@
+{
+    "languages": [
+    {
+        "language": "English",
+        "translations": [
+        { "key": "jump", "value": "Jump" },
+        { "key": "attack", "value": "Attack" },
+        { "key": "menu_play", "value": "Play" },
+        { "key": "menu_exit", "value": "Exit" }
+        ]
+    },
+    {
+        "language": "Українська",
+        "translations": [
+        { "key": "jump", "value": "Стрибок" },
+        { "key": "attack", "value": "Атака" },
+        { "key": "menu_play", "value": "Грати" },
+        { "key": "menu_exit", "value": "Вихід" }
+        ]
+    }
+    ]
+}

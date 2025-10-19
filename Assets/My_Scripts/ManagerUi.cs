@@ -93,30 +93,6 @@ public class ManagerUi : MonoBehaviour
     // }
     public void updateHp()
     {
-        // float hp = hero.health - 0;
-        // foreach (UnityEngine.UI.Image heart in hearts)
-        // {
-        //     HeartUiAnimator = heart.GetComponent<Animator>();
-        //     Debug.Log($"hp: {hp}");
-        //     if (hp >= 2)
-        //     {
-        //         HeartUiAnimator.Play("heart", 0, Mathf.Clamp01(4 / 6f));
-        //         // heart.sprite = spritesOfHeart[4];
-        //         hp -= 2;
-        //     }
-        //     else if (hp >= 1)
-        //     {
-        //         // heart.sprite = spritesOfHeart[2];
-        //         HeartUiAnimator.Play("heart", 0, Mathf.Clamp01(2 / 6f));
-        //         hp -= 1;
-        //     }
-        //     else
-        //     {
-        //         HeartUiAnimator.Play("heart", 0, Mathf.Clamp01(0 / 6f));
-        //         // heart.sprite = spritesOfHeart[0];
-
-        //     }
-        // }
         float hp = hero.health + 1;
         HeartUiAnimator.Play("heart", 0, Mathf.Clamp01(hp / 6f));
         HeartUiAnimator.Update(0f); 
@@ -124,12 +100,10 @@ public class ManagerUi : MonoBehaviour
     }
     public void updateBattery()
     {
-        // battery -= 1;
         batteryUiAnimator.speed = 1;
         batteryUiAnimator.Play("battery", 0, Mathf.Clamp01(hero.battery / 6f));
         batteryUiAnimator.Update(0f); 
         batteryUiAnimator.speed = 0;
-        // batteryUi.sprite = BattaryElems[battery];
     }
 
 }

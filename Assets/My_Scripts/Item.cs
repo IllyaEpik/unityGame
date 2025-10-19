@@ -41,7 +41,6 @@ public class Item : MonoBehaviour
                 managerUi.updateHp();
                 Invoke("DeleteObject", 0.3f);
             }
-
             
         }
     }
