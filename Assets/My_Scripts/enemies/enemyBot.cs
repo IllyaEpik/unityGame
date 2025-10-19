@@ -14,6 +14,8 @@ public class enemyBot : MonoBehaviour
 
     private bool isAlive = true;
 
+    private bool isDead = false;
+
 
     [SerializeField] Transform FirePoint;
     [SerializeField] Transform detectionZone;
@@ -23,7 +25,6 @@ public class enemyBot : MonoBehaviour
     [SerializeField] private GameObject plasmaPrefab;
 
     [SerializeField] private float damagePerHit = 50f; // половина здоровья
-
     public float safeDistance = 3f;
     public float moveSpeed = 2f;
     public float jumpForce = 5f;
@@ -37,26 +38,23 @@ public class enemyBot : MonoBehaviour
     public float maxHealth = 100;
     public float currentHealth;
 
-    [SerializeField] private EnemyHealthBar healthBar;
+    [SerializeField] private GameObject healthBarPrefab;
+    private EnemyHealthBar healthBar;
 
-    private void Start()
+private void Start()
+{
+    animator = GetComponent<Animator>();
+    rb = GetComponent<Rigidbody2D>();
+    currentHealth = maxHealth;
+
+    // создаём личный бар для каждого врага
+    if (healthBarPrefab != null)
     {
-        // Die();
-        animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
-
-
-
-
-        currentHealth = maxHealth;
-
-        // Создаём префаб
-        // GameObject bar = Instantiate(Resources.Load<GameObject>("HealthBar"), null);
-        // healthBar = bar.GetComponent<HealthBar>();
-        healthBar.target = transform; // Привязываем к этому врагу
-
-        
+        GameObject bar = Instantiate(healthBarPrefab, transform.position + new Vector3(0, 1.5f, 0), Quaternion.identity);
+        healthBar = bar.GetComponent<EnemyHealthBar>();
+        healthBar.target = transform;
     }
+}
 
     private void FixedUpdate()
     {
@@ -168,11 +166,13 @@ public class enemyBot : MonoBehaviour
             Die();
     }
 
-    private void Die()
-    {
-        // isAlive = false;
-        Destroy(gameObject);
-    }
+private void Die()
+{
+    animator.SetTrigger("isDead");
+    if (healthBar != null)
+        Destroy(healthBar.gameObject); // удалить бар вместе с врагом
+    Destroy(gameObject, 1f);
+}
 
     public void OnHit()
     {

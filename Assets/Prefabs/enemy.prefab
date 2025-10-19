@@ -159,6 +159,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   heroObject: {fileID: 0}
+  healthBarPrefab: {fileID: 2587504997564988471, guid: 2313d7bcb58494889906776587b65bbf, type: 3}
+  maxHealth: 100
+  currentHealth: 0
 --- !u!95 &2556156043076226745
 Animator:
   serializedVersion: 7

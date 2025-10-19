@@ -19,9 +19,10 @@ public class EnemyPlant : MonoBehaviour
 
     [SerializeField] Hero heroObject;
 
-    
 
-    
+    [SerializeField] private GameObject healthBarPrefab; // префаб полоски HP
+    private EnemyHealthBar healthBar; // ссылка на созданный бар
+
     
     private bool attacking = false;
     
@@ -31,24 +32,20 @@ public class EnemyPlant : MonoBehaviour
     public float maxHealth = 100;
     public float currentHealth;
 
-    private EnemyHealthBar healthBar;
-
-    void Start()
+void Start()
+{
+    heroObject = FindFirstObjectByType<Hero>();
+    hero = 1 << heroObject.gameObject.layer;
+    animator = GetComponent<Animator>();
+    currentHealth = maxHealth;
+    // создаём личный бар для этого врага
+    if (healthBarPrefab != null)
     {
-        heroObject = FindFirstObjectByType<Hero>();// находим объект героя в сцене
-        hero = 1 << heroObject.gameObject.layer;// получаем слой героя
-        animator = GetComponent<Animator>();
-
-
-
-
-        currentHealth = maxHealth;
-
-        // Создаём префаб
-        // GameObject bar = Instantiate(Resources.Load<GameObject>("HealthBar"), null);
-        healthBar = GetComponent<EnemyHealthBar>();
-        healthBar.target = transform; // Привязываем к этому врагу
+        GameObject bar = Instantiate(healthBarPrefab, transform.position + new Vector3(0, 1.5f, 0), Quaternion.identity);
+        healthBar = bar.GetComponent<EnemyHealthBar>();
+        healthBar.target = transform;
     }
+}
 
     void Update()
     {
@@ -124,6 +121,8 @@ public class EnemyPlant : MonoBehaviour
     private void Die()
     {
         animator.SetTrigger("isDead");
+        if (healthBar != null)
+            Destroy(healthBar.gameObject);
         Destroy(gameObject, 1f);
     }
 }

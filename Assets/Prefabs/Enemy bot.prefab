@@ -308,12 +308,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -4178046375966092550, guid: 03c71fcb9c84e4a458710af32896b6fb, type: 3}
+  m_Sprite: {fileID: 5088316998373936774, guid: a05b502b8791f624ea23164dc016094a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 7.11, y: 8.63}
+  m_Size: {x: 5.21, y: 8.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -382,7 +382,7 @@ MonoBehaviour:
   jumpForce: 0
   maxHealth: 100
   currentHealth: 0
-  healthBar: {fileID: 8576342505926303120}
+  healthBarPrefab: {fileID: 2587504997564988471, guid: 2313d7bcb58494889906776587b65bbf, type: 3}
 --- !u!95 &3810552657440852052
 Animator:
   serializedVersion: 7
@@ -445,6 +445,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fillImage: {fileID: 0}
-  healthBarCanvas: {fileID: 0}
   offset: {x: 0, y: 5, z: 0}
   target: {fileID: 7246121502034423090}

@@ -137,7 +137,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fillImage: {fileID: 1684686163}
-  healthBarCanvas: {fileID: 687746709}
   offset: {x: 0, y: 5.5, z: 0}
   target: {fileID: 63272163}
 --- !u!4 &63272163 stripped
@@ -145,6 +144,71 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3148454493668940392, guid: b2eeffa5b8d85cd41a36fd5f87848ea3, type: 3}
   m_PrefabInstance: {fileID: 971697918}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &232400586
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3810552657440852052, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 386810c4d912a42ceb4c4ce3223eaafd, type: 2}
+    - target: {fileID: 4230844430991088939, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
+      propertyPath: m_Name
+      value: Enemy bot
+      objectReference: {fileID: 0}
+    - target: {fileID: 7246121502034423090, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 71.05214
+      objectReference: {fileID: 0}
+    - target: {fileID: 7246121502034423090, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5.5867615
+      objectReference: {fileID: 0}
+    - target: {fileID: 7246121502034423090, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7246121502034423090, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7246121502034423090, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7246121502034423090, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7246121502034423090, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7246121502034423090, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7246121502034423090, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7246121502034423090, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7697053481392955900, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
+      propertyPath: hero.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
 --- !u!1 &284109791
 GameObject:
   m_ObjectHideFlags: 0
@@ -631,7 +695,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: df1d8491018d646088e13f0129cf24bb, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.477
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1227,11 +1291,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 595708953}
   m_CullTransparentMesh: 1
---- !u!224 &687746709 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7611004265050274948, guid: 2313d7bcb58494889906776587b65bbf, type: 3}
-  m_PrefabInstance: {fileID: 1882259894612545594}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &723773873
 GameObject:
   m_ObjectHideFlags: 0
@@ -1791,7 +1850,7 @@ PrefabInstance:
       objectReference: {fileID: 1946944988}
     - target: {fileID: 2139814582395971649, guid: b2eeffa5b8d85cd41a36fd5f87848ea3, type: 3}
       propertyPath: hero.m_Bits
-      value: 64
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2261049689267568082, guid: b2eeffa5b8d85cd41a36fd5f87848ea3, type: 3}
       propertyPath: m_Name
@@ -3039,7 +3098,7 @@ Transform:
   m_GameObject: {fileID: 1473034006}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.1, y: 18.8, z: 0}
+  m_LocalPosition: {x: 2.542314, y: 18.8, z: 0}
   m_LocalScale: {x: 20, y: 20, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -24240,6 +24299,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WorldCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 6890025671225653116, guid: 2313d7bcb58494889906776587b65bbf, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7611004265050274948, guid: 2313d7bcb58494889906776587b65bbf, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -24410,3 +24473,4 @@ SceneRoots:
   - {fileID: 1400559005}
   - {fileID: 1882259894612545594}
   - {fileID: 439224713}
+  - {fileID: 232400586}
