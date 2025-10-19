@@ -181,8 +181,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -343, y: -86}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -404.55182, y: -142}
+  m_SizeDelta: {x: 260.896, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &137762614
 MonoBehaviour:
@@ -1685,8 +1685,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -100, y: -86}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -404.55, y: -192.5}
+  m_SizeDelta: {x: 260.9, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &734151437
 MonoBehaviour:
@@ -1905,7 +1905,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 349.04688, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1947,8 +1947,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -36.346123, y: -101.96662}
-  m_SizeDelta: {x: 228.692, y: 66.82}
+  m_AnchoredPosition: {x: -3.257, y: -0.00015068}
+  m_SizeDelta: {x: 1111.486, y: 162.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &767741510
 GameObject:
@@ -4064,8 +4064,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 141, y: -86}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -404.55, y: -239.99998}
+  m_SizeDelta: {x: 260.9, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1744667805
 MonoBehaviour:
@@ -23542,7 +23542,7 @@ MonoBehaviour:
       \u041C\u043E\u0436\u0435\u043C\u043E \u0441\u043F\u0440\u043E\u0431\u0443\u0432\u0430\u0442\u0438
       \u2014 \u0442\u0435\u0440\u043C\u0456\u043D\u0430\u043B \u043F\u043E\u0447\u043D\u0435
       \u0430\u0432\u0442\u043E\u0437\u043B\u0430\u043C \u043F\u0456\u0441\u043B\u044F
-      \u0432\u0432\u0435\u0434\u0435\u043D\u043D\u044F."
+      \u0432\u0432\u0435\u0434\u0435\u043D\u043D\u044F.ok"
     responses:
     - responseText: "\u0422\u0430\u043A, \u044F\u043A \u043C\u0438\u043D\u0443\u043B\u043E\u0433\u043E
         \u0440\u0430\u0437\u0443."
@@ -23638,7 +23638,7 @@ SpriteRenderer:
   m_Size: {x: 5.29, y: 8.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1934310848
