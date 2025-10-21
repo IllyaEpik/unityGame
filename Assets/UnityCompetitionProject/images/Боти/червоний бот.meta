@@ -1,13 +1,5 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
-<<<<<<< HEAD
-guid: b812434fbabe5944c8ac90288f9e0330
-=======
-guid: cf76b01eb4f902c4087f0831f31f7862
->>>>>>> origin/ButtonJetpack
-=======
-guid: 55be9f709930bff428f8ff1dcdf390a9
->>>>>>> origin/Jetpack
+guid: bb88dbd9bc5b0954ba85cf1bf2d899a9
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
