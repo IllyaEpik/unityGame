@@ -20,14 +20,14 @@ public class EnemyPlant : MonoBehaviour
     [SerializeField] Hero heroObject;
 
 
-    [SerializeField] private GameObject healthBarPrefab; // префаб полоски HP
+    [SerializeField] private GameObject healthBarPrefab; // префаб полоски HP 
     private EnemyHealthBar healthBar; // ссылка на созданный бар
 
     
     private bool attacking = false;
     
 
-
+ 
 
     public float maxHealth = 100;
     public float currentHealth;
@@ -44,6 +44,7 @@ void Start()
         GameObject bar = Instantiate(healthBarPrefab, transform.position + new Vector3(0, 1.5f, 0), Quaternion.identity);
         healthBar = bar.GetComponent<EnemyHealthBar>();
         healthBar.target = transform;
+        healthBar.offset = new Vector3(0, 5f, 0);
     }
 }
 

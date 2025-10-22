@@ -1,14 +1,20 @@
 using System;
 using System.Collections.Generic;
-
+using UnityEditor;
+public interface IItemUser
+{
+    void OnItemUsed(ItemData item);
+    // You can define other required methods here
+}
 [Serializable]
-public class EnemyData
+public class ItemData
 {
     // Координаты врага. 
     public float posX;
     public float posY;
     // Жив ли враг? Или уже прикидывается трупиком?
-    public bool isAlive;
+    // public bool isAlive = true;
+    public IItemUser type;
 }
 
 [Serializable]
@@ -24,5 +30,5 @@ public class SaveData
     public long timestamp;
     
     // враги 
-    public List<EnemyData> enemies = new List<EnemyData>();
+    public List<ItemData> enemies = new List<ItemData>();
 }

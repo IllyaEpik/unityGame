@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
+using System;
 
 public class SaveSystem : MonoBehaviour
 {
@@ -14,8 +15,24 @@ public class SaveSystem : MonoBehaviour
         savePath = Path.Combine(Application.persistentDataPath, "save.json");
         Debug.Log("Save path: " + savePath);
     }
-
     // Сохраняем игрока и ВСЕХ врагов типа EnemyPlant на сцене.
+    private SaveData SaveMob<T>(SaveData data)  where T : MonoBehaviour
+    {
+        T[] currentEnemies = FindObjectsOfType<T>();
+        foreach (T e in currentEnemies)
+        {
+            // Проверяем, что ссылка не "мертвая" (на всякий случай а то баги)
+            if (e == null) continue;
+
+            ItemData ed = new ItemData();
+            ed.posX = e.transform.position.x;
+            ed.posY = e.transform.position.y;
+            // ed.type = T;
+            // ed.isAlive = e.isAlive;
+            data.enemies.Add(ed);
+        }
+        return data;
+    }
     public void SaveGame(Hero player) 
     {
         SaveData data = new SaveData();
@@ -29,19 +46,12 @@ public class SaveSystem : MonoBehaviour
 
         // Враги
         // Находим ВСЕХ активных врагов типа EnemyPlant на сцене прямо сейчас 
-        EnemyPlant[] currentEnemies = FindObjectsOfType<EnemyPlant>(); 
-        foreach (EnemyPlant e in currentEnemies) 
-        {
-            // Проверяем, что ссылка не "мертвая" (на всякий случай а то баги)
-            if (e == null) continue; 
-            
-            EnemyData ed = new EnemyData();
-            ed.posX = e.transform.position.x;
-            ed.posY = e.transform.position.y;
-            ed.isAlive = e.isAlive; 
-            data.enemies.Add(ed);
-        }
-
+        SaveMob<EnemyPlant>(data);
+        // SaveMob<enemyBot>(data);
+        // SaveMob<NpcBot>(data);
+        // SaveMob<Chest>(data);
+        // SaveMob<Key>(data);
+        
         // Превращаем всё в JSON и записываем на диск.
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(savePath, json);
@@ -72,17 +82,17 @@ public class SaveSystem : MonoBehaviour
             Destroy(old.gameObject);
         }
         // Создаём врагов из prefab. 
-        foreach (EnemyData ed in data.enemies)
+        foreach (ItemData ed in data.enemies)
         {
             GameObject enemyObj = Instantiate(enemyPrefab, new Vector2(ed.posX, ed.posY), Quaternion.identity);
             EnemyPlant e = enemyObj.GetComponent<EnemyPlant>(); 
             
             // восстанавливаем состояние isAlive
-            e.isAlive = ed.isAlive; 
+            // e.isAlive = ed.isAlive; 
             
             // если в враг здох то деактив 
-            if (!ed.isAlive)
-                enemyObj.SetActive(false);
+            // if (!ed.isAlive)
+            //     enemyObj.SetActive(false);
         }
 
         Debug.Log("Game loaded плз донт краш!");

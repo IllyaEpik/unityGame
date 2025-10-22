@@ -238,7 +238,6 @@ GameObject:
   - component: {fileID: 7697053481392955900}
   - component: {fileID: 3810552657440852052}
   - component: {fileID: 8834320784528608178}
-  - component: {fileID: 8576342505926303120}
   m_Layer: 7
   m_Name: Enemy bot
   m_TagString: enemy
@@ -432,18 +431,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &8576342505926303120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4230844430991088939}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 013a6bda8ab65437081d36402960bc00, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fillImage: {fileID: 0}
-  offset: {x: 0, y: 5, z: 0}
-  target: {fileID: 7246121502034423090}
