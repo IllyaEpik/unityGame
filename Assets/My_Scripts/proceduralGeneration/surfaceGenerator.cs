@@ -8,8 +8,9 @@ public class surfaceGenerator : MonoBehaviour
 {
     public int levelWidth = 250;
     public float levelHeightChange = 15f;
-    public int levelHeight = 50; 
+    public int levelHeight = 50;
     public int[][] map;
+    public int[][] structure;
     public int enemyBotCount = 2;
     public int enemyPlantCount = 2;
 
@@ -19,6 +20,7 @@ public class surfaceGenerator : MonoBehaviour
     private int[] surface;
     [SerializeField] private GameObject enemyBotPrefab;
     [SerializeField] private GameObject enemyPlantPrefab;
+    [SerializeField] private GameObject npcPrefab;
     [SerializeField] private Tilemap groundTilemap;
     [SerializeField] private TileBase[] tilePalette;
     public int seed;
@@ -53,7 +55,7 @@ public class surfaceGenerator : MonoBehaviour
             surface[x] = y;
             // Instantiate(groundTilePrefab, new Vector2(x, y), Quaternion.identity, transform);
 
-            for (int countY = 0; countY < 50; countY++)
+            for (int countY = 0; countY < levelHeight; countY++)
             {
                 if (countY > y)
                 {
@@ -75,21 +77,38 @@ public class surfaceGenerator : MonoBehaviour
                 // }
             }
         }
-        generateEnemies(enemyBotCount, enemyBotPrefab);
-        generateEnemies(enemyPlantCount, enemyPlantPrefab);
+        // generateEnemies(enemyBotCount, enemyBotPrefab);
+        // generateEnemies(enemyPlantCount, enemyPlantPrefab);
+        generateStructure(npcPrefab);
     }
     void generateEnemies(int count, GameObject prefab)
     {
-        
-        
+
+
         // float offset = Random.Range(0f, 9999f);
-        for (int e = 0; e < count; e++ )
+        for (int e = 0; e < count; e++)
         {
             // Mathf.FloorToInt()
-            float x = Random.Range(0f, levelWidth*4);
+            float x = Random.Range(0f, levelWidth * 4);
             // int y = surface[x];
-            Instantiate(prefab, new Vector2(x-levelWidth*2, 0), Quaternion.identity);
+            Instantiate(prefab, new Vector2(x - levelWidth * 2, 0), Quaternion.identity);
         }
     }
-    
+    // 4.9
+    void generateStructure(GameObject prefab)
+    {
+        int currentY = surface[surface.Length - 1] + 1;
+        Debug.Log(currentY);
+        TileBase tileToPlace = tilePalette[0];
+        int distance = 25;
+        for (int x = 0; x < distance; x++)
+        {
+            for (int y = 0; y < levelHeight; y++)
+            {
+                groundTilemap.SetTile(new Vector3Int(levelWidth / 2 + x, -currentY-y, 0), tileToPlace);
+                
+            }
+        }
+        Instantiate(prefab, new Vector2((levelWidth / 2 +distance/2)*5 + 2.5f, currentY*-5+10), Quaternion.identity);
+    }
 }
