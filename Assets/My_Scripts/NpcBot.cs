@@ -2,6 +2,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Xml.Serialization;
+using System;
 
 [System.Serializable]
 public class PlayerResponse
@@ -10,6 +12,7 @@ public class PlayerResponse
     public string responseText; // Текст варианта игрока
     public int nextLineIndex;   // К какому элементу diálogo перейти (-1 = конец)
     public bool oneTime = false; // Если true — можно выбрать только один раз за игру (сессия)
+
 }
 
 [System.Serializable]
@@ -22,6 +25,8 @@ public class DialogueLine
 
 public class NpcBot : MonoBehaviour
 {
+    
+    
     [Header("Диалоговые данные")]
     [SerializeField] private DialogueLine[] dialogueLines;
 
@@ -40,6 +45,7 @@ public class NpcBot : MonoBehaviour
     private int currentLine = 0;
     private bool playerInRange = false;
     private bool dialogueActive = false;
+    public System.Action<int> endAction;
 
     void Start()
     {
@@ -53,7 +59,6 @@ public class NpcBot : MonoBehaviour
                 if (b != null) b.gameObject.SetActive(false);
         }
     }
-
     void Update()
     {
         if (playerInRange && Input.GetKeyDown(KeyCode.E))
@@ -82,7 +87,7 @@ public class NpcBot : MonoBehaviour
         }
 
         currentLine = lineIndex;
-
+        Debug.Log(dialogueLines[currentLine].npcText);
         if (dialogueText != null) dialogueText.text = dialogueLines[currentLine].npcText;
 
         ShowChoices();
@@ -159,6 +164,7 @@ public class NpcBot : MonoBehaviour
         if (choiceButtons != null)
             foreach (var b in choiceButtons)
                 if (b != null) b.gameObject.SetActive(false);
+        endAction(currentLine);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

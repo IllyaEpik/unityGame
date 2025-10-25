@@ -1,4 +1,6 @@
+using System;
 using System.Threading;
+using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.iOS;
@@ -19,6 +21,7 @@ public class enemyBot : MonoBehaviour
 
     [SerializeField] Transform FirePoint;
     [SerializeField] Transform detectionZone;
+    public bool isAggressive = true;
     [SerializeField] Transform detectionZoneRight;
     [SerializeField] LayerMask hero;
     [SerializeField] Hero heroObject;
@@ -40,6 +43,7 @@ public class enemyBot : MonoBehaviour
 
     [SerializeField] private GameObject healthBarPrefab;
     private EnemyHealthBar healthBar;
+    public System.Action dyingEvent;
 
 private void Start()
 {
@@ -47,21 +51,25 @@ private void Start()
     rb = GetComponent<Rigidbody2D>();
     currentHealth = maxHealth;
 
-    // создаём личный бар для каждого врага
-    if (healthBarPrefab != null)
-    {
-        GameObject bar = Instantiate(healthBarPrefab, transform.position + new Vector3(0, 1.5f, 0), Quaternion.identity);
-        healthBar = bar.GetComponent<EnemyHealthBar>();
-        healthBar.target = transform;
-        healthBar.offset = new Vector3(0, 5f, 0);
-    }
+        // создаём личный бар для каждого врага
+        if (healthBarPrefab != null)
+        {
+            GameObject bar = Instantiate(healthBarPrefab, transform.position + new Vector3(0, 1.5f, 0), Quaternion.identity);
+            healthBar = bar.GetComponent<EnemyHealthBar>();
+            healthBar.target = transform;
+            healthBar.offset = new Vector3(0, 5f, 0);
+        }
+        dyingEvent = new System.Action(idk);
 }
-
+    public void idk(){}
     private void FixedUpdate()
     {
-        cooldownCurrent -= Time.fixedDeltaTime;
-        Flip();
-        // CheckPlayerDistance();
+        if (isAggressive)
+        {
+            cooldownCurrent -= Time.fixedDeltaTime;
+            Flip();
+            // CheckPlayerDistance();
+        }
     }
     public void OnPlayerShoot()
     {
@@ -170,8 +178,9 @@ private void Start()
 private void Die()
 {
     animator.SetTrigger("isDead");
-    if (healthBar != null)
-        Destroy(healthBar.gameObject); // удалить бар вместе с врагом
+        if (healthBar != null)
+            Destroy(healthBar.gameObject); // удалить бар вместе с врагом
+    dyingEvent();
     Destroy(gameObject, 1f);
 }
 

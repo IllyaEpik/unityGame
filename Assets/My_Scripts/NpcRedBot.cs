@@ -1,17 +1,22 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
+using UnityEngine.Splines;
 
 public class RedBot : MonoBehaviour
 {
-    [Header("UI Elements")]
-    [SerializeField] private GameObject dialoguePanel;
-    [SerializeField] private TMP_Text dialogueText;
-    [SerializeField] private Button talkButton;
+    // [Header("Диалоговые данные")]
+    // [SerializeField] private DialogueLine[] dialogueLines;
 
-    [Header("Choices")]
-    [SerializeField] private Button[] choiceButtons; 
-    [SerializeField] private TMP_Text[] choiceTexts;
+    // [Header("UI Elements")]
+    // [SerializeField] private GameObject dialoguePanel;
+    // [SerializeField] private TMP_Text dialogueText;
+    // [SerializeField] private Button talkButton;
+
+    // [Header("Choices")]
+    // [SerializeField] private Button[] choiceButtons; 
+    // [SerializeField] private TMP_Text[] choiceTexts;
 
     [Header("Behavior")]
     [SerializeField] private float attackSpeed = 2.5f;
@@ -38,20 +43,33 @@ public class RedBot : MonoBehaviour
     private bool isAggressive = false;
     private bool playerInRange = false;
     private Transform target;
-
+    private NpcBot dialogScript;
+    private enemyBot attackScript;
     void Start()
     {
         currentHealth = maxHealth;
+        dialogScript = GetComponent<NpcBot>();
+        attackScript = GetComponent<enemyBot>();
+        attackScript.isAggressive = false;
+        attackScript.dyingEvent = Die;
+        // if (talkButton != null) talkButton.gameObject.SetActive(false);
+        // if (dialoguePanel != null) dialoguePanel.SetActive(false);
+        // if (talkButton != null) talkButton.onClick.AddListener(OnTalkButtonPressed);
 
-        if (talkButton != null) talkButton.gameObject.SetActive(false);
-        if (dialoguePanel != null) dialoguePanel.SetActive(false);
-        if (talkButton != null) talkButton.onClick.AddListener(OnTalkButtonPressed);
-
-        if (choiceButtons != null)
-            foreach (var b in choiceButtons)
-                if (b != null) b.gameObject.SetActive(false);
+        // if (choiceButtons != null)
+        //     foreach (var b in choiceButtons)
+        //         if (b != null) b.gameObject.SetActive(false);
+        dialogScript.endAction = new Action<int>(endDialog);
     }
-
+    private void endDialog(int currentLine)
+    {
+        Debug.Log(currentLine);
+        if (currentLine == 3)
+        {
+            // isAggressive = true;
+            attackScript.isAggressive = true;
+        }
+    }
     void Update()
     {
         currentCooldown -= Time.deltaTime;
@@ -68,58 +86,58 @@ public class RedBot : MonoBehaviour
     // --- Dialogue ---
     void StartDialogue()
     {
-        dialogueActive = true;
-        if (dialoguePanel != null) dialoguePanel.SetActive(true);
-        if (dialogueText != null)
-            dialogueText.text = "Задание: уничтожить синего бота. Он может притворяться, что он твой друг, так что не дай ему договорить.";
+        // dialogueActive = true;
+        // if (dialoguePanel != null) dialoguePanel.SetActive(true);
+        // if (dialogueText != null)
+        //     dialogueText.text = "Задание: уничтожить синего бота. Он может притворяться, что он твой друг, так что не дай ему договорить.";
 
-        ShowChoices();
+        // ShowChoices();
     }
 
     void ShowChoices()
     {
-        string[] options = { "Согласиться", "Отказаться" };
-        for (int i = 0; i < choiceButtons.Length; i++)
-        {
-            if (i < options.Length)
-            {
-                choiceButtons[i].gameObject.SetActive(true);
-                choiceTexts[i].text = options[i];
+        // string[] options = { "Согласиться", "Отказаться" };
+        // for (int i = 0; i < choiceButtons.Length; i++)
+        // {
+        //     if (i < options.Length)
+        //     {
+        //         choiceButtons[i].gameObject.SetActive(true);
+        //         choiceTexts[i].text = options[i];
 
-                int idx = i;
-                choiceButtons[i].onClick.RemoveAllListeners();
-                choiceButtons[i].onClick.AddListener(() => OnChoiceSelected(idx));
-            }
-            else
-            {
-                choiceButtons[i].gameObject.SetActive(false);
-            }
-        }
+        //         int idx = i;
+        //         choiceButtons[i].onClick.RemoveAllListeners();
+        //         choiceButtons[i].onClick.AddListener(() => OnChoiceSelected(idx));
+        //     }
+        //     else
+        //     {
+        //         choiceButtons[i].gameObject.SetActive(false);
+        //     }
+        // }
     }
 
     void OnChoiceSelected(int index)
     {
-        if (index == 0)
-        {
-            dialogueText.text = "Хорошо. Следи за ним.";
-            EndDialogue();
-        }
-        else if (index == 1)
-        {
-            dialogueText.text = "Ты ослушался приказа... Теперь ты враг!";
-            EndDialogue();
-            BecomeAggressive();
-        }
+        // if (index == 0)
+        // {
+        //     dialogueText.text = "Хорошо. Следи за ним.";
+        //     EndDialogue();
+        // }
+        // else if (index == 1)
+        // {
+        //     dialogueText.text = "Ты ослушался приказа... Теперь ты враг!";
+        //     EndDialogue();
+        //     BecomeAggressive();
+        // }
     }
 
     void EndDialogue()
     {
-        dialogueActive = false;
-        if (dialoguePanel != null) dialoguePanel.SetActive(false);
+        // dialogueActive = false;
+        // if (dialoguePanel != null) dialoguePanel.SetActive(false);
 
-        if (choiceButtons != null)
-            foreach (var b in choiceButtons)
-                b.gameObject.SetActive(false);
+        // if (choiceButtons != null)
+        //     foreach (var b in choiceButtons)
+        //         b.gameObject.SetActive(false);
     }
 
     public void BecomeAggressive()
@@ -169,7 +187,8 @@ public class RedBot : MonoBehaviour
     void Die()
     {
         SpawnReinforcements();
-        Destroy(gameObject, 1f);
+        attackScript.dyingEvent = attackScript.idk;
+        // Destroy(gameObject, 1f);
     }
 
     void SpawnReinforcements()
@@ -179,35 +198,35 @@ public class RedBot : MonoBehaviour
         Vector2 center = transform.position;
         for (int i = 0; i < reinforcementCount; i++)
         {
-            Vector2 rnd = Random.insideUnitCircle * reinforcementRadius;
+            Vector2 rnd = UnityEngine.Random.insideUnitCircle * reinforcementRadius;
             Vector2 spawnPos = center + rnd;
             Instantiate(reinforcementPrefab, spawnPos, Quaternion.identity);
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("hero"))
-        {
-            playerInRange = true;
-            if (talkButton != null) talkButton.gameObject.SetActive(true);
-        }
-    }
+    // private void OnTriggerEnter2D(Collider2D collision)
+    // {
+    //     if (collision.CompareTag("hero"))
+    //     {
+    //         playerInRange = true;
+    //         if (talkButton != null) talkButton.gameObject.SetActive(true);
+    //     }
+    // }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("hero"))
-        {
-            playerInRange = false;
-            if (talkButton != null) talkButton.gameObject.SetActive(false);
-            EndDialogue();
-        }
-    }
+    // private void OnTriggerExit2D(Collider2D collision)
+    // {
+    //     if (collision.CompareTag("hero"))
+    //     {
+    //         playerInRange = false;
+    //         if (talkButton != null) talkButton.gameObject.SetActive(false);
+    //         EndDialogue();
+    //     }
+    // }
 
-    void OnTalkButtonPressed()
-    {
-        if (!dialogueActive) StartDialogue();
-    }
+    // void OnTalkButtonPressed()
+    // {
+    //     if (!dialogueActive) StartDialogue();
+    // }
 
     private void OnDrawGizmosSelected()
     {

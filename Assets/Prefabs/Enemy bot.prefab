@@ -235,9 +235,9 @@ GameObject:
   - component: {fileID: 7246121502034423090}
   - component: {fileID: 6736188301497397651}
   - component: {fileID: 2115807129965615291}
-  - component: {fileID: 7697053481392955900}
   - component: {fileID: 3810552657440852052}
   - component: {fileID: 8834320784528608178}
+  - component: {fileID: 6062738436405132236}
   m_Layer: 7
   m_Name: Enemy bot
   m_TagString: enemy
@@ -355,33 +355,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 5.21, y: 8.5}
   m_Direction: 0
---- !u!114 &7697053481392955900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4230844430991088939}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e767aa402a5d7ce4aa330d29b515931e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FirePoint: {fileID: 4662576110824545398}
-  detectionZone: {fileID: 8395323062684339571}
-  detectionZoneRight: {fileID: 3445015455209096975}
-  hero:
-    serializedVersion: 2
-    m_Bits: 64
-  heroObject: {fileID: 0}
-  plasmaPrefab: {fileID: 2706267242370651042, guid: e7758fec670ba4840bbe6f45fd168e63, type: 3}
-  damagePerHit: 50
-  safeDistance: 3
-  moveSpeed: 2
-  jumpForce: 0
-  maxHealth: 100
-  currentHealth: 0
-  healthBarPrefab: {fileID: 2587504997564988471, guid: 2313d7bcb58494889906776587b65bbf, type: 3}
 --- !u!95 &3810552657440852052
 Animator:
   serializedVersion: 7
@@ -431,3 +404,31 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &6062738436405132236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4230844430991088939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e767aa402a5d7ce4aa330d29b515931e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FirePoint: {fileID: 4662576110824545398}
+  detectionZone: {fileID: 8395323062684339571}
+  isAggressive: 1
+  detectionZoneRight: {fileID: 3445015455209096975}
+  hero:
+    serializedVersion: 2
+    m_Bits: 64
+  heroObject: {fileID: 0}
+  plasmaPrefab: {fileID: 2706267242370651042, guid: e7758fec670ba4840bbe6f45fd168e63, type: 3}
+  damagePerHit: 50
+  safeDistance: 3
+  moveSpeed: 2
+  jumpForce: 5
+  maxHealth: 100
+  currentHealth: 0
+  healthBarPrefab: {fileID: 2587504997564988471, guid: 2313d7bcb58494889906776587b65bbf, type: 3}
