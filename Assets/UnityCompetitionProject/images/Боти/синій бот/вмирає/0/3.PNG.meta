@@ -1,13 +1,5 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
-guid: e98a41687b76e7d408e3d5b3b2178380
-=======
-<<<<<<< HEAD
 guid: a1e2042b3c817cf4d9330fe3fbdd3cfc
-=======
-guid: 9e8475633a3b5ad4bb9c9a3bdd72669a
->>>>>>> origin/Jetpack
->>>>>>> origin/Red_bot_npc
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -147,7 +139,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -934,7 +926,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
