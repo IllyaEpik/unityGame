@@ -345,19 +345,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5cdca35ec89cfa42bec18534191cbce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelWidth: 100
+  levelWidth: 200
   levelHeightChange: 5
   levelHeight: 25
+  noiseScale: 0.02
   enemyBotCount: 0
   enemyPlantCount: 0
-  noiseScale: 0.02
+  seed: 0
   enemyBotPrefab: {fileID: 4230844430991088939, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
   enemyPlantPrefab: {fileID: 2261049689267568082, guid: b2eeffa5b8d85cd41a36fd5f87848ea3, type: 3}
   npcPrefab: {fileID: 8080085319249185538, guid: 1391b8a0dae23f94fb85edb6dd04544d, type: 3}
   groundTilemap: {fileID: 1980942091}
   tilePalette:
   - {fileID: 11400000, guid: c1f6e0002b0efcc47b94ffb106b3214d, type: 2}
-  seed: 0
+  - {fileID: 11400000, guid: c36df87a84eafc440a70fdc767cb97b9, type: 2}
 --- !u!1 &247790626
 GameObject:
   m_ObjectHideFlags: 0
@@ -904,7 +905,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.8
+  m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -2155,6 +2156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cfebe5f5459467458ccf7bb16a15a2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  surfaceGenerator: {fileID: 176969393}
 --- !u!4 &1009511081
 Transform:
   m_ObjectHideFlags: 0

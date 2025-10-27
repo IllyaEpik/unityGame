@@ -1,5 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/My_Scripts/languages.meta
 guid: 5104544d98f364ebab62f198b202cfa3
+=======
+<<<<<<< HEAD
+guid: 90789e63a5d49e5439caf6f1895e86d9
+=======
+guid: bb88dbd9bc5b0954ba85cf1bf2d899a9
+>>>>>>> origin/Red_bot_npc
+>>>>>>> origin/Generation:Assets/UnityCompetitionProject/images/Боти/червоний бот.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

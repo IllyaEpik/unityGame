@@ -1,5 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/My_Scripts/blocks.meta
 guid: d23fc7884b1be418a95773b753b0f55b
+=======
+<<<<<<< HEAD
+guid: ac69cce084b9a8341b27a09fc340a5fd
+=======
+guid: f05ecbe4696365a47bff4fc6556ab8a2
+>>>>>>> origin/Red_bot_npc
+>>>>>>> origin/Generation:Assets/UnityCompetitionProject/images/Боти/синій бот.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

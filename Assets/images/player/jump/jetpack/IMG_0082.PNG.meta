@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+guid: 747c58ff63c754a4db7592c8c2e0c58a
+=======
 guid: 28e3fdcd6817bf94eb7d6ae43912fc0c
+>>>>>>> origin/Red_bot_npc
 TextureImporter:
   internalIDToNameTable:
   - first:

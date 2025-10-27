@@ -1,114 +1,129 @@
-using System.Threading;
-using NUnit.Framework.Constraints;
-using Unity.Collections;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+
 public class surfaceGenerator : MonoBehaviour
 {
     public int levelWidth = 250;
     public float levelHeightChange = 15f;
     public int levelHeight = 50;
-    public int[][] map;
-    public int[][] structure;
+    public float noiseScale = 0.1f;
+
     public int enemyBotCount = 2;
     public int enemyPlantCount = 2;
 
-    public float noiseScale = 0.1f;
-    // public GameObject groundTilePrefab;
-    private System.Random random = new System.Random();
+    public int seed;
     private int[] surface;
+    public int[][] map;
+
     [SerializeField] private GameObject enemyBotPrefab;
     [SerializeField] private GameObject enemyPlantPrefab;
     [SerializeField] private GameObject npcPrefab;
     [SerializeField] private Tilemap groundTilemap;
     [SerializeField] private TileBase[] tilePalette;
-    public int seed;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
+        // LoadSeed(); // Загружаем сид, если есть
+        seed = System.DateTime.Now.Millisecond;
+        Random.InitState(seed);
+        // Random.InitState(seed);
+        PlayerPrefs.SetInt("worldSeed", seed);
         generateSurface();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void LoadSeed(int loadedSeed)
     {
-
-    }
-    void generateSurface()
-    {
-        surface = new int[levelWidth];
-        map = new int[levelWidth][];
-        if (seed == 0)
-            seed = System.DateTime.Now.Millisecond;
-
+        seed = loadedSeed;
         Random.InitState(seed);
+        generateSurface();
+        // if (PlayerPrefs.HasKey("worldSeed"))
+        // {
+        //     seed = PlayerPrefs.GetInt("worldSeed");
+        //     Debug.Log($"Loaded seed: {seed}");
+        // }
+        // else
+        // {
+        //     seed = System.DateTime.Now.Millisecond;
+        //     PlayerPrefs.SetInt("worldSeed", seed);
+        //     PlayerPrefs.Save();
+        //     Debug.Log($"Generated new seed: {seed}");
+        // }
+
+        
+        
+    }
+
+    public void generateSurface()
+    {
+        surface = new int[levelWidth * 2];
+        map = new int[levelWidth * 2][];
+        groundTilemap.ClearAllTiles();
+
         float offset = Random.Range(0f, 9999f);
 
-
-        for (int x = 0; x < levelWidth; x++)
+        // Генерация в обе стороны от центра (влево и вправо)
+        for (int i = -levelWidth; i < levelWidth; i++)
         {
-            map[x] = new int[levelHeight];
-            float floatY = Mathf.PerlinNoise((x + offset) * noiseScale, 0) * levelHeightChange;
-            // if (y>)
+            int xIndex = i + levelWidth;
+            map[xIndex] = new int[levelHeight];
+            float floatY = Mathf.PerlinNoise((i + offset) * noiseScale, 0) * levelHeightChange;
             int y = Mathf.FloorToInt(floatY);
-            surface[x] = y;
-            // Instantiate(groundTilePrefab, new Vector2(x, y), Quaternion.identity, transform);
+            surface[xIndex] = y;
 
             for (int countY = 0; countY < levelHeight; countY++)
             {
                 if (countY > y)
                 {
-
-                    map[x][countY] = 1;
+                    map[xIndex][countY] = 1;
                     TileBase tileToPlace = tilePalette[0];
-                    groundTilemap.SetTile(new Vector3Int(x - levelWidth / 2, -countY, 0), tileToPlace);
+                    groundTilemap.SetTile(new Vector3Int(i, -countY, 0), tileToPlace);
                 }
-                // else if (countY+1==y && random.Next(0,5)==1)
-                // {
-                //     if (enemyBotCountLeft > 0 && random.Next(0,5)==1)
-                //     {
-                //         enemyBotCountLeft--;
-                //         
-                //     }else if (enemyPlantCount > 0)
-                //     {
-                //         enemyPlantCountLeft--;
-                //     }
-                // }
             }
         }
+
+        generateStructure(npcPrefab);
         // generateEnemies(enemyBotCount, enemyBotPrefab);
         // generateEnemies(enemyPlantCount, enemyPlantPrefab);
-        generateStructure(npcPrefab);
     }
+
     void generateEnemies(int count, GameObject prefab)
     {
-
-
-        // float offset = Random.Range(0f, 9999f);
         for (int e = 0; e < count; e++)
         {
-            // Mathf.FloorToInt()
-            float x = Random.Range(0f, levelWidth * 4);
-            // int y = surface[x];
-            Instantiate(prefab, new Vector2(x - levelWidth * 2, 0), Quaternion.identity);
+            float x = Random.Range(-levelWidth, levelWidth);
+            Instantiate(prefab, new Vector2(x, 0), Quaternion.identity);
         }
     }
-    // 4.9
+
     void generateStructure(GameObject prefab)
     {
-        int currentY = surface[surface.Length - 1] + 1;
-        Debug.Log(currentY);
-        TileBase tileToPlace = tilePalette[0];
+        // int middleIndex = surface.Length / 2;
+        int currentYLeft = surface[0]+1;
+        int currentYRight = surface[surface.Length-1]+1;
+
+        TileBase tileToPlace = tilePalette[1];
         int distance = 25;
+
+        // Генерация платформы справа
         for (int x = 0; x < distance; x++)
         {
             for (int y = 0; y < levelHeight; y++)
             {
-                groundTilemap.SetTile(new Vector3Int(levelWidth / 2 + x, -currentY-y, 0), tileToPlace);
-                
+                groundTilemap.SetTile(new Vector3Int(levelWidth + x, -currentYRight - y, 0), tileToPlace);
             }
         }
-        Instantiate(prefab, new Vector2((levelWidth / 2 +distance/2)*5 + 2.5f, currentY*-5+10), Quaternion.identity);
+
+        // Генерация платформы слева
+        for (int x = 0; x < distance; x++)
+        {
+            for (int y = 0; y < levelHeight; y++)
+            {
+                groundTilemap.SetTile(new Vector3Int(-levelWidth - x, -currentYLeft - y, 0), tileToPlace);
+            }
+        }
+
+        // Спавн NPC на обеих сторонах
+        Instantiate(prefab, new Vector2((levelWidth+distance/2 + 2.5f)*5, -currentYRight-3 ), Quaternion.identity);
+        Instantiate(prefab, new Vector2((-levelWidth-distance/2 - 2.5f)*5, -currentYLeft-3 ), Quaternion.identity);
     }
 }

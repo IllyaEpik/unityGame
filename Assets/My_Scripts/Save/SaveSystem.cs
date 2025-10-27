@@ -8,7 +8,7 @@ public class SaveSystem : MonoBehaviour
 {
     // Путь к файлу сохранения.
     private string savePath;
-
+    public surfaceGenerator surfaceGenerator;
     private void Awake()
     {
         // Формируем путь к сейву. 
@@ -43,7 +43,7 @@ public class SaveSystem : MonoBehaviour
         data.health = player.health;
         data.battery = player.battery;
         data.timestamp = System.DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-
+        data.seed = surfaceGenerator.seed;
         // Враги
         // Находим ВСЕХ активных врагов типа EnemyPlant на сцене прямо сейчас 
         SaveMob<EnemyPlant>(data);
@@ -66,11 +66,11 @@ public class SaveSystem : MonoBehaviour
             Debug.LogWarning("сейва нет"); // Не нашли сейв — не беда, можно начать сначала!
             return false;
         }
-
+        
         // Читаем JSON и воскрешаем всех из цифрового небытия
         string json = File.ReadAllText(savePath);
         SaveData data = JsonUtility.FromJson<SaveData>(json);
-
+        surfaceGenerator.LoadSeed(data.seed);
         // Восстанавливаем игрока. 
         player.transform.position = new Vector2(data.playerX, data.playerY);
         player.health = data.health;

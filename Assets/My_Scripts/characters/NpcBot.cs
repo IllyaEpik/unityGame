@@ -46,7 +46,6 @@ public class NpcBot : MonoBehaviour
     private bool playerInRange = false;
     private bool dialogueActive = false;
     public System.Action<int> endAction;
-
     void Start()
     {
         if (talkButton != null) talkButton.gameObject.SetActive(false);

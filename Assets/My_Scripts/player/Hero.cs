@@ -109,7 +109,7 @@ public class Hero : MonoBehaviour
         }
         else
         {
-            isGround = false;
+            isGround = false; 
             isJump = false;
             animator.SetBool("isJump", isJump);
         }

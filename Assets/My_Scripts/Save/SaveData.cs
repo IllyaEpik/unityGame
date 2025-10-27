@@ -25,7 +25,7 @@ public class SaveData
     public float playerY;
     public float health;
     public int battery;
-
+    public int seed;
     // Время сохранения
     public long timestamp;
     
