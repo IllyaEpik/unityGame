@@ -7,91 +7,135 @@ using UnityEngine.iOS;
 
 public class enemyBot : MonoBehaviour
 {
-    // private bool isLeft = false;
-    Vector2 size = new Vector2(25, 3);
     private float cooldown = 2f;
     private float cooldownCurrent = 0;
+
     private Animator animator;
-    private int isLeft = 1;
-
-    private bool isAlive = true;
-
-    private bool isDead = false;
-
-
-    [SerializeField] Transform FirePoint;
-    [SerializeField] Transform detectionZone;
-    public bool isAggressive = true;
-    [SerializeField] Transform detectionZoneRight;
-    [SerializeField] LayerMask hero;
-    [SerializeField] Hero heroObject;
-    [SerializeField] private GameObject plasmaPrefab;
-
-    [SerializeField] private float damagePerHit = 50f; // половина здоровья
-    public float safeDistance = 3f;
-    public float moveSpeed = 2f;
-    public float jumpForce = 5f;
     private Rigidbody2D rb;
     private bool isGrounded = true;
+    private bool isAlive = true;
 
-    // [SerializeField] private HealthBar bar;
+    [Header("References")]
+    [SerializeField] private Transform FirePoint;
+    [SerializeField] private Transform LeftZone;             
+    [SerializeField] private Transform RightZone;            
+    [SerializeField] private Transform LeftZoneDetection;    
+    [SerializeField] private Transform RightZoneDetection;   
+    [SerializeField] private LayerMask heroMask;
+    [SerializeField] private Hero heroObject;
+    [SerializeField] private GameObject plasmaPrefab;
 
+    [Header("Stats")]
+    public float moveSpeed = 2f;
+    public float jumpForce = 5f;
+    public float safeDistance = 3f;
+    [SerializeField] private float damagePerHit = 50f;
 
+    [Header("Zone Sizes")]
+    public Vector2 attackZoneSize = new Vector2(25, 8);
+    public Vector2 detectionZoneSize = new Vector2(75, 24);
 
-    public float maxHealth = 100;
-    public float currentHealth;
+    public bool isAggressive = true;
+    public System.Action dyingEvent = delegate { };
 
-    [SerializeField] private GameObject healthBarPrefab;
-    private EnemyHealthBar healthBar;
-    public System.Action dyingEvent;
+    private float maxHealth = 100f;
+    private float currentHealth;
+    private Vector2 lastPos;
 
-private void Start()
-{
-    animator = GetComponent<Animator>();
-    rb = GetComponent<Rigidbody2D>();
-    currentHealth = maxHealth;
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        currentHealth = maxHealth;
+        lastPos = transform.position;
+    }
 
-        // создаём личный бар для каждого врага
-        if (healthBarPrefab != null)
-        {
-            GameObject bar = Instantiate(healthBarPrefab, transform.position + new Vector3(0, 1.5f, 0), Quaternion.identity);
-            healthBar = bar.GetComponent<EnemyHealthBar>();
-            healthBar.target = transform;
-            healthBar.offset = new Vector3(0, 5f, 0);
-        }
-        dyingEvent = new System.Action(idk);
-}
-    public void idk(){}
     private void FixedUpdate()
     {
-        if (isAggressive)
+        if (!isAlive || heroObject == null || !isAggressive) return;
+
+        cooldownCurrent -= Time.fixedDeltaTime;
+
+        HandleMovement();
+        HandleAttack();
+        CheckStuckAndJump();
+    }
+
+    private void HandleMovement()
+    {
+        bool heroInLeftDetection = Physics2D.OverlapBox(LeftZoneDetection.position, detectionZoneSize, 0, heroMask);
+        bool heroInRightDetection = Physics2D.OverlapBox(RightZoneDetection.position, detectionZoneSize, 0, heroMask);
+        bool heroInLeftAttack = Physics2D.OverlapBox(LeftZone.position, attackZoneSize, 0, heroMask);
+        bool heroInRightAttack = Physics2D.OverlapBox(RightZone.position, attackZoneSize, 0, heroMask);
+
+        float distance = Vector2.Distance(transform.position, heroObject.transform.position);
+
+        Vector2 lv = rb.linearVelocity;
+
+        // если герой в зоне Detection, но не в атаке
+        if ((heroInLeftDetection || heroInRightDetection) && !(heroInLeftAttack || heroInRightAttack))
         {
-            cooldownCurrent -= Time.fixedDeltaTime;
-            Flip();
-            // CheckPlayerDistance();
+            if (distance > safeDistance)
+            {
+                Vector2 dir = (heroObject.transform.position - transform.position).normalized;
+                lv.x = dir.x * moveSpeed;
+                FlipSprite(dir.x);
+            }
+            else
+            {
+                lv.x = 0; // слишком близко — стоим
+            }
+        }
+        else
+        {
+            lv.x = 0; // герой вне detection-зоны
+        }
+
+        rb.linearVelocity = lv;
+    }
+
+    private void HandleAttack()
+    {
+        bool heroInLeftAttack = Physics2D.OverlapBox(LeftZone.position, attackZoneSize, 0, heroMask);
+        bool heroInRightAttack = Physics2D.OverlapBox(RightZone.position, attackZoneSize, 0, heroMask);
+
+        if (heroInLeftAttack)
+            Attack(-180);
+        else if (heroInRightAttack)
+            Attack(0);
+    }
+
+    private void Attack(int direction)
+    {
+        if (cooldownCurrent <= 0)
+        {
+            Instantiate(plasmaPrefab, FirePoint.position, Quaternion.Euler(0, 0, direction));
+            cooldownCurrent = cooldown;
         }
     }
-    public void OnPlayerShoot()
+
+    private void FlipSprite(float dirX)
     {
-        if (isGrounded)
+        if (dirX > 0)
+            transform.localScale = new Vector3(1, 1, 1);
+        else if (dirX < 0)
+            transform.localScale = new Vector3(-1, 1, 1);
+    }
+
+    private void CheckStuckAndJump()
+    {
+        float moved = Mathf.Abs(transform.position.x - lastPos.x);
+        Vector2 lv = rb.linearVelocity;
+
+        if (moved < 0.01f && Mathf.Abs(lv.x) > 0.1f && isGrounded)
         {
-            // , ForceMode2D.Impulse
-            
-            rb.AddForce(Vector2.up * jumpForce);
+            lv.y = jumpForce;
+            rb.linearVelocity = lv;
             isGrounded = false;
         }
-    }
-    // private void CheckPlayerDistance()
-    // {
-    //     if (heroObject == null) return;
 
-    //     float distance = Vector2.Distance(transform.position, heroObject.transform.position);
-    //     if (distance < safeDistance)
-    //     {
-    //         Vector2 dir = (transform.position - heroObject.transform.position).normalized;
-    //         transform.position += (Vector3)(dir * moveSpeed * Time.fixedDeltaTime);
-    //     }
-    // }
+        lastPos = transform.position;
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -99,93 +143,26 @@ private void Start()
             isGrounded = true;
     }
 
-    // public void getDamageForBot()
-    // {
-    //     Destroy(gameObject);
-    // }
-
-    private void Flip()
-    {
-        Collider2D[] right = Physics2D.OverlapBoxAll(detectionZoneRight.position, size, 0f, hero);
-        Collider2D[] left = Physics2D.OverlapBoxAll(detectionZone.position, size, 0f, hero);
-
-        if (right.Length != 0 || left.Length != 0)
-        {
-            foreach (Collider2D col in right)
-            {
-                if (col.CompareTag("heroAttack"))
-                {
-                    OnPlayerShoot();
-                }
-                if (col.CompareTag("hero"))
-                {
-                    // animator.SetBool("isAttack", true);
-                    attackHero(isLeft*180);
-                    // isLeft = 
-                    // transform.localScale *= new Vector2(1, 1);
-                }
-            }
-            foreach (Collider2D col in left)
-            {
-                if (col.CompareTag("heroAttack"))
-                {
-                    OnPlayerShoot();
-                }
-                if (col.CompareTag("hero"))
-                {
-                    // animator.SetBool("isAttack", true);
-                    transform.localScale *= new Vector2(-1, 1);
-                    if (isLeft == 0)
-                    {
-                        isLeft = 1;
-                    }
-                    else
-                    {
-                        isLeft = 0;
-                    }
-                    
-                    // attackHero(isLeft*180);
-                    Debug.Log(transform.localScale.x);
-                }
-            }
-        }
-        else
-        {
-            // animator.SetBool("isAttack", false);
-        }
-    }
-
-    private void attackHero(int left)
-    {
-        if (cooldownCurrent <= 0)
-        {
-            Instantiate(plasmaPrefab, FirePoint.position, Quaternion.Euler(0, 0, left));
-            cooldownCurrent = cooldown;
-        }
-    }
-
     public void TakeDamage(float amount)
     {
-        // if (!isAlive) return;
-
         currentHealth -= amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-        healthBar.UpdateHealth(currentHealth, maxHealth);
         if (currentHealth <= 0)
             Die();
     }
 
-private void Die()
-{
-    animator.SetTrigger("isDead");
-        if (healthBar != null)
-            Destroy(healthBar.gameObject); // удалить бар вместе с врагом
-    dyingEvent();
-    Destroy(gameObject, 1f);
-}
+    private void Die()
+    {
+        isAlive = false;
+        rb.linearVelocity = Vector2.zero;
+        dyingEvent();
+        Destroy(gameObject, 1f);
+    }
 
     public void OnHit()
     {
         TakeDamage(damagePerHit);
     }
+
+    // Старый метод для совместимости со старыми скриптами
+    public void idk() { }
 }
