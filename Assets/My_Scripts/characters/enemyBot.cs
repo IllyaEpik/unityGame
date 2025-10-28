@@ -173,6 +173,7 @@ private void Start()
         healthBar.UpdateHealth(currentHealth, maxHealth);
         if (currentHealth <= 0)
             Die();
+
     }
 
 private void Die()
@@ -182,6 +183,7 @@ private void Die()
             Destroy(healthBar.gameObject); // удалить бар вместе с врагом
     dyingEvent();
     Destroy(gameObject, 1f);
+    gameObject.layer = LayerMask.NameToLayer("Default");
 }
 
     public void OnHit()

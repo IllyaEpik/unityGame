@@ -24,6 +24,11 @@ public class Hero : MonoBehaviour
 
     [SerializeField] LayerMask ground;
     [SerializeField] Transform zoneGround;
+
+
+
+    private bool canAttack = true;
+    [SerializeField] private float attackCooldown = 0.5f;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -48,9 +53,12 @@ public class Hero : MonoBehaviour
         // if (Input.GetKeyDown(KeyCode.E))
         // {
         // (this.isLeft) ? Quaternion.Euler(0, 0, 90) :
+        if (!canAttack) return;
 
         Instantiate(plasmaPrefab, transform.position, Quaternion.Euler(0, 0, this.isLeft ? 0 : 180));
         // }
+        canAttack = false;
+        Invoke(nameof(ResetAttack), attackCooldown);
     }
     void Update()
     {
@@ -120,5 +128,10 @@ public class Hero : MonoBehaviour
     {
         hasShield = true;
         shieldIcon.enabled = true;
+    }
+
+    private void ResetAttack()
+    {
+        canAttack = true;
     }
 }

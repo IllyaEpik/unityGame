@@ -73,6 +73,11 @@ public class plasma : MonoBehaviour
                 RemoveAttack();
                 return;
             }
+            
+            if (someone.CompareTag("ground"))
+            {
+                RemoveAttack();
+            }
             return;
         }
 
@@ -84,5 +89,10 @@ public class plasma : MonoBehaviour
         return;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log($"Bullet hit {collision.name} (tag: {collision.tag}, layer: {collision.gameObject.layer})");
+    }
+    
     
 }

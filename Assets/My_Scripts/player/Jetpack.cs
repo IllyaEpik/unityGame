@@ -71,7 +71,8 @@ public class Jetpack : MonoBehaviour
             rb.AddForce(hero.isLeft ? Vector2.left * jetpackForce * 10 : Vector2.right * jetpackForce * 10);
             batteryTimer += Time.fixedDeltaTime;
             animator.SetBool("isFlying", true);
-            
+            Debug.Log("Jetpack animation triggered!");
+
             if (batteryTimer >= 2f)
             {
                 hero.battery -= 1;
@@ -79,6 +80,10 @@ public class Jetpack : MonoBehaviour
                 manager.updateBattery();
                 if (hero.battery < 0) hero.battery = 0;
             }
+        }
+        if (!isUsingJetpack)
+        {
+            animator.SetBool("isFlying", false);
         }
     }
 
@@ -88,6 +93,7 @@ public void UseJetpackFromUI()
     {
         isUsingJetpack = true;
         animator.SetBool("isFlying", true);
+        Debug.Log("Jetpack animation triggered!");
 
         rb.AddForce(Vector2.up * jetpackForce);
         rb.AddForce(hero.isLeft ? Vector2.left * jetpackForce * 10 : Vector2.right * jetpackForce * 10);
@@ -105,6 +111,7 @@ public void UseJetpackFromUI()
     {
         isUsingJetpack = false;
         animator.SetBool("isFlying", false);
+        Debug.Log("Jetpack animation triggered!");
     }
 }
 }

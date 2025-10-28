@@ -125,5 +125,6 @@ void Start()
         if (healthBar != null)
             Destroy(healthBar.gameObject);
         Destroy(gameObject, 1f);
+        gameObject.layer = LayerMask.NameToLayer("Default");
     }
 }
