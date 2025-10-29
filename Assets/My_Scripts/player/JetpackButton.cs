@@ -26,6 +26,7 @@ public class JetpackButtonController : MonoBehaviour
 
         if (!jetpackMode)
         {
+            Debug.Log(buttonText);
             buttonText.text = LanguageManager.Instance.GetText("jump");
             jetpack.animator.SetBool("isFlying", false);
         }
