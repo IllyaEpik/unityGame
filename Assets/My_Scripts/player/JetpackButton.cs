@@ -9,32 +9,27 @@ public class JetpackButtonController : MonoBehaviour
     public TMP_Text buttonText;
     public Jetpack jetpack;
     public Hero hero;
-    public bool isHolding = false;
-    private bool jetpackMode = false;
+    private bool isHolding = false;
 
     private void Start()
     {
-        jumpButton.onClick.AddListener(OnButtonClick);
         AddHoldEvents();
         buttonText.text = LanguageManager.Instance.GetText("jump");
     }
 
     private void Update()
     {
-        jetpackMode = !hero.isGround;
-        jetpack.isUsingJetpack = isHolding && jetpackMode;
-
-        if (!jetpackMode)
+        // Управление джетпаком через удержание кнопки
+        if (isHolding && hero.battery > 0)
         {
-            buttonText.text = LanguageManager.Instance.GetText("jump");
-            jetpack.animator.SetBool("isFlying", false);
+            jetpack.StartJetpack();
+            buttonText.text = "Jetpack";
         }
-    }
-
-    private void OnButtonClick()
-    {
-        jetpackMode = true;
-        buttonText.text = "Jetpack";
+        else
+        {
+            jetpack.StopJetpack();
+            buttonText.text = LanguageManager.Instance.GetText("jump");
+        }
     }
 
     private void AddHoldEvents()
