@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+guid: 63db2388c85959e499a86b6b0c8ac0f0
+=======
 guid: b2cf84f86a627a04fb0eb04017fa872a
+>>>>>>> origin/AiBotLogic
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
