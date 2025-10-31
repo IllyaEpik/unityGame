@@ -111,7 +111,10 @@ public class enemyBot : MonoBehaviour
         rb.linearVelocity = lv;
 
         float horizontalSpeed = Mathf.Abs(lv.x);
-        animator.SetFloat("moveVector", horizontalSpeed);
+        // animator.SetFloat("moveVector", horizontalSpeed);
+        
+        animator.SetBool("running",horizontalSpeed > 0.1);
+        
     }
 
     private void HandleAttack()
