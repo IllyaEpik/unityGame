@@ -43,12 +43,12 @@ public class RedBot : MonoBehaviour
     private bool isAggressive = false;
     private bool playerInRange = false;
     private Transform target;
-    private NpcBot dialogScript;
+    private DialogueManager dialogScript;
     private enemyBot attackScript;
     void Start()
     {
         currentHealth = maxHealth;
-        dialogScript = GetComponent<NpcBot>();
+        dialogScript = GetComponent<DialogueManager>();
         attackScript = GetComponent<enemyBot>();
         attackScript.isAggressive = false;
         attackScript.dyingEvent = Die;
@@ -59,7 +59,7 @@ public class RedBot : MonoBehaviour
         // if (choiceButtons != null)
         //     foreach (var b in choiceButtons)
         //         if (b != null) b.gameObject.SetActive(false);
-        dialogScript.endAction = new Action<int>(endDialog);
+        // dialogScript.endAction = new Action<int>(endDialog);
     }
     private void endDialog(int currentLine)
     {
