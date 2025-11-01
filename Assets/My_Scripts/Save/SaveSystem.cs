@@ -43,7 +43,10 @@ public class SaveSystem : MonoBehaviour
         data.health = player.health;
         data.battery = player.battery;
         data.timestamp = System.DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-        data.seed = surfaceGenerator.seed;
+        if (surfaceGenerator)
+        {
+            data.seed = surfaceGenerator.seed;
+        }
         // Враги
         // Находим ВСЕХ активных врагов типа EnemyPlant на сцене прямо сейчас 
         SaveMob<EnemyPlant>(data);

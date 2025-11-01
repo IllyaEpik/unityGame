@@ -359,6 +359,10 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: 0.18188572
       objectReference: {fileID: 0}
+    - target: {fileID: 3810552657440852052, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: e4729f29540cd8f4f8df038b1e084579, type: 2}
     - target: {fileID: 4230844430991088939, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
       propertyPath: m_Name
       value: Enemy bot
@@ -2783,11 +2787,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7246121502034423090, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 107.6
+      value: 104.3
       objectReference: {fileID: 0}
     - target: {fileID: 7246121502034423090, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.8
+      value: 20.7
       objectReference: {fileID: 0}
     - target: {fileID: 7246121502034423090, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3152,7 +3156,6 @@ MonoBehaviour:
   buttonText: {fileID: 1171825478}
   jetpack: {fileID: 1946944991}
   hero: {fileID: 1946944988}
-  isHolding: 0
 --- !u!1001 &1352255446
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23825,7 +23828,7 @@ Transform:
   m_GameObject: {fileID: 1934310845}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 113.2, y: -5.5242143, z: 0}
+  m_LocalPosition: {x: 110.2, y: 16.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -24098,10 +24101,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hero: {fileID: 1946944988}
   jetpackForce: 10
-  horizontalBoost: 5
-  animator: {fileID: 0}
+  horizontalBoost: 999
   isUsingJetpack: 0
-  buttonText: {fileID: 1171825478}
+  animator: {fileID: 0}
 --- !u!114 &1946944992
 MonoBehaviour:
   m_ObjectHideFlags: 0
