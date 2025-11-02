@@ -1,3 +1,5 @@
+using UnityEngine.UI;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour
@@ -8,17 +10,29 @@ public class DialogueTrigger : MonoBehaviour
     [Header("Настройки")]
     public bool autoStartOnTrigger = true;
     public bool startOnlyOnce = false;
+   [SerializeField] private Button talkButton;
 
     private bool triggered = false;
 
+    void Start()
+    {
+        talkButton.gameObject.SetActive(false);
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!autoStartOnTrigger || triggered) return;
+
+        if (triggered) return;
 
         if (other.CompareTag("hero"))
         {
-            DialogueManager.Instance.StartDialogue(dialogueLines, OnDialogueEnd);
-            if (startOnlyOnce) triggered = true;
+            if (talkButton == null)
+            {
+                TriggerDialogue();
+                if (startOnlyOnce) triggered = true;
+                return;
+            }
+            talkButton.gameObject.SetActive(true);
+            
         }
     }
 

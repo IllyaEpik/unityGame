@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MissionManager : MonoBehaviour
 {
-    public enemyBot enemy;
+    public GameObject enemy;
     public Hero hero;
 
     public bool isActive = true;
@@ -13,7 +13,6 @@ public class MissionManager : MonoBehaviour
     {
         if (!isActive || isCompleted || isFailed)
             return;
-
         if (hero != null && hero.health <= 0)
         {
             isFailed = true;

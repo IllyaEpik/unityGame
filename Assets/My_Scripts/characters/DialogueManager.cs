@@ -18,7 +18,16 @@ public class DialogueManager : MonoBehaviour
     private int currentLine = 0;
     private bool dialogueActive = false;
     private System.Action onDialogueEnd;
-
+    void Start()
+    {
+        // dialogueActive = false;
+        dialoguePanel.SetActive(false);
+        foreach (var b in choiceButtons) b.gameObject.SetActive(false);
+        // foreach (Button item in choiceButtons)
+        // {
+        //     item.SetActive
+        // }
+    }
     void Awake()
     {
         Instance = this;
