@@ -10,6 +10,8 @@ public class DialogueTrigger : MonoBehaviour
     [Header("Настройки")]
     public bool autoStartOnTrigger = true;
     public bool startOnlyOnce = false;
+
+    public event System.Action onDialogueEnd;
    [SerializeField] private Button talkButton;
 
     private bool triggered = false;
@@ -32,11 +34,10 @@ public class DialogueTrigger : MonoBehaviour
                 return;
             }
             talkButton.gameObject.SetActive(true);
-            
+
         }
     }
 
-    // можешь вызвать вручную из другого скрипта:
     public void TriggerDialogue()
     {
         DialogueManager.Instance.StartDialogue(dialogueLines, OnDialogueEnd);
@@ -46,5 +47,7 @@ public class DialogueTrigger : MonoBehaviour
     {
         // сюда можно добавить действия после окончания диалога
         Debug.Log($"Диалог завершён на объекте {gameObject.name}");
+        onDialogueEnd?.Invoke();
+        GetComponent<RedBotTask>()?.OnDialogueEnd();
     }
 }
