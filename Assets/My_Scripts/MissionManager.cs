@@ -5,7 +5,7 @@ public class MissionManager : MonoBehaviour
     public GameObject enemy;
     public Hero hero;
 
-    public bool isActive = false;
+    public bool isActive = true;
     public bool isCompleted = false;
     public bool isFailed = false;
 
@@ -13,7 +13,6 @@ public class MissionManager : MonoBehaviour
     {
         if (!isActive || isCompleted || isFailed)
             return;
-
         if (hero != null && hero.health <= 0)
         {
             isFailed = true;
@@ -28,13 +27,5 @@ public class MissionManager : MonoBehaviour
             isActive = false;
             Debug.Log("Місію виконано — ворога знищено");
         }
-    }
-
-    public void ActivateMission()
-    {
-        isActive = true;
-        isCompleted = false;
-        isFailed = false;
-        Debug.Log(" Місія активована: ліквідуй ворога");
     }
 }
