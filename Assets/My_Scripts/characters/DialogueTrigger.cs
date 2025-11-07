@@ -1,6 +1,7 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class DialogueTrigger : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class DialogueTrigger : MonoBehaviour
    [SerializeField] private Button talkButton;
 
     private bool triggered = false;
+    internal Action onDialogueEnd;
 
     void Start()
     {

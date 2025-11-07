@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class MissionManager : MonoBehaviour
@@ -8,6 +9,12 @@ public class MissionManager : MonoBehaviour
     public bool isActive = true;
     public bool isCompleted = false;
     public bool isFailed = false;
+
+    internal void ActivateMission()
+    {
+        // throw new NotImplementedException();
+        
+    }
 
     void Update()
     {
