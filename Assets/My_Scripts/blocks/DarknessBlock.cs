@@ -18,7 +18,7 @@ public class DarknessBlock : MonoBehaviour
 
         if (globalLight == null)
         {
-            Debug.LogError("Global Light 2D не найден");
+            Debug.LogError("❌ Global Light 2D не найден!");
             enabled = false;
             return;
         }
@@ -58,6 +58,6 @@ public class DarknessBlock : MonoBehaviour
     private void ToggleLight()
     {
         isDark = !isDark; // Переключаем состояние
-        Debug.Log("Смена света: " + (isDark ? "Тьма" : "Свет"));
+        Debug.Log("🔄 Смена света: " + (isDark ? "Тьма" : "Свет"));
     }
 }

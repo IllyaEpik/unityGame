@@ -60,10 +60,25 @@ public class SaveSystem : MonoBehaviour
         File.WriteAllText(savePath, json);
         Debug.Log("Game saved вроде!");
     }
-
+    public void resetAll()
+    {
+        // string json = JsonUtility.ToJson("", true);
+        // JsonUtility.FromJsonOverwrite("", "");
+        // Debug.Log(json);
+        if (File.Exists(savePath))
+        {
+            File.Delete(savePath);
+            Debug.Log("Save file deleted!");
+        }
+        else
+        {
+            Debug.Log("No save file exists.");
+        }
+    }
     // Загружаем игрока и врагов из prefab.
     public bool LoadGame(Hero player, GameObject enemyPrefab)
     {
+        Debug.Log("ok");
         if (!File.Exists(savePath))
         {
             Debug.LogWarning("сейва нет"); // Не нашли сейв — не беда, можно начать сначала!
@@ -73,7 +88,11 @@ public class SaveSystem : MonoBehaviour
         // Читаем JSON и воскрешаем всех из цифрового небытия
         string json = File.ReadAllText(savePath);
         SaveData data = JsonUtility.FromJson<SaveData>(json);
-        surfaceGenerator.LoadSeed(data.seed);
+        if (surfaceGenerator)
+        {
+            surfaceGenerator.LoadSeed(data.seed);
+            
+        }
         // Восстанавливаем игрока. 
         player.transform.position = new Vector2(data.playerX, data.playerY);
         player.health = data.health;

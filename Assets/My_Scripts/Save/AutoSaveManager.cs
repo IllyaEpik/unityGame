@@ -40,12 +40,12 @@ public class AutoSaveManager : MonoBehaviour
         }
     }
 
-    private void OnApplicationQuit()
-    {
-        // На всякий случай сохраняем игру при выходе. Вдруг свет выключат
-        if (player != null && saveSystem != null)
-            saveSystem.SaveGame(player);
-    }
+    // private void OnApplicationQuit()
+    // {
+    //     // На всякий случай сохраняем игру при выходе. Вдруг свет выключат
+    //     if (player != null && saveSystem != null)
+    //         saveSystem.SaveGame(player);
+    // }
 
     private void OnApplicationPause(bool pause)
     {
