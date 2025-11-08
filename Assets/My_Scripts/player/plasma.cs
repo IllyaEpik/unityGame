@@ -17,7 +17,7 @@ public class plasma : MonoBehaviour
 
 
 
-    [SerializeField] private float damage = 50f; // урон пули
+    [SerializeField] public float damage = 50f; // урон пули
     void Start()
     {
 
@@ -39,6 +39,7 @@ public class plasma : MonoBehaviour
         if (collider2D != null)
         {
             GameObject someone = collider2D.gameObject;
+            Debug.Log("Пуля попала в: " + someone.name);
             // var checkBot = someone.GetComponentInChildren<BoxCollider2D>();
             // 
             enemyBot? targetBot = someone.GetComponent<enemyBot>();
@@ -73,7 +74,7 @@ public class plasma : MonoBehaviour
                 RemoveAttack();
                 return;
             }
-            
+
             if (someone.CompareTag("ground"))
             {
                 RemoveAttack();
@@ -91,8 +92,13 @@ public class plasma : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log($"Bullet hit {collision.name} (tag: {collision.tag}, layer: {collision.gameObject.layer})");
+        Alien alien = collision.GetComponent<Alien>();
+        if (alien != null)
+        {
+            alien.TakeDamage(damage); // damage из скрипта plasma
+            Destroy(gameObject); // пуля исчезает
+            return;
+        }
     }
-    
     
 }
