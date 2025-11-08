@@ -58,27 +58,34 @@ public class surfaceGenerator : MonoBehaviour
         surface = new int[levelWidth * 2];
         map = new int[levelWidth * 2][];
         groundTilemap.ClearAllTiles();
-
+        int count = 0;
         float offset = Random.Range(0f, 9999f);
-
+        
         // Генерация в обе стороны от центра (влево и вправо)
         for (int i = -levelWidth; i < levelWidth; i++)
         {
-            int xIndex = i + levelWidth;
-            map[xIndex] = new int[levelHeight];
-            float floatY = Mathf.PerlinNoise((i + offset) * noiseScale, 0) * levelHeightChange;
-            int y = Mathf.FloorToInt(floatY);
-            surface[xIndex] = y;
-
-            for (int countY = 0; countY < levelHeight; countY++)
+            if (count <= 0)
             {
-                if (countY > y)
+                int xIndex = i + levelWidth;
+                map[xIndex] = new int[levelHeight];
+                float floatY = Mathf.PerlinNoise((i + offset) * noiseScale, 0) * levelHeightChange;
+                int y = Mathf.FloorToInt(floatY);
+                surface[xIndex] = y;
+                for (int countY = 0; countY < levelHeight; countY++)
                 {
-                    map[xIndex][countY] = 1;
-                    TileBase tileToPlace = tilePalette[0];
-                    groundTilemap.SetTile(new Vector3Int(i, -countY, 0), tileToPlace);
+                    if (countY > y)
+                    {
+                        map[xIndex][countY] = 1;
+                        TileBase tileToPlace = tilePalette[0];
+                        groundTilemap.SetTile(new Vector3Int(i, -countY, 0), tileToPlace);
+                    }
                 }
             }
+            else
+            {
+                count--;
+            }
+            
         }
 
         generateStructure(npcPrefab);
