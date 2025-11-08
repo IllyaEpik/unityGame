@@ -2,12 +2,13 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System;
 
 public class DialogueManager : MonoBehaviour
 {
-    public static DialogueManager Instance; // Singleton для простого вызова из любого места
+    public static DialogueManager Instance;
 
-    [Header("UI элементы")]
+    [Header("UI елементи")]
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TMP_Text dialogueText;
     [SerializeField] private Button[] choiceButtons;
@@ -17,25 +18,23 @@ public class DialogueManager : MonoBehaviour
     private HashSet<string> usedOneTimeResponses = new HashSet<string>();
     private int currentLine = 0;
     private bool dialogueActive = false;
-    private System.Action onDialogueEnd;
-    void Start()
-    {
-        // dialogueActive = false;
-        dialoguePanel.SetActive(false);
-        foreach (var b in choiceButtons) b.gameObject.SetActive(false);
-        // foreach (Button item in choiceButtons)
-        // {
-        //     item.SetActive
-        // }
-    }
+
+    // 🔹 Подія, яка викликається після закінчення діалогу, з номером останнього рядка
+    private Action<int> onDialogueEnd;
+
     void Awake()
     {
         Instance = this;
         if (dialoguePanel != null) dialoguePanel.SetActive(false);
     }
 
-    // Запуск любого диалога
-    public void StartDialogue(DialogueLine[] dialogue, System.Action endAction = null)
+    void Start()
+    {
+        dialoguePanel.SetActive(false);
+        foreach (var b in choiceButtons) b.gameObject.SetActive(false);
+    }
+
+    public void StartDialogue(DialogueLine[] dialogue, Action<int> endAction = null)
     {
         if (dialogue == null || dialogue.Length == 0) return;
 
@@ -58,7 +57,6 @@ public class DialogueManager : MonoBehaviour
 
         currentLine = lineIndex;
         dialogueText.text = currentDialogue[lineIndex].npcText;
-
         ShowChoices(currentDialogue[lineIndex].responses);
     }
 
@@ -105,6 +103,8 @@ public class DialogueManager : MonoBehaviour
             usedOneTimeResponses.Add(key);
         }
 
+        chosen.onChosen?.Invoke();
+
         if (chosen.nextLineIndex >= 0)
             ShowLine(chosen.nextLineIndex);
         else
@@ -117,6 +117,12 @@ public class DialogueManager : MonoBehaviour
         dialoguePanel.SetActive(false);
         foreach (var b in choiceButtons) b.gameObject.SetActive(false);
 
-        onDialogueEnd?.Invoke();
+        // 🔹 Викликаємо подію з параметром (яка лінія була останньою)
+        onDialogueEnd?.Invoke(currentLine);
     }
+
+public int GetCurrentLineIndex()
+{
+    return currentLine;
+}
 }
