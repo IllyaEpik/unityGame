@@ -12,6 +12,7 @@ TagManager:
   - ground
   - attackButton
   - DarknessOverlay
+  - alien
   layers:
   - Default
   - TransparentFX
@@ -24,7 +25,7 @@ TagManager:
   - death
   - heroAttack
   - emenyAttack
-  - 
+  - alien
   - 
   - 
   - 
