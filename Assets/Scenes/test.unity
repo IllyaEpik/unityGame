@@ -278,16 +278,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 970ab1b8fdada473eba72439cecd2558, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rightOffset: 10
-  leftOffset: -10
-  speed: 15
+  rightOffset: 500
+  leftOffset: -500
+  speed: 50
   bulletPrefab: {fileID: 7341490253933789906, guid: 94bfb7e382e5f4bcd9dc8fd25f72014b, type: 3}
   firePoint: {fileID: 1916863302}
   bulletSpeed: 7
   fireCooldown: 1
   bulletDamage: 40
   maxHealth: 100
-  healthBar: {fileID: 0}
+  healthBar: {fileID: 294913276663654457, guid: 2313d7bcb58494889906776587b65bbf, type: 3}
   deathFallDelay: 0.2
   fallSpeed: 5
   destroyAfter: 15

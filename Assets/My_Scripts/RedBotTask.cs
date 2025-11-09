@@ -13,14 +13,14 @@ public class RedBotTask : MonoBehaviour
         if (dialogueTrigger == null)
             dialogueTrigger = GetComponent<DialogueTrigger>();
 
-        if (dialogueTrigger != null)
-            dialogueTrigger.onDialogueEnd += OnDialogueEnd;
+        // if (dialogueTrigger != null)
+        //     dialogueTrigger.onDialogueEnd += OnDialogueEnd;
     }
 
     private void OnDestroy()
     {
-        if (dialogueTrigger != null)
-            dialogueTrigger.onDialogueEnd -= OnDialogueEnd;
+        // if (dialogueTrigger != null)
+        //     dialogueTrigger.onDialogueEnd -= OnDialogueEnd;
     }
 
     public void OnDialogueEnd()
@@ -29,7 +29,7 @@ public class RedBotTask : MonoBehaviour
 
         if (missionManager != null)
         {
-            missionManager.ActivateMission();
+            // missionManager.ActivateMission();
             Debug.Log("Місія активована після діалогу з Червоним ботом.");
             missionGiven = true;
         }
