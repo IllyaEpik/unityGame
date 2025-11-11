@@ -20,7 +20,7 @@ public class DialogueHint : MonoBehaviour
 
     void Start()
     {
-        // 🔹 Автоматический поиск, если поля не заданы
+        // Автоматический поиск, если поля не заданы
         if (hintPanel == null)
         {
             GameObject panelObj = GameObject.Find("HintPanel");
@@ -35,7 +35,7 @@ public class DialogueHint : MonoBehaviour
                 hintText = textObj.GetComponent<TMP_Text>();
         }
 
-        // 🔹 Безопасная инициализация
+        // Безопасная инициализация
         if (hintPanel != null)
         {
             hintPanel.alpha = 0;
@@ -47,7 +47,7 @@ public class DialogueHint : MonoBehaviour
     {
         if (hintPanel == null || hintText == null)
         {
-            Debug.LogWarning("⚠️ DialogueHint: HintPanel или HintText не найдены!");
+            Debug.LogWarning("DialogueHint: HintPanel или HintText не найдены!");
             return;
         }
 
@@ -61,7 +61,7 @@ public class DialogueHint : MonoBehaviour
         hintPanel.gameObject.SetActive(true);
         hintText.text = text;
 
-        // 🔹 Плавное появление
+        // Плавное появление
         float t = 0;
         while (t < 1)
         {
@@ -75,7 +75,7 @@ public class DialogueHint : MonoBehaviour
         {
             yield return new WaitForSeconds(visibleTime);
 
-            // 🔹 Плавное исчезновение
+            // Плавное исчезновение
             while (t > 0)
             {
                 t -= Time.deltaTime * fadeSpeed;
