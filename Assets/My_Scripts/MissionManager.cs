@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class MissionManager : MonoBehaviour
@@ -9,10 +10,14 @@ public class MissionManager : MonoBehaviour
     public bool isCompleted = false;
     public bool isFailed = false;
 
+    // 🔹 Нове поле — текст поточного завдання
+    [HideInInspector] public string currentTaskText = "Вбий ворога";
+
     void Update()
     {
         if (!isActive || isCompleted || isFailed)
             return;
+
         if (hero != null && hero.health <= 0)
         {
             isFailed = true;
@@ -27,5 +32,12 @@ public class MissionManager : MonoBehaviour
             isActive = false;
             Debug.Log("Місію виконано — ворога знищено");
         }
+    }
+
+    // 🔹 Метод для оновлення тексту завдання
+    public void SetTaskText(string newText)
+    {
+        currentTaskText = newText;
+        Debug.Log($"Завдання оновлено: {newText}");
     }
 }

@@ -51,7 +51,7 @@ public class TaskPanelManager : MonoBehaviour
         if (missionManager.isCompleted || missionManager.isFailed || !missionManager.isActive)
             taskText.text = "Місій для тебе поки що немає";
         else
-            taskText.text = "Завдання: Вбий ворога";
+            taskText.text = missionManager.currentTaskText; // 🔹 Беремо з MissionManager
     }
 
     private void UpdateStatus()
@@ -109,4 +109,10 @@ public class TaskPanelManager : MonoBehaviour
             coordsText.text += $"\n Ціль: X={targetPos.x:F1}, Y={targetPos.y:F1}";
         }
     }
+
+public void SetCustomTask(string newTask)
+{
+    if (taskText != null)
+        taskText.text = newTask;
+}
 }

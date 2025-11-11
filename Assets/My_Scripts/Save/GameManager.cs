@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq; 
-
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     // Главный герой
@@ -25,14 +25,44 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             saveSystem.LoadGame(player, enemyPrefab);
-            
-        
         }
-        
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            saveSystem.resetAll();
+        }
+        // resetAll
 
     }
-    public void OnMyButtonClicked_death() 
-        {
+    public void OnMyButtonClicked_death()
+    {
         saveSystem.LoadGame(player, enemyPrefab);
-        }
+    }
+    // private void load()
+    // {
+
+    //     gameManager = FindFirstObjectByType<GameManager>();
+    //     gameManager.OnMyButtonClicked_death();
+    // }
+    private void Start()
+    {
+        OnMyButtonClicked_death();
+    }
+    // private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    // {
+    //     if (scene.name == "test")
+    //     {
+    //         OnMyButtonClicked_death();
+    //         // unsubscribe if you only need this once
+    //         SceneManager.sceneLoaded -= OnSceneLoaded;
+    //     }
+    // }
+    // private void OnEnable()
+    // {
+    //     SceneManager.sceneLoaded += OnSceneLoaded;
+    // }
+
+    // private void OnDisable()
+    // {
+    //     SceneManager.sceneLoaded -= OnSceneLoaded;
+    // }
 }
