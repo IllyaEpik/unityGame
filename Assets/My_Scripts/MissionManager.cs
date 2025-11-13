@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class MissionManager : MonoBehaviour
 {
+
+    public static MissionManager Instance;
     public GameObject enemy;
     public Hero hero;
 
@@ -12,6 +14,19 @@ public class MissionManager : MonoBehaviour
 
     // 🔹 Нове поле — текст поточного завдання
     [HideInInspector] public string currentTaskText = "Вбий ворога";
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Update()
     {

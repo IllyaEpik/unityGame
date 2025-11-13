@@ -345,19 +345,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5cdca35ec89cfa42bec18534191cbce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelWidth: 400
+  levelWidth: 200
   levelHeightChange: 5
   levelHeight: 25
   noiseScale: 0.02
-  enemyBotCount: 1
-  enemyPlantCount: 1
-  structures:
-  - prefab: {fileID: 8861536036782329082, guid: 2b47242ef8727445d966d3be58c64e92, type: 3}
-    amount: 1
-  skipAfterStructure: 4
+  enemyBotCount: 0
+  enemyPlantCount: 0
   seed: 0
   enemyBotPrefab: {fileID: 4230844430991088939, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
   enemyPlantPrefab: {fileID: 2261049689267568082, guid: b2eeffa5b8d85cd41a36fd5f87848ea3, type: 3}
+  npcPrefab: {fileID: 8080085319249185538, guid: 1391b8a0dae23f94fb85edb6dd04544d, type: 3}
   groundTilemap: {fileID: 1980942091}
   tilePalette:
   - {fileID: 11400000, guid: c1f6e0002b0efcc47b94ffb106b3214d, type: 2}
@@ -1570,6 +1567,7 @@ MonoBehaviour:
   buttonText: {fileID: 672902131}
   jetpack: {fileID: 1946944991}
   hero: {fileID: 0}
+  isHolding: 0
 --- !u!1 &703834331
 GameObject:
   m_ObjectHideFlags: 0
@@ -2729,6 +2727,7 @@ MonoBehaviour:
   buttonText: {fileID: 672902131}
   jetpack: {fileID: 1946944991}
   hero: {fileID: 1946944988}
+  isHolding: 0
 --- !u!1 &1265028737
 GameObject:
   m_ObjectHideFlags: 0
@@ -2991,7 +2990,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1374417073
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4463,7 +4462,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   zoneGround: {fileID: 1164213972}
-  attackCooldown: 0.5
 --- !u!50 &1946944989
 Rigidbody2D:
   serializedVersion: 5
@@ -4543,8 +4541,9 @@ MonoBehaviour:
   hero: {fileID: 1946944988}
   jetpackForce: 10
   horizontalBoost: 20
-  isUsingJetpack: 0
   animator: {fileID: 0}
+  isUsingJetpack: 0
+  buttonText: {fileID: 672902131}
 --- !u!1 &1980942087
 GameObject:
   m_ObjectHideFlags: 0

@@ -79,7 +79,9 @@ public class Alien : MonoBehaviour
 
     void HandleShooting()
     {
-        fireTimer += Time.deltaTime;
+        System.Random random = new System.Random();
+        float number = random.Next(1,20)/20f;
+        fireTimer += Time.deltaTime * number;
         if (fireTimer >= fireCooldown)
         {
             Shoot();
