@@ -3416,19 +3416,38 @@ MonoBehaviour:
     - responseText: no
       nextLineIndex: 2
       oneTime: 0
+      onChosen:
+        m_PersistentCalls:
+          m_Calls: []
     - responseText: yes
       nextLineIndex: 1
       oneTime: 0
+      onChosen:
+        m_PersistentCalls:
+          m_Calls: []
   - npcText: goodbye
     responses:
     - responseText: 'goodbye '
       nextLineIndex: -1
       oneTime: 0
+      onChosen:
+        m_PersistentCalls:
+          m_Calls: []
   - npcText: whf
     responses:
     - responseText: ok
       nextLineIndex: -1
       oneTime: 0
+      onChosen:
+        m_PersistentCalls:
+          m_Calls: []
+  enableHints: 1
+  teleportTarget: {fileID: 0}
+  teleportAfterLine: -1
+  objectToSpawn: {fileID: 0}
+  spawnAfterLine: -1
+  spawnPosition: {fileID: 0}
+  destroySelfAfterSpawn: 0
   autoStartOnTrigger: 0
   startOnlyOnce: 0
   talkButton: {fileID: 1965931460}
@@ -4819,6 +4838,7 @@ MonoBehaviour:
   isActive: 1
   isCompleted: 0
   isFailed: 0
+  currentTaskText: "\u0412\u0431\u0438\u0439 \u0432\u043E\u0440\u043E\u0433\u0430"
 --- !u!4 &908075126
 Transform:
   m_ObjectHideFlags: 0
@@ -5580,11 +5600,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6822406304032999496, guid: 81507d4ad9a17461b908b69ff80b6223, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -74.05125
+      value: 225.8
       objectReference: {fileID: 0}
     - target: {fileID: 6822406304032999496, guid: 81507d4ad9a17461b908b69ff80b6223, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -9.503395
+      value: 34.9
       objectReference: {fileID: 0}
     - target: {fileID: 6822406304032999496, guid: 81507d4ad9a17461b908b69ff80b6223, type: 3}
       propertyPath: m_LocalPosition.z
@@ -28969,11 +28989,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1595144870781422847, guid: 981af3f5a510f48458addc196a05e456, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -48.8
+      value: 240.4
       objectReference: {fileID: 0}
     - target: {fileID: 1595144870781422847, guid: 981af3f5a510f48458addc196a05e456, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9
+      value: 22.1
       objectReference: {fileID: 0}
     - target: {fileID: 1595144870781422847, guid: 981af3f5a510f48458addc196a05e456, type: 3}
       propertyPath: m_LocalPosition.z

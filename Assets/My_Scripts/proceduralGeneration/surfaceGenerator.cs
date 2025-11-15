@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
-
+using System.Collections.Generic;
 public class surfaceGenerator : MonoBehaviour
 {
     public int levelWidth = 250;
@@ -20,7 +20,8 @@ public class surfaceGenerator : MonoBehaviour
     [SerializeField] private GameObject npcPrefab;
     [SerializeField] private Tilemap groundTilemap;
     [SerializeField] private TileBase[] tilePalette;
-
+    [Header("Параметры структур")]
+    [SerializeField] private List<StructureData> structures = new List<StructureData>();
     void Start()
     {
         // LoadSeed(); // Загружаем сид, если есть
@@ -58,19 +59,31 @@ public class surfaceGenerator : MonoBehaviour
         surface = new int[levelWidth * 2];
         map = new int[levelWidth * 2][];
         groundTilemap.ClearAllTiles();
-        int count = 0;
+        float count = 0f;
         float offset = Random.Range(0f, 9999f);
+        int structureCoors = Random.Range(-levelWidth+2, levelWidth-2);
         
         // Генерация в обе стороны от центра (влево и вправо)
         for (int i = -levelWidth; i < levelWidth; i++)
         {
             if (count <= 0)
             {
-                int xIndex = i + levelWidth;
+                int xIndex = i + levelWidth; 
                 map[xIndex] = new int[levelHeight];
                 float floatY = Mathf.PerlinNoise((i + offset) * noiseScale, 0) * levelHeightChange;
                 int y = Mathf.FloorToInt(floatY);
                 surface[xIndex] = y;
+                if (structureCoors==i)
+                {
+                    Debug.Log(structureCoors);
+                    Debug.Log(i);
+                    count = structures[0].prefabWidth;
+                    Instantiate(structures[0].prefab, 
+                    new Vector2(
+                        (structureCoors+2.5f+structures[0].prefabWidth/2)*5, 
+                        (-y-structures[0].prefabWidth/2)*5-0.5f ), 
+                        Quaternion.identity);
+                }
                 for (int countY = 0; countY < levelHeight; countY++)
                 {
                     if (countY > y)
@@ -88,7 +101,7 @@ public class surfaceGenerator : MonoBehaviour
             
         }
 
-        generateStructure(npcPrefab);
+        // generateStructure(npcPrefab);
         // generateEnemies(enemyBotCount, enemyBotPrefab);
         // generateEnemies(enemyPlantCount, enemyPlantPrefab);
     }
@@ -133,4 +146,20 @@ public class surfaceGenerator : MonoBehaviour
         Instantiate(prefab, new Vector2((levelWidth+distance/2 + 2.5f)*5, -currentYRight-3 ), Quaternion.identity);
         Instantiate(prefab, new Vector2((-levelWidth-distance/2 - 2.5f)*5, -currentYLeft-3 ), Quaternion.identity);
     }
+    
+[System.Serializable]
+public class StructureData
+{
+    public GameObject prefab;
+    public int amount = 1;
+    public float prefabWidth = 30f; // ширина префаба в юнитах
+    public int widthInTiles
+    {
+        get
+        {
+            return Mathf.CeilToInt(prefabWidth / 10f); // tileSize = 10
+        }
+    }
+}
+
 }
