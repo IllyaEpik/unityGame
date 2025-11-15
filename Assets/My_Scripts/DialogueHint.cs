@@ -1,6 +1,5 @@
 using UnityEngine;
 using TMPro;
-using System.Collections;
 
 public class DialogueHint : MonoBehaviour
 {
@@ -8,82 +7,68 @@ public class DialogueHint : MonoBehaviour
 
     [SerializeField] private CanvasGroup hintPanel;
     [SerializeField] private TMP_Text hintText;
-    [SerializeField] private float fadeSpeed = 2f;
     [SerializeField] private float visibleTime = 7f;
 
-    private int hintCount = 0; // Счётчик показанных подсказок
+    private float timer = 0f;
+    private bool isVisible = false;
 
-    void Awake()
+    [Header("Memory Integrity")]
+    private int memoryCollected = 0;
+    private int maxMemory = 5;
+
+    private void Awake()
     {
         Instance = this;
-    }
 
-    void Start()
-    {
-        // Автоматический поиск, если поля не заданы
         if (hintPanel == null)
-        {
-            GameObject panelObj = GameObject.Find("HintPanel");
-            if (panelObj != null)
-                hintPanel = panelObj.GetComponent<CanvasGroup>();
-        }
+            hintPanel = GameObject.Find("HintPanel")?.GetComponent<CanvasGroup>();
 
         if (hintText == null)
-        {
-            GameObject textObj = GameObject.Find("HintText");
-            if (textObj != null)
-                hintText = textObj.GetComponent<TMP_Text>();
-        }
+            hintText = GameObject.Find("HintText")?.GetComponent<TMP_Text>();
 
-        // Безопасная инициализация
-        if (hintPanel != null)
-        {
-            hintPanel.alpha = 0;
-            hintPanel.gameObject.SetActive(false);
-        }
+        HideInstant();
+    }
+
+    private void Update()
+    {
+        if (!isVisible) return;
+
+        timer += Time.deltaTime;
+
+        if (timer >= visibleTime)
+            HideInstant();
+    }
+
+    private void HideInstant()
+    {
+        hintPanel.alpha = 0;
+        hintPanel.blocksRaycasts = false;
+        hintPanel.interactable = false;
+        hintText.text = "";
+        isVisible = false;
+        timer = 0f;
     }
 
     public void ShowHint(string text)
     {
-        if (hintPanel == null || hintText == null)
-        {
-            Debug.LogWarning("DialogueHint: HintPanel или HintText не найдены!");
-            return;
-        }
-
-        StopAllCoroutines();
-        StartCoroutine(ShowHintRoutine(text));
-    }
-
-    private IEnumerator ShowHintRoutine(string text)
-    {
-        hintCount++;
-        hintPanel.gameObject.SetActive(true);
         hintText.text = text;
 
-        // Плавное появление
-        float t = 0;
-        while (t < 1)
-        {
-            t += Time.deltaTime * fadeSpeed;
-            hintPanel.alpha = t;
-            yield return null;
-        }
+        hintPanel.alpha = 1;
+        hintPanel.blocksRaycasts = true;
+        hintPanel.interactable = true;
 
-        // 🔹 Если это вторая подсказка — подождать 7 секунд
-        if (hintCount == 2)
-        {
-            yield return new WaitForSeconds(visibleTime);
-
-            // Плавное исчезновение
-            while (t > 0)
-            {
-                t -= Time.deltaTime * fadeSpeed;
-                hintPanel.alpha = t;
-                yield return null;
-            }
-
-            hintPanel.gameObject.SetActive(false);
-        }
+        isVisible = true;
+        timer = 0f;
     }
+
+
+    public void CollectMemoryShard()
+    {
+        memoryCollected++;
+        int value = Mathf.Clamp(memoryCollected, 0, maxMemory);
+
+        ShowHint($"Memory Integrity частково відновлена {value}/{maxMemory}");
+    }
+
+    public int GetMemoryCollected() => memoryCollected;
 }

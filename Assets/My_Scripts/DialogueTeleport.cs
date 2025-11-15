@@ -44,7 +44,7 @@ public class DialogueTeleport : MonoBehaviour
         if (botObject != null)
         {
             botObject.SetActive(false);
-            Debug.Log("🤖 Червоний бот зник після діалогу.");
+            Debug.Log("Червоний бот зник після діалогу.");
         }
 
         // Чекаємо 7 секунд, поки гравець читає текст
@@ -57,7 +57,7 @@ public class DialogueTeleport : MonoBehaviour
         if (blueBotPrefab != null)
         {
             Instantiate(blueBotPrefab, blueBotSpawnPos, Quaternion.identity);
-            Debug.Log("💙 Синій бот зʼявився після телепортації.");
+            Debug.Log("Синій бот зʼявився після телепортації.");
         }
 
         // Зникнення чорного екрана

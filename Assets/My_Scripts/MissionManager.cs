@@ -9,7 +9,7 @@ public class MissionManager : MonoBehaviour
     public bool isCompleted = false;
     public bool isFailed = false;
 
-    // 🔹 Нове поле — текст поточного завдання
+    // Нове поле — текст поточного завдання
     [HideInInspector] public string currentTaskText = "Вбий ворога";
 
     void Update()
@@ -33,7 +33,7 @@ public class MissionManager : MonoBehaviour
         }
     }
 
-    // 🔹 Метод для оновлення тексту завдання
+    // Метод для оновлення тексту завдання
     public void SetTaskText(string newText)
     {
         currentTaskText = newText;

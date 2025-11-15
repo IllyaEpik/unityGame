@@ -8,6 +8,8 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
 
+    public event Action<int> OnDialogueEndedPublic;
+
     [Header("UI елементи")]
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TMP_Text dialogueText;
@@ -20,12 +22,12 @@ public class DialogueManager : MonoBehaviour
     private bool dialogueActive = false;
     private Action<int> onDialogueEnd;
 
-    [Header("🔸 Оновлення завдання (Task Update)")]
-    [SerializeField] private bool allowTaskUpdate = false;          // вмикати лише у потрібному діалозі
-    [SerializeField] private int updateTaskAfterLine = 2;           // після якого рядка оновити
+    [Header("Оновлення завдання (Task Update)")]
+    [SerializeField] private bool allowTaskUpdate = false;          
+    [SerializeField] private int updateTaskAfterLine = 2;          
     [SerializeField] private string newTaskText = "Йди до центру прийняття рішень";
-    [SerializeField] private Transform newTaskTarget;               // новий об'єкт-ціль
-    [SerializeField] private TaskPanelManager taskPanelManager;     // посилання на менеджер завдань
+    [SerializeField] private Transform newTaskTarget;               
+    [SerializeField] private TaskPanelManager taskPanelManager;     
 
     void Awake()
     {
@@ -65,13 +67,14 @@ public class DialogueManager : MonoBehaviour
 
         currentLine = lineIndex;
         dialogueText.text = currentDialogue[lineIndex].npcText;
+
         ShowChoices(currentDialogue[lineIndex].responses);
 
-        // Перевірка(чи потрібно оновити завдання)
+        // Перевірка чи потрібно оновити завдання
         if (allowTaskUpdate && lineIndex == updateTaskAfterLine)
         {
             UpdateTask();
-            allowTaskUpdate = false; // щоб не спрацювало повторно
+            allowTaskUpdate = false;
         }
     }
 
@@ -89,6 +92,7 @@ public class DialogueManager : MonoBehaviour
                 txt.text = resp.responseText;
 
                 string key = currentLine + "_" + i;
+
                 if (resp.oneTime && usedOneTimeResponses.Contains(key))
                 {
                     btn.interactable = false;
@@ -99,6 +103,7 @@ public class DialogueManager : MonoBehaviour
                 {
                     btn.interactable = true;
                     btn.onClick.RemoveAllListeners();
+
                     int choiceIndex = i;
                     btn.onClick.AddListener(() => OnPlayerChoice(responses[choiceIndex], choiceIndex));
                 }
@@ -118,6 +123,7 @@ public class DialogueManager : MonoBehaviour
             usedOneTimeResponses.Add(key);
         }
 
+
         chosen.onChosen?.Invoke();
 
         if (chosen.nextLineIndex >= 0)
@@ -130,10 +136,13 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueActive = false;
         dialoguePanel.SetActive(false);
+
         foreach (var b in choiceButtons)
             b.gameObject.SetActive(false);
 
         onDialogueEnd?.Invoke(currentLine);
+
+        OnDialogueEndedPublic?.Invoke(currentLine);
     }
 
     public int GetCurrentLineIndex()
@@ -141,7 +150,6 @@ public class DialogueManager : MonoBehaviour
         return currentLine;
     }
 
-    // Метод оновлення завдання через TaskPanelManager
     private void UpdateTask()
     {
         if (taskPanelManager != null)
