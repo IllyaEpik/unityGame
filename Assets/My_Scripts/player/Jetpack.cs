@@ -3,8 +3,8 @@ using UnityEngine;
 public class Jetpack : MonoBehaviour
 {
     [SerializeField] private Hero hero;
-    public float jetpackForce = 10f;          // сила джетпака
-    public float horizontalBoost = 1f;        // горизонтальная тяга
+    public float jetpackForce = 10f;        
+    public float horizontalBoost = 1f;      
     public bool isUsingJetpack = false;
 
     private Rigidbody2D rb;
@@ -22,19 +22,14 @@ public class Jetpack : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (isUsingJetpack && hero.battery > 0)
+        if (isUsingJetpack && hero.battery > 0 && !hero.isGround)
         {
-            // Горизонтальная тяга
             rb.AddForce((hero.isLeft ? Vector2.left : Vector2.right) * horizontalBoost, ForceMode2D.Force);
-
-            // Вертикальная тяга
             rb.AddForce(Vector2.up * jetpackForce, ForceMode2D.Force);
 
-            // Анимация (если по какой-то причине не включилась в StartJetpack)
             if (animator != null)
                 animator.SetBool("isFlying", true);
 
-            // Расход батареи
             batteryTimer += Time.fixedDeltaTime;
             if (batteryTimer >= 2f)
             {
@@ -46,34 +41,26 @@ public class Jetpack : MonoBehaviour
         }
         else
         {
-            // Выключаем анимацию, когда джетпак не используется
             if (animator != null)
                 animator.SetBool("isFlying", false);
-            justStarted = false; // сброс флага старта
+            justStarted = false;
         }
     }
 
-    // Запуск джетпака через UI
     public void StartJetpack()
     {
-        if (hero.battery > 0 && !justStarted)
+        if (hero.battery > 0 && !justStarted && !hero.isGround)
         {
             isUsingJetpack = true;
             justStarted = true;
 
-            // Обнуляем вертикальную скорость для мгновенного отрыва
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
-
-            // Импульс вверх
             rb.AddForce(Vector2.up * jetpackForce * 1.5f, ForceMode2D.Impulse);
 
-            // Сразу запускаем анимацию
             if (animator != null)
                 animator.SetBool("isFlying", true);
         }
     }
 
-    // Остановка джетпака
     public void StopJetpack()
     {
         isUsingJetpack = false;
