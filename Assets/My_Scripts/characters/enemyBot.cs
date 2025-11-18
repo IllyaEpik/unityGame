@@ -27,6 +27,10 @@ public class enemyBot : MonoBehaviour
     [SerializeField] private Hero heroObject;
     [SerializeField] private GameObject plasmaPrefab;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource shotSound;
+
+
     [Header("Stats")]
     public float moveSpeed = 2f;
     public float jumpForce = 5f;
@@ -133,6 +137,10 @@ public class enemyBot : MonoBehaviour
         if (cooldownCurrent <= 0)
         {
             Instantiate(plasmaPrefab, FirePoint.position, Quaternion.Euler(0, 0, direction));
+
+            if (shotSound != null)
+                shotSound.Play();
+            
             cooldownCurrent = cooldown;
         }
     }
