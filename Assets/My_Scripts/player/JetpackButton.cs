@@ -19,7 +19,8 @@ public class JetpackButtonController : MonoBehaviour
 
     private void Update()
     {
-        if (isHolding && hero.battery > 0 && !hero.isGround)
+        // Управление джетпаком через удержание кнопки
+        if (isHolding && hero.battery > 0)
         {
             jetpack.StartJetpack();
             buttonText.text = "Jetpack";
