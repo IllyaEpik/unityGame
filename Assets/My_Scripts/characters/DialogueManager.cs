@@ -23,11 +23,11 @@ public class DialogueManager : MonoBehaviour
     private Action<int> onDialogueEnd;
 
     [Header("Оновлення завдання (Task Update)")]
-    [SerializeField] private bool allowTaskUpdate = false;          
-    [SerializeField] private int updateTaskAfterLine = 2;          
+    [SerializeField] private bool allowTaskUpdate = false;   
+    [SerializeField] private int updateTaskAfterLine = 2;    
     [SerializeField] private string newTaskText = "Йди до центру прийняття рішень";
-    [SerializeField] private Transform newTaskTarget;               
-    [SerializeField] private TaskPanelManager taskPanelManager;     
+    [SerializeField] private Transform newTaskTarget;
+    [SerializeField] private TaskPanelManager taskPanelManager;
 
     void Awake()
     {
@@ -61,7 +61,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (lineIndex < 0 || lineIndex >= currentDialogue.Length)
         {
-            EndDialogue();
+            EndDialogue(lineIndex);
             return;
         }
 
@@ -70,7 +70,6 @@ public class DialogueManager : MonoBehaviour
 
         ShowChoices(currentDialogue[lineIndex].responses);
 
-        // Перевірка чи потрібно оновити завдання
         if (allowTaskUpdate && lineIndex == updateTaskAfterLine)
         {
             UpdateTask();
@@ -123,16 +122,18 @@ public class DialogueManager : MonoBehaviour
             usedOneTimeResponses.Add(key);
         }
 
-
         chosen.onChosen?.Invoke();
 
-        if (chosen.nextLineIndex >= 0)
-            ShowLine(chosen.nextLineIndex);
+        int next = chosen.nextLineIndex;
+
+        if (next >= 0)
+            ShowLine(next);
         else
-            EndDialogue();
+            EndDialogue(next);
     }
 
-    void EndDialogue()
+    // ГОЛОВНЕ ДОПРАЦЮВАННЯ — СЮДИ ТЕПЕР ПРОХОДИТЬ ПРАВИЛЬНИЙ NEXT LINE
+    void EndDialogue(int finalIndex)
     {
         dialogueActive = false;
         dialoguePanel.SetActive(false);
@@ -140,9 +141,10 @@ public class DialogueManager : MonoBehaviour
         foreach (var b in choiceButtons)
             b.gameObject.SetActive(false);
 
-        onDialogueEnd?.Invoke(currentLine);
+        onDialogueEnd?.Invoke(finalIndex);
 
-        OnDialogueEndedPublic?.Invoke(currentLine);
+        // головне — тепер тут приходить 1 або 2 коли вибрано відповідь!
+        OnDialogueEndedPublic?.Invoke(finalIndex);
     }
 
     public int GetCurrentLineIndex()

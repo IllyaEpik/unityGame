@@ -226,23 +226,11 @@ MonoBehaviour:
       \u0445\u043E\u0447\u0443\u0442\u044C,\n\u0449\u043E\u0431 \u0442\u0438 \u043F\u0430\u043C'\u044F\u0442\u0430\u0432..."
     responses:
     - responseText: 
-      nextLineIndex: 7
+      nextLineIndex: -1
       oneTime: 0
       onChosen:
         m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 2458769268836579650}
-            m_TargetAssemblyTypeName: Npc_3, Assembly-CSharp
-            m_MethodName: StartBotMovement
-            m_Mode: 1
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 7
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
+          m_Calls: []
   enableHints: 1
   teleportTarget: {fileID: 0}
   teleportAfterLine: 0
@@ -280,10 +268,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00572c3cd218b46ffa3caa52d119d685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newBotPrefab: {fileID: 4688352109710318361, guid: 9e3d6e7e9a9fa4c8798c41ce6b56c388, type: 3}
-  targetPosition: {x: 278.2303, y: 14.33682, z: 0}
   moveSpeed: 10
+  stopDistance: 0.1
   jumpForce: 15
-  groundMask:
+  groundCheckPoint: {fileID: 0}
+  groundCheckRadius: 0.1
+  groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  targetPosition: {x: 260, y: 14}
+  startMoveAfterLine: 7
+  newBotPrefab: {fileID: 4688352109710318361, guid: 9e3d6e7e9a9fa4c8798c41ce6b56c388, type: 3}

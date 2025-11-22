@@ -1,9 +1,5 @@
 using System;
-using System.Threading;
-using JetBrains.Annotations;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.iOS;
 
 public class enemyBot : MonoBehaviour
 {
@@ -39,20 +35,51 @@ public class enemyBot : MonoBehaviour
     public Vector2 detectionZoneSize = new Vector2(75, 24);
 
     public bool isAggressive = true;
-    public System.Action dyingEvent = delegate { };
+    public Action dyingEvent = delegate { };
 
     private float maxHealth = 100f;
     private float currentHealth;
     private Vector2 lastPos;
 
-    [SerializeField] private GameObject healthBarPrefab; // префаб полоски HP 
-    private EnemyHealthBar healthBar; // ссылка на созданный бар
+    [SerializeField] private GameObject healthBarPrefab;
+    private EnemyHealthBar healthBar;
+
+private void Awake()
+{
+    rb = GetComponent<Rigidbody2D>();
+    animator = GetComponent<Animator>();
+
+    if (LeftZone == null)
+        LeftZone = transform.Find("RightZone");
+    if (RightZone == null)
+        RightZone = transform.Find("LeftZone");
+    if (LeftZone != null && RightZone != null)
+    {
+        Transform temp = LeftZone;
+        LeftZone = RightZone;
+        RightZone = temp;
+    }
+
+    if (LeftZoneDetection == null)
+        LeftZoneDetection = transform.Find("LeftZoneDetection");
+    if (RightZoneDetection == null)
+        RightZoneDetection = transform.Find("RightZoneDetection");
+
+    if (heroObject == null)
+    {
+        heroObject = GameObject.FindFirstObjectByType<Hero>();
+        if (heroObject == null)
+        Debug.LogWarning("Hero object not found in scene");
+    }
+}
+
+
+
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
         currentHealth = maxHealth;
         lastPos = transform.position;
+
         if (healthBarPrefab != null)
         {
             GameObject bar = Instantiate(healthBarPrefab, transform.position + new Vector3(0, 1.5f, 0), Quaternion.identity);
@@ -87,7 +114,6 @@ public class enemyBot : MonoBehaviour
 
         Vector2 lv = rb.linearVelocity;
 
-        // если герой в зоне Detection, но не в атаке
         if ((heroInLeftDetection || heroInRightDetection) && !(heroInLeftAttack || heroInRightAttack) && !groundInFirePoint)
         {
             if (distance > safeDistance)
@@ -98,23 +124,16 @@ public class enemyBot : MonoBehaviour
             }
             else
             {
-                // Vector2 dir = (heroObject.transform.position - transform.position).normalized;
-                // lv.x = dir.x * -moveSpeed;
-                lv.x = 0; // слишком близко — стоим
+                lv.x = 0;
             }
         }
         else
         {
-            lv.x = 0; // герой вне detection-зоны
+            lv.x = 0;
         }
 
         rb.linearVelocity = lv;
-
-        float horizontalSpeed = Mathf.Abs(lv.x);
-        // animator.SetFloat("moveVector", horizontalSpeed);
-        
-        animator.SetBool("running",horizontalSpeed > 0.1);
-        
+        animator.SetBool("running", Mathf.Abs(lv.x) > 0.1f);
     }
 
     private void HandleAttack()
@@ -139,33 +158,22 @@ public class enemyBot : MonoBehaviour
 
     private void FlipSprite(float dirX)
     {
-        if (dirX > 0)
-            transform.localScale = new Vector3(1, 1, 1);
-        else if (dirX < 0)
-            transform.localScale = new Vector3(-1, 1, 1);
+        transform.localScale = new Vector3(dirX > 0 ? 1 : -1, 1, 1);
     }
 
     private void CheckStuckAndJump()
     {
         bool heroInRightAttack = Physics2D.OverlapBox(RightZone.position, attackZoneSize, 0, heroMask);
         bool groundInFirePoint = Physics2D.OverlapBox(FirePoint.position, FirePointSize, 0, groundMask);
-        
-        bool groundInRightAttack = Physics2D.OverlapBox(LeftZone.position, attackZoneSize, 0, groundMask);
-        Debug.Log(groundInRightAttack);
-        // float moved = Mathf.Abs(transform.position.x - lastPos.x);
+
         Vector2 lv = rb.linearVelocity;
-        // FirePoint
-        // Debug.Log(isGrounded);
-        if (groundInFirePoint)
+        if (groundInFirePoint && isGrounded && !heroInRightAttack)
         {
-            if (isGrounded && !heroInRightAttack)
-            {
-                lv.y = jumpForce;
-                Vector2 dir = (heroObject.transform.position - transform.position).normalized;
-                lv.x = dir.x * -moveSpeed;
-                rb.linearVelocity = lv;
-                isGrounded = false;
-            }
+            lv.y = jumpForce;
+            Vector2 dir = (heroObject.transform.position - transform.position).normalized;
+            lv.x = dir.x * -moveSpeed;
+            rb.linearVelocity = lv;
+            isGrounded = false;
         }
 
         lastPos = transform.position;
@@ -182,26 +190,24 @@ public class enemyBot : MonoBehaviour
         currentHealth -= amount;
         if (currentHealth <= 0)
             Die();
-
     }
 
-private void Die()
-{
-    isAlive = false;
-    animator.SetTrigger("isDead");
-    if (healthBar != null)
-        Destroy(healthBar.gameObject); // удалить бар вместе с врагом
-    dyingEvent();
-    rb.linearVelocity = Vector2.zero;
-    Destroy(gameObject, 1f);
-    gameObject.layer = LayerMask.NameToLayer("Default");
-}
+    private void Die()
+    {
+        isAlive = false;
+        animator.SetTrigger("isDead");
+        if (healthBar != null)
+            Destroy(healthBar.gameObject);
+        dyingEvent();
+        rb.linearVelocity = Vector2.zero;
+        Destroy(gameObject, 1f);
+        gameObject.layer = LayerMask.NameToLayer("Default");
+    }
 
     public void OnHit()
     {
         TakeDamage(damagePerHit);
     }
 
-    // Старый метод для совместимости со старыми скриптами
     public void idk() { }
 }

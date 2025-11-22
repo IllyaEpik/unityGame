@@ -1,95 +1,107 @@
 using UnityEngine;
 
-public class Npc_3 : MonoBehaviour
+public class DialogueMoverBot : MonoBehaviour
 {
-    [Header("Настройки бота")]
-    [SerializeField] private GameObject newBotPrefab;
-    [SerializeField] private Vector3 targetPosition;
+    [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 2f;
+    [SerializeField] private float stopDistance = 0.1f;
     [SerializeField] private float jumpForce = 5f;
-    [SerializeField] private LayerMask groundMask;
 
-    private GameObject activeBot;
+    [Header("Ground Check")]
+    [SerializeField] private Transform groundCheckPoint;
+    [SerializeField] private float groundCheckRadius = 0.1f;
+    [SerializeField] private LayerMask groundLayer;
+
+    [Header("Target Position (X, Y)")]
+    [SerializeField] private Vector2 targetPosition;
+
+    [Header("Dialogue Settings")]
+    [SerializeField] private int startMoveAfterLine = 7;
+
+    [Header("Bot Replacement")]
+    [SerializeField] private GameObject newBotPrefab;
+
     private Rigidbody2D rb;
-    private Animator animator;
-
+    private bool isMoving = false;
+    private bool hasSpawned = false;
     private bool isGrounded = true;
-    private bool startMoving = false;
 
-    private void Awake()
+    private void Start()
     {
-        activeBot = gameObject;
-        rb = activeBot.GetComponent<Rigidbody2D>();
-        animator = activeBot.GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+
+        if (DialogueManager.Instance != null)
+            DialogueManager.Instance.OnDialogueEndedPublic += OnDialogueEnded;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        if (!startMoving || activeBot == null) return;
+        CheckGround();
 
-        HandleMovement();
-        CheckGrounded();
+        if (!isMoving && DialogueManager.Instance != null)
+        {
+            int currentLine = DialogueManager.Instance.GetCurrentLineIndex();
+            if (currentLine >= startMoveAfterLine)
+                isMoving = true;
+        }
+
+        if (isMoving)
+            MoveToTarget();
     }
 
-    public void StartBotMovement()
+    private void CheckGround()
     {
-        startMoving = true;
+        if (groundCheckPoint != null)
+            isGrounded = Physics2D.OverlapCircle(groundCheckPoint.position, groundCheckRadius, groundLayer);
+        else
+            isGrounded = true;
     }
 
-    private void HandleMovement()
+    private void MoveToTarget()
     {
-        if (Vector2.Distance(activeBot.transform.position, targetPosition) < 0.05f)
+        if (hasSpawned) return;
+
+        Vector2 pos = rb.position;
+        float distance = Vector2.Distance(pos, targetPosition);
+
+        if (distance > stopDistance)
+        {
+            Vector2 dir = (targetPosition - pos).normalized;
+            rb.linearVelocity = new Vector2(dir.x * moveSpeed, rb.linearVelocity.y);
+            if (isGrounded)
+            {
+                RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.right * Mathf.Sign(dir.x), 0.5f, groundLayer);
+                if (hit.collider != null)
+                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            }
+        }
+        else
         {
             rb.linearVelocity = Vector2.zero;
-            animator.SetBool("running", false);
-            startMoving = false;
-
             SpawnNewBot();
-            return;
         }
+    }
 
-        Vector2 dir = (targetPosition - activeBot.transform.position).normalized;
-        Vector2 lv = rb.linearVelocity;
-
-        lv.x = dir.x * moveSpeed;
-
-        if (dir.y > 0.1f && isGrounded)
-        {
-            lv.y = jumpForce;
-            isGrounded = false;
-        }
-
-        rb.linearVelocity = lv;
-        animator.SetBool("running", Mathf.Abs(lv.x) > 0.1f);
-        FlipSprite(dir.x);
+    private void OnDialogueEnded(int lastLine)
+    {
+        if (lastLine >= startMoveAfterLine)
+            isMoving = true;
     }
 
     private void SpawnNewBot()
     {
-        if (newBotPrefab == null || activeBot == null) return;
+        if (hasSpawned) return;
 
-        Vector3 spawnPos = activeBot.transform.position;
+        if (newBotPrefab != null)
+            Instantiate(newBotPrefab, transform.position, Quaternion.identity);
 
-        activeBot.SetActive(false);
-
-        activeBot = Instantiate(newBotPrefab, spawnPos, Quaternion.identity);
-        rb = activeBot.GetComponent<Rigidbody2D>();
-        animator = activeBot.GetComponent<Animator>();
+        hasSpawned = true;
+        Destroy(gameObject);
     }
 
-    private void FlipSprite(float dirX)
+    private void OnDestroy()
     {
-        if (dirX > 0)
-            activeBot.transform.localScale = new Vector3(1, 1, 1);
-        else if (dirX < 0)
-            activeBot.transform.localScale = new Vector3(-1, 1, 1);
-    }
-
-    private void CheckGrounded()
-    {
-        if (activeBot == null) return;
-        Collider2D groundCheck = Physics2D.OverlapCircle(activeBot.transform.position, 0.1f, groundMask);
-        if (groundCheck != null)
-            isGrounded = true;
+        if (DialogueManager.Instance != null)
+            DialogueManager.Instance.OnDialogueEndedPublic -= OnDialogueEnded;
     }
 }
