@@ -8,6 +8,8 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
 
+    public event Action<int> OnDialogueEndedPublic;
+
     [Header("UI елементи")]
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TMP_Text dialogueText;
@@ -18,25 +20,33 @@ public class DialogueManager : MonoBehaviour
     private HashSet<string> usedOneTimeResponses = new HashSet<string>();
     private int currentLine = 0;
     private bool dialogueActive = false;
-
-    // 🔹 Подія, яка викликається після закінчення діалогу, з номером останнього рядка
     private Action<int> onDialogueEnd;
+
+    [Header("Оновлення завдання (Task Update)")]
+    [SerializeField] private bool allowTaskUpdate = false;          
+    [SerializeField] private int updateTaskAfterLine = 2;          
+    [SerializeField] private string newTaskText = "Йди до центру прийняття рішень";
+    [SerializeField] private Transform newTaskTarget;               
+    [SerializeField] private TaskPanelManager taskPanelManager;     
 
     void Awake()
     {
         Instance = this;
-        if (dialoguePanel != null) dialoguePanel.SetActive(false);
+        if (dialoguePanel != null)
+            dialoguePanel.SetActive(false);
     }
 
     void Start()
     {
         dialoguePanel.SetActive(false);
-        foreach (var b in choiceButtons) b.gameObject.SetActive(false);
+        foreach (var b in choiceButtons)
+            b.gameObject.SetActive(false);
     }
 
     public void StartDialogue(DialogueLine[] dialogue, Action<int> endAction = null)
     {
-        if (dialogue == null || dialogue.Length == 0) return;
+        if (dialogue == null || dialogue.Length == 0)
+            return;
 
         currentDialogue = dialogue;
         currentLine = 0;
@@ -58,6 +68,13 @@ public class DialogueManager : MonoBehaviour
         currentLine = lineIndex;
         dialogueText.text = currentDialogue[lineIndex].npcText;
         ShowChoices(currentDialogue[lineIndex].responses);
+
+        // Перевірка чи потрібно оновити завдання
+        if (allowTaskUpdate && lineIndex == updateTaskAfterLine)
+        {
+            UpdateTask();
+            allowTaskUpdate = false;
+        }
     }
 
     void ShowChoices(PlayerResponse[] responses)
@@ -74,6 +91,7 @@ public class DialogueManager : MonoBehaviour
                 txt.text = resp.responseText;
 
                 string key = currentLine + "_" + i;
+
                 if (resp.oneTime && usedOneTimeResponses.Contains(key))
                 {
                     btn.interactable = false;
@@ -84,6 +102,7 @@ public class DialogueManager : MonoBehaviour
                 {
                     btn.interactable = true;
                     btn.onClick.RemoveAllListeners();
+
                     int choiceIndex = i;
                     btn.onClick.AddListener(() => OnPlayerChoice(responses[choiceIndex], choiceIndex));
                 }
@@ -115,14 +134,30 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueActive = false;
         dialoguePanel.SetActive(false);
-        foreach (var b in choiceButtons) b.gameObject.SetActive(false);
 
-        // 🔹 Викликаємо подію з параметром (яка лінія була останньою)
+        foreach (var b in choiceButtons)
+            b.gameObject.SetActive(false);
+
         onDialogueEnd?.Invoke(currentLine);
+
+        OnDialogueEndedPublic?.Invoke(currentLine);
     }
 
-public int GetCurrentLineIndex()
-{
-    return currentLine;
-}
+    public int GetCurrentLineIndex()
+    {
+        return currentLine;
+    }
+
+    private void UpdateTask()
+    {
+        if (taskPanelManager != null)
+        {
+            taskPanelManager.UpdateTask(newTaskText, newTaskTarget);
+            Debug.Log("Завдання оновлено через TaskPanelManager: " + newTaskText);
+        }
+        else
+        {
+            Debug.LogWarning("TaskPanelManager не призначено у DialogueManager!");
+        }
+    }
 }

@@ -9,11 +9,11 @@ public class DialogueTeleport : MonoBehaviour
     [SerializeField] private TMP_Text centerText;   // Текст по центру
     [SerializeField] private Transform player;      // Гравець, якого треба телепортувати
     [SerializeField] private Vector3 teleportPosition; // Координати, куди телепортувати
-    [SerializeField] private GameObject botObject;  // 🔹 Бот, який зникає (червоний)
+    [SerializeField] private GameObject botObject;  // Бот, який зникає (червоний)
     
     [Header("Префаб для спавну")]
-    [SerializeField] private GameObject blueBotPrefab;  // 🔹 Префаб синього бота
-    [SerializeField] private Vector3 blueBotSpawnPos;   // 🔹 Координати спавну синього бота
+    [SerializeField] private GameObject blueBotPrefab;  // Префаб синього бота
+    [SerializeField] private Vector3 blueBotSpawnPos;   // Координати спавну синього бота
 
     [Header("Налаштування")]
     [SerializeField] private float fadeSpeed = 1.5f; // Швидкість затемнення
@@ -26,7 +26,7 @@ public class DialogueTeleport : MonoBehaviour
 
     private IEnumerator FadeAndTeleport()
     {
-        // 1️⃣ Затемнення екрана
+        // Затемнення екрана
         fadePanel.gameObject.SetActive(true);
         float t = 0f;
         while (t < 1)
@@ -36,31 +36,31 @@ public class DialogueTeleport : MonoBehaviour
             yield return null;
         }
 
-        // 2️⃣ Показати текст
+        // Показати текст
         centerText.text = "Слідкування за B-17.";
         centerText.gameObject.SetActive(true);
 
-        // 🔹 2.1 — Прибрати бота після затемнення (в момент чорного екрану)
+        //  2.1 — Прибрати бота після затемнення (в момент чорного екрану)
         if (botObject != null)
         {
             botObject.SetActive(false);
-            Debug.Log("🤖 Червоний бот зник після діалогу.");
+            Debug.Log("Червоний бот зник після діалогу.");
         }
 
-        // ⏳ Чекаємо 7 секунд, поки гравець читає текст
+        // Чекаємо 7 секунд, поки гравець читає текст
         yield return new WaitForSeconds(textDelay);
 
-        // 3️⃣ Телепортація гравця
+        // Телепортація гравця
         player.position = teleportPosition;
 
-        // 🔹 3.1 — Спавн синього бота
+        // 3.1 — Спавн синього бота
         if (blueBotPrefab != null)
         {
             Instantiate(blueBotPrefab, blueBotSpawnPos, Quaternion.identity);
-            Debug.Log("💙 Синій бот зʼявився після телепортації.");
+            Debug.Log("Синій бот зʼявився після телепортації.");
         }
 
-        // 4️⃣ Зникнення чорного екрана
+        // Зникнення чорного екрана
         yield return new WaitForSeconds(1f);
         while (t > 0)
         {

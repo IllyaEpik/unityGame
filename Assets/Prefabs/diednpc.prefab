@@ -1,0 +1,190 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7080099110451174492
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2771290902821106298}
+  - component: {fileID: 5279972204323503478}
+  - component: {fileID: 4940299792370937141}
+  - component: {fileID: 8673902403847876343}
+  m_Layer: 0
+  m_Name: diednpc
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2771290902821106298
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7080099110451174492}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.61237246, y: 0.61237246, z: -0.35355335, w: 0.35355335}
+  m_LocalPosition: {x: 65.25247, y: -6.251847, z: 4.420311}
+  m_LocalScale: {x: 1, y: 1, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 120, y: 0, z: -90}
+--- !u!212 &5279972204323503478
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7080099110451174492}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: b5d01162228f9b94ebd462a4042470f7, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 10, y: 10}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &4940299792370937141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7080099110451174492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fa72ec566ea24b31961fd72e3021925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueLines:
+  - npcText: "RX-09 \u0441\u0442\u043E\u0457\u0442\u044C \u043D\u0430\u0434 \u0437\u0440\u0443\u0439\u043D\u043E\u0432\u0430\u043D\u0438\u043C
+      \u0442\u0456\u043B\u043E\u043C\n\u0421\u0438\u043D\u044C\u043E\u0433\u043E. 
+      \xAB\u041C\u0415\u0422\u0410: \u0412\u0418\u041A\u041E\u041D\u0410\u041D\u041E\xBB"
+    responses:
+    - responseText: 
+      nextLineIndex: 1
+      oneTime: 0
+      onChosen:
+        m_PersistentCalls:
+          m_Calls: []
+  - npcText: "RX-09 \u043E\u0442\u0440\u0438\u043C\u0443\u0454 \u043A\u043E\u043E\u0440\u0434\u0438\u043D\u0430\u0442\u0438
+      \u2014 \u043C\u0456\u0441\u0446\u0435,\n\u0434\u0435 \u043C\u043E\u0436\u0435
+      \u0431\u0443\u0442\u0438 \xAB\u0446\u0435\u043D\u0442\u0440 \u043F\u0440\u0438\u0439\u043D\u044F\u0442\u0442\u044F\n\u0440\u0456\u0448\u0435\u043D\u044C\xBB
+      (\u0439\u043E\u0433\u043E \u043D\u0430\u043F\u0440\u0430\u0432\u043B\u044F\u0454
+      \u0432\u043D\u0443\u0442\u0440\u0456\u0448\u043D\u0456\u0439 \u043D\u0430\u0432\u0456\u0433\u0430\u0442\u043E\u0440
+      \u0437\u0430\u0434\u0430\u0447). \u0412\u0456\u043D \u0432\u0438\u0440\u0456\u0448\u0443\u0454
+      \u0441\u043B\u0456\u0434\u0443\u0432\u0430\u0442\u0438 \u0434\u0430\u043B\u0456
+      \u0441\u0430\u043C."
+    responses:
+    - responseText: 
+      nextLineIndex: 2
+      oneTime: 0
+      onChosen:
+        m_PersistentCalls:
+          m_Calls: []
+  updateTaskOnTrigger: 1
+  updateTaskAfterLine: 2
+  newTaskText: "\u0419\u0434\u0438 \u0434\u043E \u0446\u0435\u043D\u0442\u0440\u0443
+    \u043F\u0440\u0438\u0439\u043D\u044F\u0442\u0442\u044F \u0440\u0456\u0448\u0435\u043D\u044C"
+  newTaskTarget: {fileID: 2902412853602747403, guid: 2a09cc1dcd92c439c89d6e748d71fff5, type: 3}
+  taskPanelManager: {fileID: 0}
+  teleportTarget: {fileID: 0}
+  teleportAfterLine: 0
+  objectToSpawn: {fileID: 4970491579697224422, guid: 2a09cc1dcd92c439c89d6e748d71fff5, type: 3}
+  spawnAfterLine: 2
+  spawnPosition: {fileID: 0}
+  destroySelfAfterSpawn: 0
+  autoStartOnTrigger: 1
+  startOnlyOnce: 0
+  talkButton: {fileID: 0}
+--- !u!61 &8673902403847876343
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7080099110451174492}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 10, y: 10}
+    newSize: {x: 10, y: 10}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 18.43, y: 27.82}
+  m_EdgeRadius: 0

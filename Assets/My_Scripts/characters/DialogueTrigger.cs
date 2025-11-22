@@ -1,5 +1,4 @@
 using UnityEngine;
-using System;
 using UnityEngine.UI;
 
 public class DialogueTrigger : MonoBehaviour
@@ -73,14 +72,14 @@ public class DialogueTrigger : MonoBehaviour
     {
         Debug.Log($"Діалог завершено ({gameObject.name}), останній рядок: {lastLine}");
 
-        // ✅ Телепорт
+        // Телепорт
         if (teleportTarget != null && lastLine == teleportAfterLine)
         {
             Debug.Log("Телепорт після рядка " + lastLine);
             teleportTarget.OnDialogueEnd();
         }
 
-        // ✅ Спавн об'єкта
+        // Спавн об'єкта
         if (!spawnTriggered && objectToSpawn != null && lastLine == spawnAfterLine)
         {
             spawnTriggered = true;
@@ -101,7 +100,7 @@ public class DialogueTrigger : MonoBehaviour
 
         int current = DialogueManager.Instance.GetCurrentLineIndex();
 
-        // ✅ Підказки
+        // Підказки
         if (enableHints)
         {
             if (!hintShown0 && current == 1)
@@ -117,14 +116,14 @@ public class DialogueTrigger : MonoBehaviour
             }
         }
 
-        // ✅ Телепорт (у процесі, якщо треба)
+        // Телепорт (у процесі, якщо треба)
         if (!teleportTriggered && teleportTarget != null && teleportAfterLine >= 0 && current == teleportAfterLine)
         {
             teleportTriggered = true;
             teleportTarget.OnDialogueEnd();
         }
 
-        // ✅ Спавн (у процесі, якщо треба)
+        // Спавн (у процесі, якщо треба)
         if (!spawnTriggered && objectToSpawn != null && spawnAfterLine >= 0 && current == spawnAfterLine)
         {
             spawnTriggered = true;

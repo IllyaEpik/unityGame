@@ -51,7 +51,7 @@ public class TaskPanelManager : MonoBehaviour
         if (missionManager.isCompleted || missionManager.isFailed || !missionManager.isActive)
             taskText.text = "Місій для тебе поки що немає";
         else
-            taskText.text = missionManager.currentTaskText; // 🔹 Беремо з MissionManager
+            taskText.text = missionManager.currentTaskText; // Беремо з MissionManager
     }
 
     private void UpdateStatus()
@@ -110,9 +110,26 @@ public class TaskPanelManager : MonoBehaviour
         }
     }
 
-public void SetCustomTask(string newTask)
-{
-    if (taskText != null)
-        taskText.text = newTask;
-}
+    public void SetCustomTask(string newTask)
+    {
+        if (taskText != null)
+            taskText.text = newTask;
+    }
+
+    // Новый универсальный метод — для виклику з DialogueManager
+    public void UpdateTask(string newTaskText, Transform newTarget)
+    {
+        if (missionManager != null)
+        {
+            missionManager.currentTaskText = newTaskText;
+            missionManager.isActive = true;
+        }
+
+        taskTarget = newTarget;
+
+        if (taskText != null)
+            taskText.text = newTaskText;
+
+        Debug.Log($"Завдання оновлено: {newTaskText} (нова ціль: {newTarget?.name ?? "немає"})");
+    }
 }
