@@ -29,12 +29,6 @@ public class Hero : MonoBehaviour
 
     private bool canAttack = true;
     [SerializeField] private float attackCooldown = 0.5f;
-
-
-    [Header("Audio")]
-    [SerializeField] private AudioSource shotSound;
-
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -64,8 +58,6 @@ public class Hero : MonoBehaviour
         Instantiate(plasmaPrefab, transform.position, Quaternion.Euler(0, 0, this.isLeft ? 0 : 180));
         // }
         canAttack = false;
-        if (shotSound != null)
-                shotSound.Play();
         Invoke(nameof(ResetAttack), attackCooldown);
     }
     void Update()

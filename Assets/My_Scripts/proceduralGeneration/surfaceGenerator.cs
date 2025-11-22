@@ -10,6 +10,7 @@ public class surfaceGenerator : MonoBehaviour
 
     public int enemyBotCount = 2;
     public int enemyPlantCount = 2;
+    public int alienCount = 2;
 
     public int seed;
     private int[] surface;
@@ -18,6 +19,7 @@ public class surfaceGenerator : MonoBehaviour
     [SerializeField] private GameObject enemyBotPrefab;
     [SerializeField] private GameObject enemyPlantPrefab;
     [SerializeField] private GameObject npcPrefab;
+    [SerializeField] private GameObject AlienPrefab;
     [SerializeField] private Tilemap groundTilemap;
     [SerializeField] private TileBase[] tilePalette;
     [Header("Параметры структур")]
@@ -101,9 +103,10 @@ public class surfaceGenerator : MonoBehaviour
             
         }
 
-        // generateStructure(npcPrefab);
-        // generateEnemies(enemyBotCount, enemyBotPrefab);
-        // generateEnemies(enemyPlantCount, enemyPlantPrefab);
+        generateStructure(npcPrefab);
+        generateEnemies(enemyBotCount, enemyBotPrefab);
+        generateEnemies(enemyPlantCount, enemyPlantPrefab);
+        generateEnemies(alienCount, AlienPrefab);
     }
 
     void generateEnemies(int count, GameObject prefab)
@@ -111,7 +114,7 @@ public class surfaceGenerator : MonoBehaviour
         for (int e = 0; e < count; e++)
         {
             float x = Random.Range(-levelWidth, levelWidth);
-            Instantiate(prefab, new Vector2(x, 0), Quaternion.identity);
+            Instantiate(prefab, new Vector2(x, 80), Quaternion.identity);
         }
     }
 
