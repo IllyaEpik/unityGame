@@ -78,7 +78,6 @@ public class SaveSystem : MonoBehaviour
     // Загружаем игрока и врагов из prefab.
     public bool LoadGame(Hero player, GameObject enemyPrefab)
     {
-        Debug.Log("ok");
         if (!File.Exists(savePath))
         {
             Debug.LogWarning("сейва нет"); // Не нашли сейв — не беда, можно начать сначала!
@@ -91,7 +90,6 @@ public class SaveSystem : MonoBehaviour
         if (surfaceGenerator)
         {
             surfaceGenerator.LoadSeed(data.seed);
-            
         }
         // Восстанавливаем игрока. 
         player.transform.position = new Vector2(data.playerX, data.playerY);
@@ -99,7 +97,7 @@ public class SaveSystem : MonoBehaviour
         player.battery = data.battery;
 
         // Удаляем старых врагов типа EnemyPlant со сцены. елси не удалить все полетит 
-        foreach (EnemyPlant old in FindObjectsOfType<EnemyPlant>()) 
+        foreach (EnemyPlant old in FindObjectsOfType<EnemyPlant>())
         {
             Destroy(old.gameObject);
         }

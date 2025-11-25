@@ -758,11 +758,11 @@ PrefabInstance:
       objectReference: {fileID: 377250762}
     - target: {fileID: 7246121502034423090, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 84
+      value: 13.1
       objectReference: {fileID: 0}
     - target: {fileID: 7246121502034423090, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 14.6
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 7246121502034423090, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1853,19 +1853,38 @@ MonoBehaviour:
     - responseText: no
       nextLineIndex: 2
       oneTime: 0
+      onChosen:
+        m_PersistentCalls:
+          m_Calls: []
     - responseText: yes
       nextLineIndex: 1
       oneTime: 0
+      onChosen:
+        m_PersistentCalls:
+          m_Calls: []
   - npcText: goodbye
     responses:
     - responseText: 'goodbye '
       nextLineIndex: -1
       oneTime: 0
+      onChosen:
+        m_PersistentCalls:
+          m_Calls: []
   - npcText: whf
     responses:
     - responseText: ok
       nextLineIndex: -1
       oneTime: 0
+      onChosen:
+        m_PersistentCalls:
+          m_Calls: []
+  enableHints: 1
+  teleportTarget: {fileID: 0}
+  teleportAfterLine: -1
+  objectToSpawn: {fileID: 0}
+  spawnAfterLine: -1
+  spawnPosition: {fileID: 0}
+  destroySelfAfterSpawn: 0
   autoStartOnTrigger: 0
   startOnlyOnce: 0
   talkButton: {fileID: 1965931460}
@@ -1908,6 +1927,12 @@ MonoBehaviour:
   - {fileID: 718480990}
   - {fileID: 489901577}
   - {fileID: 1366364482}
+  allowTaskUpdate: 0
+  updateTaskAfterLine: 2
+  newTaskText: "\u0419\u0434\u0438 \u0434\u043E \u0446\u0435\u043D\u0442\u0440\u0443
+    \u043F\u0440\u0438\u0439\u043D\u044F\u0442\u0442\u044F \u0440\u0456\u0448\u0435\u043D\u044C"
+  newTaskTarget: {fileID: 0}
+  taskPanelManager: {fileID: 0}
 --- !u!4 &711256061
 Transform:
   m_ObjectHideFlags: 0
@@ -2876,6 +2901,7 @@ MonoBehaviour:
   isActive: 1
   isCompleted: 0
   isFailed: 0
+  currentTaskText: "\u0412\u0431\u0438\u0439 \u0432\u043E\u0440\u043E\u0433\u0430"
 --- !u!4 &908075126
 Transform:
   m_ObjectHideFlags: 0
@@ -3660,11 +3686,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7246121502034423090, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 104.3
+      value: 90.5
       objectReference: {fileID: 0}
     - target: {fileID: 7246121502034423090, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 20.7
+      value: 20.1
       objectReference: {fileID: 0}
     - target: {fileID: 7246121502034423090, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
       propertyPath: m_LocalPosition.z
@@ -24834,6 +24860,63 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!1001 &1840102987
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1495496410546377123, guid: e239a10ee2168ef4c9aa9cff55cc4200, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.7398834
+      objectReference: {fileID: 0}
+    - target: {fileID: 1495496410546377123, guid: e239a10ee2168ef4c9aa9cff55cc4200, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5.2444267
+      objectReference: {fileID: 0}
+    - target: {fileID: 1495496410546377123, guid: e239a10ee2168ef4c9aa9cff55cc4200, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1495496410546377123, guid: e239a10ee2168ef4c9aa9cff55cc4200, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1495496410546377123, guid: e239a10ee2168ef4c9aa9cff55cc4200, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1495496410546377123, guid: e239a10ee2168ef4c9aa9cff55cc4200, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1495496410546377123, guid: e239a10ee2168ef4c9aa9cff55cc4200, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1495496410546377123, guid: e239a10ee2168ef4c9aa9cff55cc4200, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1495496410546377123, guid: e239a10ee2168ef4c9aa9cff55cc4200, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1495496410546377123, guid: e239a10ee2168ef4c9aa9cff55cc4200, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8937023810055130003, guid: e239a10ee2168ef4c9aa9cff55cc4200, type: 3}
+      propertyPath: m_Name
+      value: plasma
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e239a10ee2168ef4c9aa9cff55cc4200, type: 3}
 --- !u!1 &1873082539
 GameObject:
   m_ObjectHideFlags: 0
@@ -26162,3 +26245,4 @@ SceneRoots:
   - {fileID: 908075126}
   - {fileID: 723555541}
   - {fileID: 163365867}
+  - {fileID: 1840102987}

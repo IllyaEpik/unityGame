@@ -40,6 +40,7 @@ public class enemyBot : MonoBehaviour
 
     public bool isAggressive = true;
     public System.Action dyingEvent = delegate { };
+    public bool turnedRight = true;
 
     private float maxHealth = 100f;
     private float currentHealth;
@@ -122,9 +123,14 @@ public class enemyBot : MonoBehaviour
         bool heroInLeftAttack = Physics2D.OverlapBox(LeftZone.position, attackZoneSize, 0, heroMask);
         bool heroInRightAttack = Physics2D.OverlapBox(RightZone.position, attackZoneSize, 0, heroMask);
 
-        if (heroInLeftAttack)
+        // if (heroInLeftAttack)
+        //     Attack(-180);
+        // else if (heroInRightAttack)
+        //     Attack(0);
+
+        if (heroInRightAttack && turnedRight)
             Attack(-180);
-        else if (heroInRightAttack)
+        else if (!turnedRight && heroInRightAttack)
             Attack(0);
     }
 
@@ -139,10 +145,13 @@ public class enemyBot : MonoBehaviour
 
     private void FlipSprite(float dirX)
     {
-        if (dirX > 0)
+        if (dirX > 0){
             transform.localScale = new Vector3(1, 1, 1);
-        else if (dirX < 0)
+            turnedRight = true;}
+        else if (dirX < 0){
             transform.localScale = new Vector3(-1, 1, 1);
+            turnedRight = false;
+            }
     }
 
     private void CheckStuckAndJump()

@@ -351,10 +351,12 @@ MonoBehaviour:
   noiseScale: 0.02
   enemyBotCount: 0
   enemyPlantCount: 0
-  seed: 0
+  alienCount: 1
+  seed: 249
   enemyBotPrefab: {fileID: 4230844430991088939, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
   enemyPlantPrefab: {fileID: 2261049689267568082, guid: b2eeffa5b8d85cd41a36fd5f87848ea3, type: 3}
   npcPrefab: {fileID: 8080085319249185538, guid: 1391b8a0dae23f94fb85edb6dd04544d, type: 3}
+  AlienPrefab: {fileID: 81795998548971994, guid: 48a55584654b14b8e91177909f5dcbd7, type: 3}
   groundTilemap: {fileID: 1980942091}
   tilePalette:
   - {fileID: 11400000, guid: c1f6e0002b0efcc47b94ffb106b3214d, type: 2}

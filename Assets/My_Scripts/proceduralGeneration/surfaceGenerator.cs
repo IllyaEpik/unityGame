@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
+using UnityEngine.Rendering;
 public class surfaceGenerator : MonoBehaviour
 {
     public int levelWidth = 250;
@@ -38,8 +39,18 @@ public class surfaceGenerator : MonoBehaviour
     {
         seed = loadedSeed;
         Random.InitState(seed);
+        groundTilemap.ClearAllTiles();
+        GameObject[] structures = GameObject.FindGameObjectsWithTag("structure");
+        foreach (GameObject structureObject in structures)
+        {
+            Destroy(structureObject);
+        }
+        GameObject[] alians = GameObject.FindGameObjectsWithTag("alien");
+        foreach (GameObject alian in alians)
+        {
+            Destroy(alian);
+        }
         generateSurface();
-        // if (PlayerPrefs.HasKey("worldSeed"))
         // {
         //     seed = PlayerPrefs.GetInt("worldSeed");
         //     Debug.Log($"Loaded seed: {seed}");
@@ -55,12 +66,11 @@ public class surfaceGenerator : MonoBehaviour
         
         
     }
-
+     
     public void generateSurface()
     {
         surface = new int[levelWidth * 2];
         map = new int[levelWidth * 2][];
-        groundTilemap.ClearAllTiles();
         float count = 0f;
         float offset = Random.Range(0f, 9999f);
         int structureCoors = Random.Range(-levelWidth+2, levelWidth-2);
@@ -113,7 +123,7 @@ public class surfaceGenerator : MonoBehaviour
     {
         for (int e = 0; e < count; e++)
         {
-            float x = Random.Range(-levelWidth, levelWidth);
+            float x = Random.Range(-levelWidth*5, levelWidth*5);
             Instantiate(prefab, new Vector2(x, 80), Quaternion.identity);
         }
     }
