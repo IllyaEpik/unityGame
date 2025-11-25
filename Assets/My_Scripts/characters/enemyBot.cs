@@ -44,34 +44,41 @@ public class enemyBot : MonoBehaviour
     [SerializeField] private GameObject healthBarPrefab;
     private EnemyHealthBar healthBar;
 
-private void Awake()
-{
-    rb = GetComponent<Rigidbody2D>();
-    animator = GetComponent<Animator>();
 
-    if (LeftZone == null)
-        LeftZone = transform.Find("RightZone");
-    if (RightZone == null)
-        RightZone = transform.Find("LeftZone");
-    if (LeftZone != null && RightZone != null)
+
+    [Header("Death Settings")]
+    [SerializeField] private GameObject deathSpawnPrefab;
+
+
+
+    private void Awake()
     {
-        Transform temp = LeftZone;
-        LeftZone = RightZone;
-        RightZone = temp;
-    }
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
 
-    if (LeftZoneDetection == null)
-        LeftZoneDetection = transform.Find("LeftZoneDetection");
-    if (RightZoneDetection == null)
-        RightZoneDetection = transform.Find("RightZoneDetection");
+        if (LeftZone == null)
+            LeftZone = transform.Find("RightZone");
+        if (RightZone == null)
+            RightZone = transform.Find("LeftZone");
+        if (LeftZone != null && RightZone != null)
+        {
+            Transform temp = LeftZone;
+            LeftZone = RightZone;
+            RightZone = temp;
+        }
 
-    if (heroObject == null)
-    {
-        heroObject = GameObject.FindFirstObjectByType<Hero>();
+        if (LeftZoneDetection == null)
+            LeftZoneDetection = transform.Find("LeftZoneDetection");
+        if (RightZoneDetection == null)
+            RightZoneDetection = transform.Find("RightZoneDetection");
+
         if (heroObject == null)
-        Debug.LogWarning("Hero object not found in scene");
+        {
+            heroObject = GameObject.FindFirstObjectByType<Hero>();
+            if (heroObject == null)
+                Debug.LogWarning("Hero object not found in scene");
+        }
     }
-}
 
 
 
@@ -196,6 +203,8 @@ private void Awake()
     {
         isAlive = false;
         animator.SetTrigger("isDead");
+        if (deathSpawnPrefab != null)
+            Instantiate(deathSpawnPrefab, transform.position, Quaternion.identity);
         if (healthBar != null)
             Destroy(healthBar.gameObject);
         dyingEvent();

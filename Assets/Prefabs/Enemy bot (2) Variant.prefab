@@ -17,6 +17,10 @@ PrefabInstance:
       value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 6062738436405132236, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
+      propertyPath: deathSpawnPrefab
+      value: 
+      objectReference: {fileID: 7827711331102321370, guid: 69e8dfac9efd642319c25e0aa7b8da52, type: 3}
+    - target: {fileID: 6062738436405132236, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
       propertyPath: groundMask.m_Bits
       value: 8
       objectReference: {fileID: 0}
