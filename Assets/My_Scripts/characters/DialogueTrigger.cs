@@ -67,19 +67,16 @@ public class DialogueTrigger : MonoBehaviour
         DialogueManager.Instance.StartDialogue(dialogueLines, OnDialogueEnd);
     }
 
-    // 🔹 Викликається коли діалог завершується
     void OnDialogueEnd(int lastLine)
     {
         Debug.Log($"Діалог завершено ({gameObject.name}), останній рядок: {lastLine}");
 
-        // Телепорт
         if (teleportTarget != null && lastLine == teleportAfterLine)
         {
             Debug.Log("Телепорт після рядка " + lastLine);
             teleportTarget.OnDialogueEnd();
         }
 
-        // Спавн об'єкта
         if (!spawnTriggered && objectToSpawn != null && lastLine == spawnAfterLine)
         {
             spawnTriggered = true;
@@ -116,14 +113,12 @@ public class DialogueTrigger : MonoBehaviour
             }
         }
 
-        // Телепорт (у процесі, якщо треба)
         if (!teleportTriggered && teleportTarget != null && teleportAfterLine >= 0 && current == teleportAfterLine)
         {
             teleportTriggered = true;
             teleportTarget.OnDialogueEnd();
         }
 
-        // Спавн (у процесі, якщо треба)
         if (!spawnTriggered && objectToSpawn != null && spawnAfterLine >= 0 && current == spawnAfterLine)
         {
             spawnTriggered = true;
