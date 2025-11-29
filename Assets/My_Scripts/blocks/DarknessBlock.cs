@@ -18,7 +18,6 @@ public class DarknessBlock : MonoBehaviour
 
         if (globalLight == null)
         {
-            Debug.LogError("❌ Global Light 2D не найден!");
             enabled = false;
             return;
         }

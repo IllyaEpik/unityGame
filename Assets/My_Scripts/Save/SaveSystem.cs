@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
@@ -6,118 +5,160 @@ using System;
 
 public class SaveSystem : MonoBehaviour
 {
-    // Путь к файлу сохранения.
-    private string savePath;
-    public surfaceGenerator surfaceGenerator;
+    public static SaveSystem Instance;
+
+    [Header("Prefabs для загрузки объектов")]
+    public GameObject plantPrefab;
+    public GameObject enemyBotPrefab;
+    public GameObject npcPrefab;
+    public GameObject chestPrefab;
+    public GameObject keyPrefab;
+    public GameObject alienPrefab;
+
+    [Header("Ссылка на игрока")]
+    public Hero hero;
+
+    // Массив тегов для удаления объектов на сцене
+    private readonly string[] tagsToDelete = { "Plant", "enemy", "NPC", "Chest", "Key", "alien" };
+
     private void Awake()
     {
-        // Формируем путь к сейву. 
-        savePath = Path.Combine(Application.persistentDataPath, "save.json");
-        Debug.Log("Save path: " + savePath);
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
     }
-    // Сохраняем игрока и ВСЕХ врагов типа EnemyPlant на сцене.
-    private SaveData SaveMob<T>(SaveData data)  where T : MonoBehaviour
-    {
-        T[] currentEnemies = FindObjectsOfType<T>();
-        foreach (T e in currentEnemies)
-        {
-            // Проверяем, что ссылка не "мертвая" (на всякий случай а то баги)
-            if (e == null) continue;
 
-            ItemData ed = new ItemData();
-            ed.posX = e.transform.position.x;
-            ed.posY = e.transform.position.y;
-            // ed.type = T;
-            // ed.isAlive = e.isAlive;
-            data.enemies.Add(ed);
-        }
-        return data;
+    private string GetPath(int slot)
+    {
+        return Path.Combine(Application.persistentDataPath, $"save_slot_{slot}.json");
     }
-    public void SaveGame(Hero player) 
+
+    // ================== СОХРАНЕНИЕ ==================
+    public void Save(int slot)
     {
         SaveData data = new SaveData();
 
-        // Сохраняем координаты, здоровье и батарейку игрока
-        data.playerX = player.transform.position.x;
-        data.playerY = player.transform.position.y;
-        data.health = player.health;
-        data.battery = player.battery;
-        data.timestamp = System.DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-        if (surfaceGenerator)
-        {
-            data.seed = surfaceGenerator.seed;
-        }
-        // Враги
-        // Находим ВСЕХ активных врагов типа EnemyPlant на сцене прямо сейчас 
-        SaveMob<EnemyPlant>(data);
-        // SaveMob<enemyBot>(data);
-        // SaveMob<NpcBot>(data);
-        // SaveMob<Chest>(data);
-        // SaveMob<Key>(data);
-        
-        // Превращаем всё в JSON и записываем на диск.
+        // Игрок
+        data.playerX = hero.transform.position.x;
+        data.playerY = hero.transform.position.y;
+        data.health = hero.health;
+        data.battery = hero.battery;
+
+        data.timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        data.saveTime = DateTime.Now.ToString("dd.MM.yyyy HH:mm");
+
+        // Сохраняем объекты на сцене
+        SaveSceneObjects(data);
+
         string json = JsonUtility.ToJson(data, true);
-        File.WriteAllText(savePath, json);
-        Debug.Log("Game saved вроде!");
+        File.WriteAllText(GetPath(slot), json);
+
+        Debug.Log($"Игра сохранена в слот {slot}");
     }
-    public void resetAll()
+
+    private void SaveSceneObjects(SaveData data)
     {
-        // string json = JsonUtility.ToJson("", true);
-        // JsonUtility.FromJsonOverwrite("", "");
-        // Debug.Log(json);
-        if (File.Exists(savePath))
+        SaveType(data, "Plant", plantPrefab);
+        SaveType(data, "enemy", enemyBotPrefab);
+        SaveType(data, "NPC", npcPrefab);
+        SaveType(data, "Chest", chestPrefab);
+        SaveType(data, "Key", keyPrefab);
+        SaveType(data, "alien", alienPrefab);
+    }
+
+    private void SaveType(SaveData data, string tag, GameObject prefab)
+    {
+        GameObject[] objects = GameObject.FindGameObjectsWithTag(tag);
+        foreach (GameObject obj in objects)
         {
-            File.Delete(savePath);
-            Debug.Log("Save file deleted!");
-        }
-        else
-        {
-            Debug.Log("No save file exists.");
+            ItemData id = new ItemData();
+            id.type = tag; // сохраняем тег
+            id.x = obj.transform.position.x;
+            id.y = obj.transform.position.y;
+            data.objects.Add(id);
         }
     }
-    // Загружаем игрока и врагов из prefab.
-    public bool LoadGame(Hero player, GameObject enemyPrefab)
+
+    // ================== ЗАГРУЗКА ==================
+    public void Load(int slot)
     {
-        Debug.Log("ok");
-        if (!File.Exists(savePath))
+        string path = GetPath(slot);
+        if (!File.Exists(path))
         {
-            Debug.LogWarning("сейва нет"); // Не нашли сейв — не беда, можно начать сначала!
-            return false;
+            Debug.LogWarning($"Слот {slot} пуст!");
+            return;
         }
-        
-        // Читаем JSON и воскрешаем всех из цифрового небытия
-        string json = File.ReadAllText(savePath);
+
+        string json = File.ReadAllText(path);
         SaveData data = JsonUtility.FromJson<SaveData>(json);
-        if (surfaceGenerator)
-        {
-            surfaceGenerator.LoadSeed(data.seed);
-            
-        }
-        // Восстанавливаем игрока. 
-        player.transform.position = new Vector2(data.playerX, data.playerY);
-        player.health = data.health;
-        player.battery = data.battery;
 
-        // Удаляем старых врагов типа EnemyPlant со сцены. елси не удалить все полетит 
-        foreach (EnemyPlant old in FindObjectsOfType<EnemyPlant>()) 
+        // Игрок
+        hero.transform.position = new Vector2(data.playerX, data.playerY);
+        hero.health = data.health;
+        hero.battery = data.battery;
+
+        // Удаляем старые объекты
+        DeleteAllObjects();
+
+        // Спавним объекты заново
+        foreach (ItemData id in data.objects)
         {
-            Destroy(old.gameObject);
-        }
-        // Создаём врагов из prefab. 
-        foreach (ItemData ed in data.enemies)
-        {
-            GameObject enemyObj = Instantiate(enemyPrefab, new Vector2(ed.posX, ed.posY), Quaternion.identity);
-            EnemyPlant e = enemyObj.GetComponent<EnemyPlant>(); 
-            
-            // восстанавливаем состояние isAlive
-            // e.isAlive = ed.isAlive; 
-            
-            // если в враг здох то деактив 
-            // if (!ed.isAlive)
-            //     enemyObj.SetActive(false);
+            SpawnObject(id);
         }
 
-        Debug.Log("Game loaded плз донт краш!");
-        return true;
+        Debug.Log($"Слот {slot} загружен!");
+    }
+
+    private void DeleteAllObjects()
+    {
+        foreach (string tag in tagsToDelete)
+        {
+            DeleteByTag(tag);
+        }
+    }
+
+    private void DeleteByTag(string tag)
+    {
+        GameObject[] objs = GameObject.FindGameObjectsWithTag(tag);
+        foreach (GameObject obj in objs)
+            Destroy(obj);
+    }
+
+    private void SpawnObject(ItemData id)
+    {
+        GameObject prefab = null;
+        switch (id.type)
+        {
+            case "Plant": prefab = plantPrefab; break;
+            case "enemy": prefab = enemyBotPrefab; break;
+            case "NPC": prefab = npcPrefab; break;
+            case "Chest": prefab = chestPrefab; break;
+            case "Key": prefab = keyPrefab; break;
+            case "alien": prefab = alienPrefab; break;
+        }
+
+        if (prefab != null)
+            Instantiate(prefab, new Vector2(id.x, id.y), Quaternion.identity);
+    }
+
+    // ================== СЛОТЫ ==================
+    public bool IsSlotOccupied(int slot)
+    {
+        return File.Exists(GetPath(slot));
+    }
+
+    public void Delete(int slot)
+    {
+        string path = GetPath(slot);
+        if (File.Exists(path))
+            File.Delete(path);
+    }
+
+    public SaveData Peek(int slot)
+    {
+        string path = GetPath(slot);
+        if (!File.Exists(path)) return null;
+        return JsonUtility.FromJson<SaveData>(File.ReadAllText(path));
     }
 }

@@ -17,6 +17,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Achivements.unity
     guid: 695e242a1cdf5451f86ec6ad2ca24b39
+  - enabled: 1
+    path: Assets/Scenes/SaveScene.unity
+    guid: 3fcdd22252ef448599c8f54a2e9239ee
+  - enabled: 1
+    path: Assets/Scenes/Quests.unity
+    guid: d900893d3d12245fdb9cb915f29c6aae
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

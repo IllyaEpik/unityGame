@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6272833240986267190}
   m_Layer: 7
   m_Name: enemy
-  m_TagString: Untagged
+  m_TagString: Plant
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -151,17 +151,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e69e6840669546408af79ddaa8946cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
   isAlive: 1
+  isAttack: 0
+  attackInterval: 1
   detectionZone: {fileID: 7397497801718253668}
   detectionZoneRight: {fileID: 8393755784971291832}
   radius: 10
-  hero:
-    serializedVersion: 2
-    m_Bits: 64
   heroObject: {fileID: 0}
   healthBarPrefab: {fileID: 2587504997564988471, guid: 2313d7bcb58494889906776587b65bbf, type: 3}
-  maxHealth: 100
-  currentHealth: 0
 --- !u!95 &2556156043076226745
 Animator:
   serializedVersion: 7

@@ -18,24 +18,24 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("saving");
             // Просто передаем игрока. SaveSystem сам найдет врагов.
-            saveSystem.SaveGame(player); 
+            saveSystem.Save(0); 
         }
 
         // L горячая клав —  Load! 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            saveSystem.LoadGame(player, enemyPrefab);
+            saveSystem.Load(0);
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            saveSystem.resetAll();
+            saveSystem.Delete(0);
         }
         // resetAll
 
     }
     public void OnMyButtonClicked_death()
     {
-        saveSystem.LoadGame(player, enemyPrefab);
+        saveSystem.Load(0);
     }
     // private void load()
     // {

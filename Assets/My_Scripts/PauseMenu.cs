@@ -55,7 +55,7 @@ public class PauseMenu : MonoBehaviour
 
     public void SaveGame()
     {
-        saveSystem.SaveGame(player);
+        SceneManager.LoadScene("SaveScene");
     }
 
     public void OpenSettings()
@@ -73,7 +73,7 @@ public class PauseMenu : MonoBehaviour
 
     public void SaveAndQuit()
     {
-        saveSystem.SaveGame(player);
+        SaveSystem.Instance.Save(0);
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else

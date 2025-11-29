@@ -1,56 +1,34 @@
-
 using UnityEngine;
-using System.Collections;
 
 public class AutoSaveManager : MonoBehaviour
 {
-    // Герой 
-    public Hero player;
-    public SaveSystem saveSystem;
-    
-    // Как часто сохранять игру (в секундах). 
-    public float intervalSeconds = 60f;
+    [Header("Автосейв")]
+    [SerializeField] private float saveInterval = 30f; // Интервал автосейва в секундах
+    [SerializeField] private int autoSaveSlot = 0; // Слот для автосейва (0, 1 или 2)
 
-    private Coroutine autoSaveCoroutine;
+    private float timer = 0f;
 
-    private void OnEnable()
+    private void Update()
     {
-        // Запускаем автосохранение
-        autoSaveCoroutine = StartCoroutine(AutoSaveRoutine());
-    }
+        timer += Time.deltaTime;
 
-    private void OnDisable()
-    {
-        // Останавливаем автосохранение если вдруг выключили объект
-        if (autoSaveCoroutine != null)
-            StopCoroutine(autoSaveCoroutine);
-    }
-
-    IEnumerator AutoSaveRoutine()
-    {
-        while (true)
+        if (timer >= saveInterval)
         {
-            yield return new WaitForSeconds(intervalSeconds);
-            if (player != null && saveSystem != null)
-            {
-                // Сохраняем игру чтобы не потерять прогресс после очередного босса
-                saveSystem.SaveGame(player); 
-                Debug.Log("AutoSave completed. (Да-да, мы всё записали)");
-            }
+            timer = 0f;
+            PerformAutoSave();
         }
     }
 
-    // private void OnApplicationQuit()
-    // {
-    //     // На всякий случай сохраняем игру при выходе. Вдруг свет выключат
-    //     if (player != null && saveSystem != null)
-    //         saveSystem.SaveGame(player);
-    // }
-
-    private void OnApplicationPause(bool pause)
+    private void PerformAutoSave()
     {
-        // Сохраняем игру, если игрок решил сделать перерыв на чай тип пауза
-        if (pause && player != null && saveSystem != null)
-            saveSystem.SaveGame(player);
+        if (SaveSystem.Instance != null)
+        {
+            SaveSystem.Instance.Save(autoSaveSlot);
+            Debug.Log($"Автосейв выполнен в слот {autoSaveSlot}");
+        }
+        else
+        {
+            Debug.LogWarning("SaveSystem.Instance не найден! Автосейв не выполнен.");
+        }
     }
 }
