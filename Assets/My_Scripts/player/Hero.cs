@@ -16,7 +16,7 @@ public class Hero : MonoBehaviour
     [SerializeField] private UnityEngine.UI.Image shieldIcon; // managerUi or hero
     [SerializeField] private FixedJoystick joystick2;
     [SerializeField] private float speed;
-    private AchievementsManager achievementsManager;
+    [SerializeField] private AchievementsManager achievementsManager;
     [SerializeField] private float jumpForce = 1000;
     private bool isJump;
     public bool isLeft = false;
@@ -107,7 +107,7 @@ public class Hero : MonoBehaviour
             isJump = true;
             animator.SetBool("isJump", isJump);
             rb.AddForce(Vector2.up * jumpForce);
-            achievementsManager.Unlock("first jump");
+            achievementsManager.Unlock("first_jump");
         }
     }
     private void CheckGround()
