@@ -28,7 +28,7 @@ public class JetpackButtonController : MonoBehaviour
         else
         {
             jetpack.StopJetpack();
-            buttonText.text = LanguageManager.Instance.GetText("jump");
+            // buttonText.text = LanguageManager.Instance.GetText("jump");
         }
     }
 

@@ -13,6 +13,10 @@ TagManager:
   - attackButton
   - DarknessOverlay
   - alien
+  - Plant
+  - NPC
+  - Key
+  - Chest
   layers:
   - Default
   - TransparentFX
