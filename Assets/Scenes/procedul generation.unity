@@ -352,6 +352,7 @@ MonoBehaviour:
   enemyBotCount: 0
   enemyPlantCount: 0
   seed: 0
+  surface: 
   enemyBotPrefab: {fileID: 4230844430991088939, guid: 39e973f835d746042b8ba4ae0e9d5b71, type: 3}
   enemyPlantPrefab: {fileID: 2261049689267568082, guid: b2eeffa5b8d85cd41a36fd5f87848ea3, type: 3}
   npcPrefab: {fileID: 8080085319249185538, guid: 1391b8a0dae23f94fb85edb6dd04544d, type: 3}
@@ -1567,7 +1568,6 @@ MonoBehaviour:
   buttonText: {fileID: 672902131}
   jetpack: {fileID: 1946944991}
   hero: {fileID: 0}
-  isHolding: 0
 --- !u!1 &703834331
 GameObject:
   m_ObjectHideFlags: 0
@@ -2156,7 +2156,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cfebe5f5459467458ccf7bb16a15a2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceGenerator: {fileID: 176969393}
+  plantPrefab: {fileID: 0}
+  enemyBotPrefab: {fileID: 0}
+  npcPrefab: {fileID: 0}
+  chestPrefab: {fileID: 0}
+  keyPrefab: {fileID: 0}
+  alienPrefab: {fileID: 0}
+  hero: {fileID: 0}
 --- !u!4 &1009511081
 Transform:
   m_ObjectHideFlags: 0
@@ -2727,7 +2733,50 @@ MonoBehaviour:
   buttonText: {fileID: 672902131}
   jetpack: {fileID: 1946944991}
   hero: {fileID: 1946944988}
-  isHolding: 0
+--- !u!1 &1222353618
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1222353620}
+  - component: {fileID: 1222353619}
+  m_Layer: 0
+  m_Name: ItemsGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1222353619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222353618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ddc73c0e7c4444bdaaf34cb69383eab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1222353620
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222353618}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.2816877, y: 10.3364315, z: 719.84625}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1265028737
 GameObject:
   m_ObjectHideFlags: 0
@@ -3476,9 +3525,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0866fd2829c6464785fd6913e914d55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1946944988}
-  saveSystem: {fileID: 1009511080}
-  intervalSeconds: 60
+  saveInterval: 30
+  autoSaveSlot: 0
 --- !u!4 &1493447357
 Transform:
   m_ObjectHideFlags: 0
@@ -4462,6 +4510,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   zoneGround: {fileID: 1164213972}
+  attackCooldown: 0.5
 --- !u!50 &1946944989
 Rigidbody2D:
   serializedVersion: 5
@@ -4541,9 +4590,8 @@ MonoBehaviour:
   hero: {fileID: 1946944988}
   jetpackForce: 10
   horizontalBoost: 20
-  animator: {fileID: 0}
   isUsingJetpack: 0
-  buttonText: {fileID: 672902131}
+  animator: {fileID: 0}
 --- !u!1 &1980942087
 GameObject:
   m_ObjectHideFlags: 0
@@ -5284,3 +5332,4 @@ SceneRoots:
   - {fileID: 965032108}
   - {fileID: 1480977494}
   - {fileID: 1400397011}
+  - {fileID: 1222353620}

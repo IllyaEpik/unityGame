@@ -12,7 +12,7 @@ public class surfaceGenerator : MonoBehaviour
     public int enemyPlantCount = 2;
 
     public int seed;
-    private int[] surface;
+    public int[] surface;
     public int[][] map;
 
     [SerializeField] private GameObject enemyBotPrefab;
